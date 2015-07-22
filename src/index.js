@@ -1,14 +1,16 @@
-import login from 'plug-login'
+import _login from 'plug-login'
 import socket from 'plug-socket'
 import request from 'request'
 import assign from 'object-assign'
 import Promise from 'bluebird'
 
+const login = Promise.promisify(_login)
+
 // turns a string of words into an object of { WORD: number }
 const enumish = (list, start = 0) => list.split(' ')
   .reduce((o, name, i) => assign(o, { [name]: start + i }), {})
 
-export default function miniplug(opts) {
+export default function miniplug(opts = {}) {
   let jar = request.jar()
   let mp = socket()
 
@@ -33,19 +35,22 @@ export default function miniplug(opts) {
   const del  = (url, data) => _request(url, { method: 'del', body: data })
 
   // log in
-  login(opts.email, opts.password, { jar, authToken: true }, (e, res) => {
-    if (e) return mp.emit('error', e)
-    mp.emit('login')
-    mp.auth(res.token)
+  let promise = opts.guest? login({ jar, authToken: true })
+              : /* else */  login(opts.email, opts.password, { jar, authToken: true })
+  promise
+    .then(res => {
+      mp.emit('login')
+      mp.auth(res.token)
 
-    let me = mp.me()
-    mp.once('ack', () => {
-      me.then(user => {
-        mp.user = user
-        mp.emit('connected', user)
+      let me = mp.me()
+      mp.once('ack', () => {
+        me.then(user => {
+          mp.user = user
+          mp.emit('connected', user)
+        })
       })
     })
-  })
+    .catch(e => { mp.emit('error', e) })
 
   mp.on('login', () => {
     mp.connected = true
