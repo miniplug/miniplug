@@ -8,7 +8,7 @@
 , "bugs": "https://github.com/goto-bus-stop/miniplug/issues"
 , "author": "René Kooi <rene@kooi.me>"
 , "dependencies":
-  { "bluebird": "^2.9.34"
+  { "flatten": "^0.0.1"
   , "object-assign": "^3.0.0"
   , "plug-login": "^0.3.0"
   , "plug-socket": "^0.0.2"

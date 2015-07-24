@@ -2,8 +2,15 @@ import _login from 'plug-login'
 import socket from 'plug-socket'
 import request from 'request'
 import assign from 'object-assign'
+import flatten from 'flatten'
 import Promise from 'bluebird'
 import { EventEmitter as EE } from 'events'
+import { stringify as stringifyQS } from 'querystring'
+
+import { BAN_DURATION
+       , BAN_REASON
+       , MUTE_DURATION
+       , MUTE_REASON } from './constants'
 
 const login = Promise.promisify(_login)
 
@@ -22,7 +29,13 @@ export default function miniplug(opts = {}) {
     return new Promise((resolve, reject) => {
       mp.onceConnected(() => req(url, opts, (e, resp) => {
         if (e) reject(e)
-        else   resolve(resp)
+        else if (resp.body.status !== 'ok') {
+          reject(resp.data.length? resp.data[0]
+                : /* otherwise */  resp.status)
+        }
+        else {
+          resolve(resp.body.data)
+        }
       }))
     })
   }
@@ -76,19 +89,186 @@ export default function miniplug(opts = {}) {
       return this
     },
 
-    // REST APIs
+    // REST: User APIs
     me() {
-      return get('users/me').get('body')
-        .get('data').get(0)
+      return get('users/me').get(0)
+    },
+    findUser(uid) {
+      return get(`users/${uid}`).get(0)
+    },
+    findUsers(...uids) {
+      return post('users/bulk', { ids: flatten(uids) })
     },
 
-    join(slug) {
-      return post('rooms/join', { slug: slug }).get('body')
-        .then(mp.roomState)
+    // REST: Ban APIs
+    getBans() {
+      return get('bans')
     },
-    roomState() {
-      return get('rooms/state').get('body')
-        .get('data').get(0)
+    ban(uid, duration = BAN_DURATION.HOUR, reason = BAN_REASON.SPAMMING) {
+      return post('bans/add', { userID: uid
+                              , reason: reason
+                              , duration: duration }).get(0)
+    },
+    unban(uid) {
+      return del(`bans/${uid}`)
+    },
+
+    // REST: Wait List APIs
+    joinWaitlist() {
+      return post('booth')
+    },
+    leaveWaitlist() {
+      return del('booth')
+    },
+    setCycle(val = true) {
+      return put('booth/cycle', { shouldCycle: val })
+    },
+    enableCycle() { return mp.setCycle(true) },
+    disableCycle() { return mp.setCycle(false) },
+    setLock(locked = true, clear = false) {
+      return put('booth/lock', { isLocked: locked, removeAllDJs: clear })
+    },
+    lockWaitlist(clear = false) { return mp.setLock(true, clear) },
+    unlockWaitlist() { return mp.setLock(false, false) },
+    addDJ(uid) {
+      return post('booth/add', { id: uid })
+    },
+    moveDJ(uid, pos) {
+      return post('booth/move', { userID: uid, position: pos })
+    },
+    removeDJ(uid) {
+      return del(`booth/remove/${uid}`)
+    },
+    skipDJ(uid, hid) {
+      return post('booth/skip', { userID: uid, historyID: hid })
+    },
+    skipMe() {
+      return post('booth/skip/me')
+    },
+
+    // REST: Chat APIs
+    deleteChat(cid) {
+      return del(`chat/${cid}`)
+    },
+
+    // REST: Friend APIs
+    getFriends() {
+      return get('friends')
+    },
+    getFriendRequests() {
+      return get('friends/invites')
+    },
+    befriend(uid) {
+      return post('friends', { id: uid })
+    },
+    rejectFriendRequest(uid) {
+      return put('friends/ignore', { id: uid })
+    },
+
+    // REST: Grab APIs
+    grab(targetPlaylist, hid) {
+      return post('grabs', { playlistID: targetPlaylist, historyID: hid }).get(0)
+    },
+
+    // REST: Ignores APIs
+    getIgnoredUsers() {
+      return get('ignores')
+    },
+    ignore(uid) {
+      return post('ignores', { id: uid }).get(0)
+    },
+    unignore(uid) {
+      return del(`ignores/${uid}`)
+    },
+
+    // REST: Mutes APIs
+    getMutes() {
+      return get('mutes')
+    },
+    mute(uid, duration = MUTE_DURATION.SHORT, reason = MUTE_REASON.VIOLATING_RULES) {
+      return post('mutes', { userID: uid
+                           , duration: duration
+                           , reason: reason })
+    },
+    unmute(uid) {
+      return del(`mutes/${uid}`)
+    },
+
+    // REST: News APIs
+    getNews() {
+      return get('news')
+    },
+
+    // REST: Playlist APIs
+    getPlaylists() {
+      return get('playlists')
+    },
+    createPlaylist(name/*, initialMedia*/) {
+      return post('playlists', { name: name })
+    },
+    deletePlaylist(pid) {
+      return del(`playlists/${pid}`)
+    },
+    activatePlaylist(pid) {
+      return put(`playlists/${pid}/activate`)
+    },
+    renamePlaylist(pid, name) {
+      return put(`playlist/${pid}/rename`, { name: name })
+    },
+    shufflePlaylist(pid) {
+      return put(`playlists/${pid}/shuffle`)
+    },
+
+    // Rest: Media APIs
+    getMedia(pid) {
+      return get(`playlists/${pid}/media`)
+    },
+    updateMedia(pid, mid, author, title) {
+      return put(`playlists/${pid}/media/update`, { id: mid
+                                                  , author: author
+                                                  , title: title }).get(0)
+    },
+    moveMedia(pid, mids, before) {
+      if (!Array.isArray(mids)) mids = [ mids ]
+      return put(`playlists/${pid}/media/move`, { ids: mids
+                                                , beforeID: before })
+    },
+    insertMedia(pid, medias, append = true) {
+      return post(`playlists/${pid}/media/insert`, { media: medias
+                                                   , append: append })
+    },
+    deleteMedia(pid, mids) {
+      if (!Array.isArray(mids)) mids = [ mids ]
+      return post(`playlists/${pid}/media/delete`, { ids: mids })
+    },
+
+    // REST: Profile APIs
+    setBlurb(blurb) {
+      return put('profile/blurb', { blurb: blurb })
+    },
+
+    // REST: Room APIs
+    getRooms(query = '', page = 0, limit = 50) {
+      return get(`rooms?${stringifyQS({ q: query, page, limit })}`)
+    },
+    getFavorites(query = '', page = 0, limit = 50) {
+      return get(`rooms/favorites?${stringifyQS({ q: query, page, limit })}`)
+    },
+    createRoom(name, isPrivate = false) {
+      return post('rooms', { name: name, private: isPrivate }).get(0)
+    },
+    favoriteRoom(rid) {
+      return post('rooms/favorites', { id: rid })
+    },
+    unfavoriteRoom(rid) {
+      return del(`rooms/favorites/${rid}`)
+    },
+    join(slug) {
+      return post('rooms/join', { slug: slug })
+        .then(mp.getRoomState)
+    },
+    getRoomState() {
+      return get('rooms/state').get(0)
         .tap(state => mp.emit('roomState', state))
     }
   })
