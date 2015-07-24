@@ -3,6 +3,7 @@ import socket from 'plug-socket'
 import request from 'request'
 import assign from 'object-assign'
 import Promise from 'bluebird'
+import { EventEmitter as EE } from 'events'
 
 const login = Promise.promisify(_login)
 
@@ -12,7 +13,7 @@ const enumish = (list, start = 0) => list.split(' ')
 
 export default function miniplug(opts = {}) {
   let jar = request.jar()
-  let mp = socket()
+  let mp = new EE()
 
   let req = request.defaults({
     jar: jar,
@@ -39,11 +40,13 @@ export default function miniplug(opts = {}) {
               : /* else */  login(opts.email, opts.password, { jar, authToken: true })
   promise
     .then(res => {
+      let ws = mp.ws = socket(res.token)
+      ws.on('error', e => mp.emit('error', e))
+
       mp.emit('login')
-      mp.auth(res.token)
 
       let me = mp.me()
-      mp.once('ack', () => {
+      ws.once('ack', () => {
         me.then(user => {
           mp.user = user
           mp.emit('connected', user)
