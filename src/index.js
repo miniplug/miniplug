@@ -93,6 +93,7 @@ export default function miniplug(opts = {}) {
     roomState() {
       return get('rooms/state').get('body')
         .get('data').get(0)
+        .tap(state => mp.emit('roomState', state))
     }
   })
 }
