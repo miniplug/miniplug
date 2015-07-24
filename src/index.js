@@ -3,6 +3,7 @@ import socket from 'plug-socket'
 import request from 'request'
 import assign from 'object-assign'
 import flatten from 'flatten'
+import partial from 'lodash.partial'
 import Promise from 'bluebird'
 import { EventEmitter as EE } from 'events'
 import { stringify as stringifyQS } from 'querystring'
@@ -101,9 +102,7 @@ export default function miniplug(opts = {}) {
     },
 
     // REST: Ban APIs
-    getBans() {
-      return get('bans')
-    },
+    getBans: partial(get, 'bans'),
     ban(uid, duration = BAN_DURATION.HOUR, reason = BAN_REASON.SPAMMING) {
       return post('bans/add', { userID: uid
                               , reason: reason
@@ -114,12 +113,8 @@ export default function miniplug(opts = {}) {
     },
 
     // REST: Wait List APIs
-    joinWaitlist() {
-      return post('booth')
-    },
-    leaveWaitlist() {
-      return del('booth')
-    },
+    joinWaitlist: partial(post, 'booth'),
+    leaveWaitlist: partial(del, 'booth'),
     setCycle(val = true) {
       return put('booth/cycle', { shouldCycle: val })
     },
@@ -142,9 +137,7 @@ export default function miniplug(opts = {}) {
     skipDJ(uid, hid) {
       return post('booth/skip', { userID: uid, historyID: hid })
     },
-    skipMe() {
-      return post('booth/skip/me')
-    },
+    skipMe: partial(post, 'booth/skip/me'),
 
     // REST: Chat APIs
     deleteChat(cid) {
@@ -152,12 +145,8 @@ export default function miniplug(opts = {}) {
     },
 
     // REST: Friend APIs
-    getFriends() {
-      return get('friends')
-    },
-    getFriendRequests() {
-      return get('friends/invites')
-    },
+    getFriends: partial(get, 'friends'),
+    getFriendRequests: partial(get, 'friends/invites'),
     befriend(uid) {
       return post('friends', { id: uid })
     },
@@ -171,9 +160,7 @@ export default function miniplug(opts = {}) {
     },
 
     // REST: Ignores APIs
-    getIgnoredUsers() {
-      return get('ignores')
-    },
+    getIgnoredUsers: partial(get, 'ignores'),
     ignore(uid) {
       return post('ignores', { id: uid }).get(0)
     },
@@ -182,9 +169,7 @@ export default function miniplug(opts = {}) {
     },
 
     // REST: Mutes APIs
-    getMutes() {
-      return get('mutes')
-    },
+    getMutes: partial(get, 'mutes'),
     mute(uid, duration = MUTE_DURATION.SHORT, reason = MUTE_REASON.VIOLATING_RULES) {
       return post('mutes', { userID: uid
                            , duration: duration
@@ -195,14 +180,10 @@ export default function miniplug(opts = {}) {
     },
 
     // REST: News APIs
-    getNews() {
-      return get('news')
-    },
+    getNews: partial(get, 'news'),
 
     // REST: Playlist APIs
-    getPlaylists() {
-      return get('playlists')
-    },
+    getPlaylists: partial(get, 'playlists'),
     createPlaylist(name/*, initialMedia*/) {
       return post('playlists', { name: name })
     },

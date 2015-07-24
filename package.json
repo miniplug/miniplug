@@ -9,6 +9,7 @@
 , "author": "René Kooi <rene@kooi.me>"
 , "dependencies":
   { "flatten": "^0.0.1"
+  , "lodash.partial": "^3.1.1"
   , "object-assign": "^3.0.0"
   , "plug-login": "^0.3.0"
   , "plug-socket": "^0.0.2"
