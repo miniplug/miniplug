@@ -74,7 +74,13 @@ export default function miniplug(opts = {}) {
       else mp._queue.push(fn)
     },
 
-    // APIs
+    // Super-Duper Advanced Plugin API
+    use(plugin) {
+      plugin(this)
+      return this
+    },
+
+    // REST APIs
     me() {
       return get('users/me').get('body')
         .get('data').get(0)
