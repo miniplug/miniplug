@@ -7,10 +7,6 @@ import { EventEmitter as EE } from 'events'
 
 const login = Promise.promisify(_login)
 
-// turns a string of words into an object of { WORD: number }
-const enumish = (list, start = 0) => list.split(' ')
-  .reduce((o, name, i) => assign(o, { [name]: start + i }), {})
-
 export default function miniplug(opts = {}) {
   let jar = request.jar()
   let mp = new EE()
@@ -98,6 +94,4 @@ export default function miniplug(opts = {}) {
   })
 }
 
-export const ROLE = assign(enumish('NONE DJ BOUNCER MANAGER COHOST HOST')
-                          , { AMBASSADOR: 3, ADMIN: 5 })
-export const MEDIA = enumish('YOUTUBE SOUNDCLOUD', 1)
+export * from './constants'
