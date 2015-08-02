@@ -14,6 +14,7 @@ import { BAN_DURATION
        , MUTE_REASON } from './constants'
 
 const login = Promise.promisify(_login)
+const debug = require('debug')('miniplug:miniplug')
 
 export default function miniplug(opts = {}) {
   let jar = request.jar()
@@ -28,11 +29,12 @@ export default function miniplug(opts = {}) {
   // wait until connections are complete before sending off requests
   const _request = (url, opts) => {
     return new Promise((resolve, reject) => {
+      debug(opts.method, url, opts.body || opts.qs)
       mp.onceConnected(() => req(url, opts, (e, resp) => {
         if (e) reject(e)
         else if (resp.body.status !== 'ok') {
-          reject(resp.data.length? resp.data[0]
-                : /* otherwise */  resp.status)
+          reject(resp.body.data.length? resp.body.data[0]
+                : /* otherwise */       resp.body.status)
         }
         else {
           resolve(resp.body.data)
@@ -43,7 +45,7 @@ export default function miniplug(opts = {}) {
   const post = (url, data) => _request(url, { method: 'post', body: data })
   const get  = (url, data) => _request(url, { method: 'get', qs: data })
   const put  = (url, data) => _request(url, { method: 'put', body: data })
-  const del  = (url, data) => _request(url, { method: 'del', body: data })
+  const del  = (url, data) => _request(url, { method: 'delete', body: data })
 
   // log in
   let promise = opts.guest? login({ jar, authToken: true })
