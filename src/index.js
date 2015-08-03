@@ -57,12 +57,9 @@ export default function miniplug(opts = {}) {
 
       mp.emit('login')
 
-      let me = mp.me()
+      let me = mp.getMe()
       ws.once('ack', () => {
-        me.then(user => {
-          mp.user = user
-          mp.emit('connected', user)
-        })
+        me.then(mp.emit.bind(mp, 'connected'))
       })
     })
     .catch(e => { mp.emit('error', e) })
@@ -74,7 +71,7 @@ export default function miniplug(opts = {}) {
   })
 
   // make miniplug!
-  return assign(mp, {
+  assign(mp, {
     // http yaddayadda
     _jar: jar,
     request: _request,
@@ -90,17 +87,6 @@ export default function miniplug(opts = {}) {
     use(plugin) {
       plugin(this)
       return this
-    },
-
-    // REST: User APIs
-    me() {
-      return get('users/me').get(0)
-    },
-    findUser(uid) {
-      return get(`users/${uid}`).get(0)
-    },
-    findUsers(...uids) {
-      return post('users/bulk', { ids: flatten(uids) })
     },
 
     // REST: Ban APIs
@@ -225,11 +211,6 @@ export default function miniplug(opts = {}) {
       return post(`playlists/${pid}/media/delete`, { ids: mids })
     },
 
-    // REST: Profile APIs
-    setBlurb(blurb) {
-      return put('profile/blurb', { blurb: blurb })
-    },
-
     // REST: Room APIs
     getRooms(query = '', page = 0, limit = 50) {
       return get(`rooms?${stringifyQS({ q: query, page, limit })}`)
@@ -255,6 +236,10 @@ export default function miniplug(opts = {}) {
         .tap(state => mp.emit('roomState', state))
     }
   })
+
+  mp.use(require('./plugins/users')())
+
+  return mp
 }
 
 export * from './constants'
