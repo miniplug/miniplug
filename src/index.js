@@ -127,11 +127,6 @@ export default function miniplug(opts = {}) {
     },
     skipMe: partial(post, 'booth/skip/me'),
 
-    // REST: Chat APIs
-    deleteChat(cid) {
-      return del(`chat/${cid}`)
-    },
-
     // REST: Grab APIs
     grab(targetPlaylist, hid) {
       return post('grabs', { playlistID: targetPlaylist, historyID: hid }).get(0)
@@ -203,6 +198,7 @@ export default function miniplug(opts = {}) {
   })
 
   mp.use(require('./plugins/users')())
+  mp.use(require('./plugins/chat')())
   mp.use(require('./plugins/friends')())
   mp.use(require('./plugins/rooms')())
 
