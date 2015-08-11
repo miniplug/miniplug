@@ -209,35 +209,11 @@ export default function miniplug(opts = {}) {
     deleteMedia(pid, mids) {
       if (!Array.isArray(mids)) mids = [ mids ]
       return post(`playlists/${pid}/media/delete`, { ids: mids })
-    },
-
-    // REST: Room APIs
-    getRooms(query = '', page = 0, limit = 50) {
-      return get(`rooms?${stringifyQS({ q: query, page, limit })}`)
-    },
-    getFavorites(query = '', page = 0, limit = 50) {
-      return get(`rooms/favorites?${stringifyQS({ q: query, page, limit })}`)
-    },
-    createRoom(name, isPrivate = false) {
-      return post('rooms', { name: name, private: isPrivate }).get(0)
-    },
-    favoriteRoom(rid) {
-      return post('rooms/favorites', { id: rid })
-    },
-    unfavoriteRoom(rid) {
-      return del(`rooms/favorites/${rid}`)
-    },
-    join(slug) {
-      return post('rooms/join', { slug: slug })
-        .then(mp.getRoomState)
-    },
-    getRoomState() {
-      return get('rooms/state').get(0)
-        .tap(state => mp.emit('roomState', state))
     }
   })
 
   mp.use(require('./plugins/users')())
+  mp.use(require('./plugins/rooms')())
 
   return mp
 }
