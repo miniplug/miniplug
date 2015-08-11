@@ -132,16 +132,6 @@ export default function miniplug(opts = {}) {
       return del(`chat/${cid}`)
     },
 
-    // REST: Friend APIs
-    getFriends: partial(get, 'friends'),
-    getFriendRequests: partial(get, 'friends/invites'),
-    befriend(uid) {
-      return post('friends', { id: uid })
-    },
-    rejectFriendRequest(uid) {
-      return put('friends/ignore', { id: uid })
-    },
-
     // REST: Grab APIs
     grab(targetPlaylist, hid) {
       return post('grabs', { playlistID: targetPlaylist, historyID: hid }).get(0)
@@ -213,6 +203,7 @@ export default function miniplug(opts = {}) {
   })
 
   mp.use(require('./plugins/users')())
+  mp.use(require('./plugins/friends')())
   mp.use(require('./plugins/rooms')())
 
   return mp
