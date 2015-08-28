@@ -100,33 +100,6 @@ export default function miniplug(opts = {}) {
       return del(`bans/${uid}`)
     },
 
-    // REST: Wait List APIs
-    joinWaitlist: partial(post, 'booth'),
-    leaveWaitlist: partial(del, 'booth'),
-    setCycle(val = true) {
-      return put('booth/cycle', { shouldCycle: val })
-    },
-    enableCycle() { return mp.setCycle(true) },
-    disableCycle() { return mp.setCycle(false) },
-    setLock(locked = true, clear = false) {
-      return put('booth/lock', { isLocked: locked, removeAllDJs: clear })
-    },
-    lockWaitlist(clear = false) { return mp.setLock(true, clear) },
-    unlockWaitlist() { return mp.setLock(false, false) },
-    addDJ(uid) {
-      return post('booth/add', { id: uid })
-    },
-    moveDJ(uid, pos) {
-      return post('booth/move', { userID: uid, position: pos })
-    },
-    removeDJ(uid) {
-      return del(`booth/remove/${uid}`)
-    },
-    skipDJ(uid, hid) {
-      return post('booth/skip', { userID: uid, historyID: hid })
-    },
-    skipMe: partial(post, 'booth/skip/me'),
-
     // REST: Grab APIs
     grab(targetPlaylist, hid) {
       return post('grabs', { playlistID: targetPlaylist, historyID: hid }).get(0)
@@ -198,6 +171,7 @@ export default function miniplug(opts = {}) {
   })
 
   mp.use(require('./plugins/users')())
+  mp.use(require('./plugins/booth')())
   mp.use(require('./plugins/chat')())
   mp.use(require('./plugins/friends')())
   mp.use(require('./plugins/rooms')())
