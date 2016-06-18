@@ -15,14 +15,22 @@ import { BAN_DURATION
 
 const login = Promise.promisify(_login)
 const debug = require('debug')('miniplug:miniplug')
+const defaultOptions = {
+  host: 'https://plug.dj'
+}
 
 export default function miniplug(opts = {}) {
   let jar = request.jar()
   let mp = new EE()
 
+  opts = { ...defaultOptions, ...opts }
+
+  // trim trailing slashes
+  opts.host = opts.host.replace(/\/+$/, '')
+
   let req = request.defaults({
     jar: jar,
-    baseUrl: 'https://plug.dj/_/',
+    baseUrl: `${opts.host}/_/`,
     json: true
   })
 
@@ -48,8 +56,9 @@ export default function miniplug(opts = {}) {
   const del  = (url, data) => _request(url, { method: 'delete', body: data })
 
   // log in
-  let promise = opts.guest? login({ jar, authToken: true })
-              : /* else */  login(opts.email, opts.password, { jar, authToken: true })
+  const loginOpts = { jar, host: opts.host, authToken: true }
+  let promise = opts.guest? login(loginOpts)
+              : /* else */  login(opts.email, opts.password, loginOpts)
   promise
     .then(res => {
       let ws = mp.ws = socket(res.token)
