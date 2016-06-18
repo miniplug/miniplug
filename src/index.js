@@ -180,11 +180,11 @@ export default function miniplug(opts = {}) {
     }
   })
 
-  mp.use(require('./plugins/users')())
-  mp.use(require('./plugins/booth')())
-  mp.use(require('./plugins/chat')())
-  mp.use(require('./plugins/friends')())
-  mp.use(require('./plugins/rooms')())
+  mp.use(require('./plugins/users').default())
+  mp.use(require('./plugins/booth').default())
+  mp.use(require('./plugins/chat').default())
+  mp.use(require('./plugins/friends').default())
+  mp.use(require('./plugins/rooms').default())
 
   return mp
 }
