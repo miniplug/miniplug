@@ -75,7 +75,8 @@ export default function miniplug(opts = {}) {
     // http yaddayadda
     _jar: jar,
     request: _request,
-    post, get, put, del,
+    get: get,
+    post, put, del,
     // request timing
     _queue: [],
     onceConnected(fn) {
