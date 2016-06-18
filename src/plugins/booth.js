@@ -1,4 +1,3 @@
-import assign from 'object-assign'
 import partial from 'lodash.partial'
 
 export default function booth(opts = {}) {
@@ -50,7 +49,7 @@ export default function booth(opts = {}) {
     })
 
     // Rest API
-    assign(mp, {
+    Object.assign(mp, {
       joinWaitlist: partial(mp.post, 'booth'),
       leaveWaitlist: partial(mp.del, 'booth'),
       setCycle(val = true) {
@@ -78,7 +77,7 @@ export default function booth(opts = {}) {
       skipMe: partial(mp.post, 'booth/skip/me')
     })
 
-    assign(mp, { historyEntry, dj, media })
+    Object.assign(mp, { historyEntry, dj, media })
   }
 
 }

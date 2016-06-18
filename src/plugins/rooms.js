@@ -1,4 +1,3 @@
-import assign from 'object-assign'
 import partial from 'lodash.partial'
 import { stringify as stringifyQS } from 'querystring'
 import _wrapRoom from '../data/room'
@@ -31,11 +30,12 @@ export default function rooms() {
       .tap(room => mp._room = room)
       .tap(mp.emit.bind(mp, 'roomState'))
 
-    assign(mp, { room // local
-               , getRooms, getFavorites, createRoom // remote
-               , favoriteRoom, unfavoriteRoom // favorites
-               , join, getRoomState // joining
-               })
+    Object.assign(mp, {
+      room // local
+    , getRooms, getFavorites, createRoom // remote
+    , favoriteRoom, unfavoriteRoom // favorites
+    , join, getRoomState // joining
+    })
   }
 
 }

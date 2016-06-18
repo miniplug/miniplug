@@ -1,4 +1,3 @@
-import assign from 'object-assign'
 import partial from 'lodash.partial'
 import wrapUser from './user'
 import unescape from 'unescape'
@@ -17,7 +16,7 @@ export default function wrapRoom(mp, room) {
     }
   }
 
-  return assign(room, {
+  return Object.assign(room, {
     join: partial(mp.join, room.slug),
 
     favorite: partial(mp.favoriteRoom, room.id),

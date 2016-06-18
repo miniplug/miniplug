@@ -1,5 +1,4 @@
 import Promise from 'bluebird'
-import assign from 'object-assign'
 import partial from 'lodash.partial'
 import wrapMessage from '../data/chat'
 
@@ -7,13 +6,14 @@ const debug = require('debug')('miniplug:chat')
 
 export default function chat(opts) {
 
-  opts = assign({
+  opts = {
     // how long to wait for chat messages to come back
     timeout: 7000
     // allow users to pass their own rate limiting function,
     // this will get a sensible default at some point
   , backoff: fn => fn
-  }, opts)
+  , ...opts
+  }
 
   return function (mp) {
     // translate raw socket events to wrapped miniplug events
@@ -56,6 +56,6 @@ export default function chat(opts) {
     const emote = partial(chat, '/me')
 
     // Public API
-    assign(mp, { deleteChat, chat, emote })
+    Object.assign(mp, { deleteChat, chat, emote })
   }
 }

@@ -1,4 +1,3 @@
-import assign from 'object-assign'
 import partial from 'lodash.partial'
 import unescape from 'unescape'
 import Promise from 'bluebird'
@@ -10,7 +9,7 @@ export default function wrapMessage(mp, message) {
     message.un = unescape(message.un)
   }
 
-  return assign(message, {
+  return Object.assign(message, {
     id: message.cid,
     message: unescape(message.message),
     own() { return mp.me().id === message.uid },

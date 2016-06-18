@@ -1,4 +1,3 @@
-import assign from 'object-assign'
 import partial from 'lodash.partial'
 import wrapUser from '../data/user'
 
@@ -14,10 +13,10 @@ export default function friends() {
     const rejectFriendRequest = uid => mp.put('friends/ignore', { id: uid })
 
     // Public API
-    assign(mp, { getFriends
-               , befriend
-               , unfriend
-               , getFriendRequests
-               , rejectFriendRequest })
+    Object.assign(mp, { getFriends
+                      , befriend
+                      , unfriend
+                      , getFriendRequests
+                      , rejectFriendRequest })
   }
 }

@@ -1,9 +1,8 @@
-import assign from 'object-assign'
 import partial from 'lodash.partial'
 import unescape from 'unescape'
 
 export default function wrapUser(mp, user) {
-  return assign(user, {
+  return Object.assign(user, {
     username: unescape(user.username),
 
     chat: partial(mp.chat, `@${user.username}`),

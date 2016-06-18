@@ -1,7 +1,6 @@
 import _login from 'plug-login'
 import socket from 'plug-socket'
 import request from 'request'
-import assign from 'object-assign'
 import flatten from 'flatten'
 import partial from 'lodash.partial'
 import Promise from 'bluebird'
@@ -80,7 +79,7 @@ export default function miniplug(opts = {}) {
   })
 
   // make miniplug!
-  assign(mp, {
+  Object.assign(mp, {
     // http yaddayadda
     _jar: jar,
     request: _request,

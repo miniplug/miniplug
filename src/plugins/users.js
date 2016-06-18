@@ -1,6 +1,3 @@
-import assign from 'object-assign'
-import find from 'array-find'
-import findIndex from 'array-findindex'
 import flatten from 'flatten'
 import partial from 'lodash.partial'
 import _wrapUser from '../data/user'
@@ -42,8 +39,7 @@ export default function users() {
         if (user.guest) {
           mp._guests++
           mp.emit('guestJoin')
-        }
-        else {
+        } else {
           user = wrapUser(user)
           mp._users.push(user)
           mp.emit('userJoin', user)
@@ -55,9 +51,8 @@ export default function users() {
         if (id === GUEST_ID) {
           mp._guests--
           mp.emit('guestLeave')
-        }
-        else {
-          let i = findIndex(mp._users, user => user.id === id)
+        } else {
+          let i = mp._users.findIndex(user => user.id === id)
           if (i !== -1) {
             let user = mp._users[i]
             mp._users.splice(i, 1)
@@ -68,7 +63,7 @@ export default function users() {
     })
 
     const me = () => mp._user
-    const user = id => find(mp._users, user => user.id === id)
+    const user = id => mp._users.find(user => user.id === id)
     const users = () => mp._users
     const guests = () => mp._guests
 
@@ -89,11 +84,13 @@ export default function users() {
     const validateUsername = name => mp.get(`users/validate/${encodeURIComponent(name)}`)
 
     // Public API
-    assign(mp, { me, user, users, guests // local
-               , getMe, getUser, getUsers // remote
-               , saveSettings, setAvatar, setBadge, setBlurb, setLanguage // setters
-               , getTransactions
-               , validateUsername })
+    Object.assign(mp, {
+      me, user, users, guests // local
+    , getMe, getUser, getUsers // remote
+    , saveSettings, setAvatar, setBadge, setBlurb, setLanguage // setters
+    , getTransactions
+    , validateUsername
+    })
   }
 
 }
