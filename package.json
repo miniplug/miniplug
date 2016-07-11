@@ -29,11 +29,16 @@
     "gulp-newer": "^1.1.0",
     "gulp-util": "^3.0.7",
     "mocha": "2.x",
+    "standard": "^7.1.2",
     "through2": "^2.0.1"
   },
   "scripts": {
     "prepublish": "npm run build",
     "build": "gulp build",
-    "test": "mocha --compilers js:babel-register"
+    "lint": "standard gulpfile.js src/**/*.js test/**/*.js",
+    "test": "npm run lint && mocha --compilers js:babel-register"
+  },
+  "standard": {
+    "env": "mocha"
   }
 }

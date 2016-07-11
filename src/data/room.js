@@ -2,7 +2,7 @@ import partial from 'lodash.partial'
 import wrapUser from './user'
 import unescape from 'unescape'
 
-export default function wrapRoom(mp, room) {
+export default function wrapRoom (mp, room) {
   if (room.users) {
     room.users = room.users.map(partial(wrapUser, mp))
   }
