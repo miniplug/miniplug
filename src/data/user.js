@@ -1,7 +1,7 @@
 import partial from 'lodash.partial'
 import unescape from 'unescape'
 
-export default function wrapUser(mp, user) {
+export default function wrapUser (mp, user) {
   return Object.assign(user, {
     username: unescape(user.username),
 
