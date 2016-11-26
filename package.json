@@ -7,7 +7,6 @@
     "plug",
     "plug.dj"
   ],
-  "main": "lib/index",
   "repository": "goto-bus-stop/miniplug",
   "bugs": "https://github.com/goto-bus-stop/miniplug/issues",
   "author": "René Kooi <rene@kooi.me>",
@@ -15,28 +14,27 @@
     "bluebird": "^2.9.34",
     "flatten": "^0.0.1",
     "lodash.partial": "^3.1.1",
+    "object-assign": "^4.1.0",
     "plug-login": "^0.3.0",
     "plug-socket": "^0.0.2",
     "request": "^2.60.0",
     "unescape": "^0.1.1"
   },
   "devDependencies": {
-    "babel-preset-es2015-node4": "^2.0.3",
-    "babel-preset-stage-2": "^6.5.0",
-    "babel-register": "^6.7.2",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-newer": "^1.1.0",
-    "gulp-util": "^3.0.7",
+    "buble": "^0.14.2",
     "mocha": "2.x",
-    "standard": "^7.1.2",
-    "through2": "^2.0.1"
+    "rollup": "^0.36.4",
+    "rollup-plugin-commonjs": "^5.0.5",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "standard": "^7.1.2"
   },
   "scripts": {
     "prepublish": "npm run build",
-    "build": "gulp build",
+    "build:buble": "buble src --output es --no modules --objectAssign Object.assign",
+    "build:rollup": "rollup -c rollup.config.js",
+    "build": "npm run build:buble && npm run build:rollup",
     "lint": "standard gulpfile.js src/**/*.js test/**/*.js",
-    "test": "npm run lint && mocha --compilers js:babel-register"
+    "test": "npm run lint && mocha --require buble/register"
   },
   "standard": {
     "env": "mocha"

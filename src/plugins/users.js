@@ -1,8 +1,9 @@
 import flatten from 'flatten'
 import partial from 'lodash.partial'
+import createDebug from 'debug'
 import _wrapUser from '../data/user'
 
-const debug = require('debug')('miniplug:users')
+const debug = createDebug('miniplug:users')
 
 const GUEST_ID = 0
 
