@@ -4,6 +4,7 @@ import request from 'request'
 import partial from 'lodash.partial'
 import Promise from 'bluebird'
 import { EventEmitter } from 'events'
+import createDebug from 'debug'
 
 import {
   BAN_DURATION,
@@ -11,14 +12,35 @@ import {
   MUTE_DURATION,
   MUTE_REASON
 } from './constants'
+import usersPlugin from './plugins/users'
+import boothPlugin from './plugins/booth'
+import chatPlugin from './plugins/chat'
+import friendsPlugin from './plugins/friends'
+import roomsPlugin from './plugins/rooms'
+
+// Exports
+
+export default miniplug
+
+export {
+  usersPlugin,
+  boothPlugin,
+  chatPlugin,
+  friendsPlugin,
+  roomsPlugin
+}
+
+export * from './constants'
+
+// Implementation
 
 const login = Promise.promisify(_login)
-const debug = require('debug')('miniplug:miniplug')
+const debug = createDebug('miniplug:miniplug')
 const defaultOptions = {
   host: 'https://plug.dj'
 }
 
-export default function miniplug (opts = {}) {
+function miniplug (opts = {}) {
   const jar = request.jar()
   const mp = new EventEmitter()
 
@@ -174,13 +196,11 @@ export default function miniplug (opts = {}) {
     }
   })
 
-  mp.use(require('./plugins/users').default())
-  mp.use(require('./plugins/booth').default())
-  mp.use(require('./plugins/chat').default())
-  mp.use(require('./plugins/friends').default())
-  mp.use(require('./plugins/rooms').default())
+  mp.use(usersPlugin())
+  mp.use(boothPlugin())
+  mp.use(chatPlugin())
+  mp.use(friendsPlugin())
+  mp.use(roomsPlugin())
 
   return mp
 }
-
-export * from './constants'

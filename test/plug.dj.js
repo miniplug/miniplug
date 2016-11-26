@@ -1,4 +1,4 @@
-import request from 'request'
+const request = require('request')
 
 describe('plug.dj', () => {
   it('is reachable', (done) => {

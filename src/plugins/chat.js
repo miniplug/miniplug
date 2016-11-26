@@ -1,8 +1,9 @@
 import Promise from 'bluebird'
 import partial from 'lodash.partial'
+import createDebug from 'debug'
 import wrapMessage from '../data/chat'
 
-const debug = require('debug')('miniplug:chat')
+const debug = createDebug('miniplug:chat')
 
 export default function chat (opts) {
   opts = {
