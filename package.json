@@ -11,23 +11,23 @@
   "bugs": "https://github.com/goto-bus-stop/miniplug/issues",
   "author": "René Kooi <rene@kooi.me>",
   "dependencies": {
-    "bluebird": "^2.9.34",
+    "bluebird": "^3.4.6",
     "debug": "^2.3.3",
-    "flatten": "^0.0.1",
-    "lodash.partial": "^3.1.1",
+    "flatten": "^1.0.2",
+    "lodash.partial": "^4.2.1",
     "object-assign": "^4.1.0",
-    "plug-login": "^0.3.0",
-    "plug-socket": "^0.0.2",
+    "plug-login": "^0.4.0",
+    "plug-socket": "^0.1.0",
     "request": "^2.60.0",
     "unescape": "^0.1.1"
   },
   "devDependencies": {
     "buble": "^0.14.2",
-    "mocha": "2.x",
+    "mocha": "3.2.0",
     "rollup": "^0.36.4",
     "rollup-plugin-commonjs": "^5.0.5",
     "rollup-plugin-node-resolve": "^2.0.0",
-    "standard": "^7.1.2"
+    "standard": "^8.6.0"
   },
   "scripts": {
     "prepublish": "npm run build",
