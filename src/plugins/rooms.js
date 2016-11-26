@@ -32,10 +32,18 @@ export default function rooms () {
         .tap(mp.emit.bind(mp, 'roomState'))
 
     Object.assign(mp, {
-      room, // local
-      getRooms, getFavorites, createRoom, // remote
-      favoriteRoom, unfavoriteRoom, // favorites
-      join, getRoomState // joining
+      // local
+      room,
+      // remote
+      getRooms,
+      getFavorites,
+      createRoom,
+      // favorites
+      favoriteRoom,
+      unfavoriteRoom,
+      // joining
+      join,
+      getRoomState
     })
   }
 }

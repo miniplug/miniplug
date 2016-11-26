@@ -15,7 +15,7 @@ export default function users () {
     mp._guests = 0
     mp._users = []
 
-    mp.on('connected', user => {
+    mp.on('connected', (user) => {
       mp._user = wrapUser(user)
     })
 
@@ -86,9 +86,22 @@ export default function users () {
 
     // Public API
     Object.assign(mp, {
-      me, user, users, guests, // local
-      getMe, getUser, getUsers, // remote
-      saveSettings, setAvatar, setBadge, setBlurb, setLanguage, // setters
+      // local
+      me,
+      user,
+      users,
+      guests,
+      // remote
+      getMe,
+      getUser,
+      getUsers,
+      // setters
+      saveSettings,
+      setAvatar,
+      setBadge,
+      setBlurb,
+      setLanguage,
+
       getTransactions,
       validateUsername
     })

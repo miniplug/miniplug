@@ -17,7 +17,8 @@ export default function friends () {
     // Public API
     Object.assign(mp, {
       getFriends,
-      befriend, unfriend,
+      befriend,
+      unfriend,
       getFriendRequests,
       rejectFriendRequest
     })
