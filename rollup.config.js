@@ -5,7 +5,10 @@ export default {
   entry: 'es/index.js',
   format: 'cjs',
   dest: 'index.js',
-  external: Object.keys(require('./package.json').dependencies),
+  exports: 'named',
+  external: [ 'events', 'querystring' ].concat(
+    Object.keys(require('./package.json').dependencies)
+  ),
   plugins: [
     commonjs({
       include: 'node_modules/**'
