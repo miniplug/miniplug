@@ -1,0 +1,54 @@
+import partial from 'lodash.partial'
+import _wrapPlaylist from '../data/playlist'
+
+const getId = (item) =>
+  typeof item === 'object' ? item.id : item
+
+const getMediaIds = (medias) => {
+  const arr = Array.isArray(medias) ? medias : [ medias ]
+  return arr.map(getId)
+}
+
+export default function playlists () {
+  return (mp) => {
+    const wrapPlaylist = partial(_wrapPlaylist, mp)
+
+    Object.assign(mp, {
+      getPlaylists: () =>
+        mp.get('playlists').map(wrapPlaylist),
+      createPlaylist: (name/*, initialMedia */) =>
+        mp.post('playlists', { name: name }),
+      deletePlaylist: (pid) =>
+        mp.del(`playlists/${pid}`),
+      activatePlaylist: (pid) =>
+        mp.put(`playlists/${pid}/activate`),
+      renamePlaylist: (pid, name) =>
+        mp.put(`playlist/${pid}/rename`, { name: name }),
+      shufflePlaylist: (pid) =>
+        mp.put(`playlists/${pid}/shuffle`),
+
+      getMedia: (pid) =>
+        mp.get(`playlists/${pid}/media`),
+      updateMedia: (pid, mid, author, title) =>
+        mp.put(`playlists/${pid}/media/update`, {
+          id: mid,
+          author: author,
+          title: title
+        }).get(0),
+      moveMedia: (pid, mids, before) =>
+        mp.put(`playlists/${pid}/media/move`, {
+          ids: getMediaIds(mids),
+          beforeID: before
+        }),
+      insertMedia: (pid, media, append = true) =>
+        mp.post(`playlists/${pid}/media/insert`, {
+          media: media,
+          append: append
+        }),
+      deleteMedia: (pid, mids) =>
+        mp.post(`playlists/${pid}/media/delete`, {
+          ids: getMediaIds(mids)
+        })
+    })
+  }
+}

@@ -17,6 +17,7 @@ import boothPlugin from './plugins/booth'
 import chatPlugin from './plugins/chat'
 import friendsPlugin from './plugins/friends'
 import roomsPlugin from './plugins/rooms'
+import playlistsPlugin from './plugins/playlists'
 
 // Exports
 
@@ -27,7 +28,8 @@ export {
   boothPlugin,
   chatPlugin,
   friendsPlugin,
-  roomsPlugin
+  roomsPlugin,
+  playlistsPlugin
 }
 
 export * from './constants'
@@ -155,45 +157,6 @@ function miniplug (opts = {}) {
 
     // REST: News APIs
     getNews: partial(get, 'news'),
-
-    // REST: Playlist APIs
-    getPlaylists: partial(get, 'playlists'),
-    createPlaylist: (name/*, initialMedia*/) =>
-      post('playlists', { name: name }),
-    deletePlaylist: (pid) =>
-      del(`playlists/${pid}`),
-    activatePlaylist: (pid) =>
-      put(`playlists/${pid}/activate`),
-    renamePlaylist: (pid, name) =>
-      put(`playlist/${pid}/rename`, { name: name }),
-    shufflePlaylist: (pid) =>
-      put(`playlists/${pid}/shuffle`),
-
-    // Rest: Media APIs
-    getMedia: (pid) =>
-      get(`playlists/${pid}/media`),
-    updateMedia: (pid, mid, author, title) =>
-      put(`playlists/${pid}/media/update`, {
-        id: mid,
-        author: author,
-        title: title
-      }).get(0),
-    moveMedia (pid, mids, before) {
-      if (!Array.isArray(mids)) mids = [ mids ]
-      return put(`playlists/${pid}/media/move`, {
-        ids: mids,
-        beforeID: before
-      })
-    },
-    insertMedia: (pid, medias, append = true) =>
-      post(`playlists/${pid}/media/insert`, {
-        media: medias,
-        append: append
-      }),
-    deleteMedia (pid, mids) {
-      if (!Array.isArray(mids)) mids = [ mids ]
-      return post(`playlists/${pid}/media/delete`, { ids: mids })
-    }
   })
 
   mp.use(usersPlugin())
@@ -201,6 +164,7 @@ function miniplug (opts = {}) {
   mp.use(chatPlugin())
   mp.use(friendsPlugin())
   mp.use(roomsPlugin())
+  mp.use(playlistsPlugin())
 
   return mp
 }
