@@ -57,11 +57,33 @@ function miniplug (opts = {}) {
     json: true
   })
 
+  // log in
+  const loginOpts = { jar, host: opts.host, authToken: true }
+  const loginPromise = opts.guest
+    ? login(loginOpts)
+    : login(opts.email, opts.password, loginOpts)
+
+  const connectionPromise = loginPromise
+    .then((res) => {
+      const ws = mp.ws = socket(res.token)
+      ws.on('error', (e) => mp.emit('error', e))
+
+      mp.isConnected = true
+      mp.emit('login')
+
+      const me = mp.getMe()
+      ws.once('ack', () => {
+        me.then((user) => mp.emit('connected', user))
+      })
+    })
+    .catch(e => { mp.emit('error', e) })
+
   // wait until connections are complete before sending off requests
-  const _request = (url, opts) => {
-    return new Promise((resolve, reject) => {
+  const _request = (url, opts) =>
+    connectionPromise.then(() => new Promise((resolve, reject) => {
       debug(opts.method, url, opts.body || opts.qs)
-      mp.onceConnected(() => req(url, opts, (e, resp) => {
+
+      req(url, opts, (e, resp) => {
         if (e) {
           reject(e)
         } else if (resp.body.status !== 'ok') {
@@ -69,38 +91,12 @@ function miniplug (opts = {}) {
         } else {
           resolve(resp.body.data)
         }
-      }))
-    })
-  }
+      })
+    }))
   const post = (url, data) => _request(url, { method: 'post', body: data })
   const get = (url, data) => _request(url, { method: 'get', qs: data })
   const put = (url, data) => _request(url, { method: 'put', body: data })
   const del = (url, data) => _request(url, { method: 'delete', body: data })
-
-  // log in
-  const loginOpts = { jar, host: opts.host, authToken: true }
-  const promise = opts.guest
-    ? login(loginOpts)
-    : login(opts.email, opts.password, loginOpts)
-  promise
-    .then((res) => {
-      const ws = mp.ws = socket(res.token)
-      ws.on('error', (e) => mp.emit('error', e))
-
-      mp.emit('login')
-
-      const me = mp.getMe()
-      ws.once('ack', () => {
-        me.then(mp.emit.bind(mp, 'connected'))
-      })
-    })
-    .catch(e => { mp.emit('error', e) })
-
-  mp.on('login', () => {
-    mp.connected = true
-    mp._queue.forEach(fn => fn())
-    mp._queue = []
-  })
 
   // make miniplug!
   Object.assign(mp, {
@@ -109,12 +105,8 @@ function miniplug (opts = {}) {
     request: _request,
     get: get,
     post, put, del,
-    // request timing
-    _queue: [],
-    onceConnected (fn) {
-      if (mp.connected) fn()
-      else mp._queue.push(fn)
-    },
+
+    connected: connectionPromise,
 
     // Super-Duper Advanced Plugin API
     use (plugin) {
