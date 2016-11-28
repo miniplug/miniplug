@@ -1,5 +1,6 @@
 import partial from 'lodash.partial'
 import _wrapPlaylist from '../data/playlist'
+import _wrapMedia from '../data/media'
 
 const getId = (item) =>
   typeof item === 'object' ? item.id : item
@@ -12,6 +13,7 @@ const getMediaIds = (medias) => {
 export default function playlists () {
   return (mp) => {
     const wrapPlaylist = partial(_wrapPlaylist, mp)
+    const wrapMedia = partial(_wrapMedia, mp)
 
     Object.assign(mp, {
       getPlaylists: () =>
@@ -32,7 +34,7 @@ export default function playlists () {
         mp.put(`playlists/${pid}/shuffle`),
 
       getMedia: (pid) =>
-        mp.get(`playlists/${pid}/media`),
+        mp.get(`playlists/${pid}/media`).map(partial(wrapMedia, pid)),
       updateMedia: (pid, mid, author, title) =>
         mp.put(`playlists/${pid}/media/update`, {
           id: mid,

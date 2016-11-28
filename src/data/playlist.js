@@ -2,7 +2,6 @@ import partial from 'lodash.partial'
 import wrapMedia from './media'
 
 export default function wrapPlaylist (mp, playlist) {
-  // let cachedMedia
   return Object.assign(playlist, {
     delete: partial(mp.deletePlaylist, playlist.id),
     activate: partial(mp.activatePlaylist, playlist.id),
