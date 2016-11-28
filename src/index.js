@@ -63,19 +63,24 @@ function miniplug (opts = {}) {
     ? login(loginOpts)
     : login(opts.email, opts.password, loginOpts)
 
+  const ws = socket()
+
   const connectionPromise = loginPromise
-    .then((res) => {
-      const ws = mp.ws = socket(res.token)
-      ws.on('error', (e) => mp.emit('error', e))
+    .then((res) => new Promise((resolve, reject) => {
+      ws.auth(res.token)
+      ws.once('error', reject)
 
       mp.isConnected = true
       mp.emit('login')
 
       const me = mp.getMe()
       ws.once('ack', () => {
+        resolve()
+        ws.removeListener('error', reject)
+
         me.then((user) => mp.emit('connected', user))
       })
-    })
+    }))
     .catch(e => { mp.emit('error', e) })
 
   // wait until connections are complete before sending off requests
@@ -100,11 +105,14 @@ function miniplug (opts = {}) {
 
   // make miniplug!
   Object.assign(mp, {
+    ws: ws,
     // http yaddayadda
     _jar: jar,
     request: _request,
-    get: get,
-    post, put, del,
+    get,
+    post,
+    put,
+    del,
 
     connected: connectionPromise,
 
