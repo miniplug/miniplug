@@ -10,6 +10,9 @@
  - [mp.favoriteRoom(id)](#mp-favoriteroom)
  - [mp.unfavoriteRoom(id)](#mp-unfavoriteroom)
  - [mp.getRoomState()](#mp-getroomstate)
+ - [mp.chat(message)](#mp-chat)
+ - [mp.emote(message)](#mp-emote)
+ - [mp.deleteChat(id)](#mp-deletechat)
  - [Room](#class-room)
    - [room.id](#room-id)
    - [room.name](#room-name)
@@ -17,6 +20,16 @@
    - [room.join()](#room-join)
    - [room.favorite()](#room-favorite)
    - [room.unfavorite()](#room-unfavorite)
+ - [ChatMessage](#class-chatmessage)
+   - [message.id](#chatmessage-id)
+   - [message.message](#chatmessage-message)
+   - [message.uid](#chatmessage-uid)
+   - [message.un](#chatmessage-un)
+   - [message.getUser()](#chatmessage-getuser)
+   - [message.own()](#chatmessage-own)
+   - [message.reply(text)](#chatmessage-reply)
+   - [message.emote(text)](#chatmessage-emote)
+   - [message.delete()](#chatmessage-delete)
  - [REST methods](#mp-rest)
 
 <a id="mp-constructor"></a>
@@ -138,6 +151,46 @@ Get the current room object, but fresh from the plug.dj API and not cached. This
 is like an async version of [mp.room()](#mp-room). Using [mp.room()](#mp-room)
 should be preferred whenever possible.
 
+<hr>
+
+<a id="mp-chat"></a>
+## mp.chat(message): Promise<[ChatMessage](#class-chatmessage)>
+
+Send a chat message. Returns a Promise that will resolve with the message once
+it is sent.
+
+```js
+// Send a temporary greeting that is deleted after 5 seconds.
+// Note that the bot user needs to have the appropriate staff permissions to be
+// able to delete its own messages.
+
+mp.chat('Hello!')
+  .delay(5000) // Using Bluebird's .delay() method
+  .then((message) => message.delete())
+```
+
+<a id="mp-emote"></a>
+## mp.emote(message): Promise<[ChatMessage](#class-chatmessage)>
+
+Send an emote chat message, like `/me` or `/em` on the plug.dj web client.
+
+```js
+mp.emote('does a little dance')
+  .then((message) => { /* Resolves to the message, just like mp.chat(). */ })
+```
+
+<a id="mp-deletechat"></a>
+## mp.deleteChat(id): Promise
+
+Delete a chat message by ID.
+
+```js
+// Delete all incoming chat:
+mp.on('chat', (message) => {
+  mp.deleteChat(message.cid)
+})
+```
+
 <a id="class-room"></a>
 ## Room
 
@@ -196,6 +249,85 @@ Remove this room from the bot user's favorites.
 // Remove the current room from favorites.
 mp.room().unfavorite().then(() => {
   console.log('Removed!')
+})
+```
+
+<a id="class-chatmessage"></a>
+## ChatMessage
+
+<a id="chatmessage-id"></a>
+### message.id: string
+
+Message ID.
+
+<a id="chatmessage-message"></a>
+### message.message: string
+
+Message text contents.
+
+<a id="chatmessage-uid"></a>
+### message.uid: number
+
+User ID of the sender of the message.
+
+<a id="chatmessage-un"></a>
+### message.un: string
+
+Username of the sender of the message.
+
+<a id="chatmessage-getuser"></a>
+### message.getUser(): Promise<[User](#class-user)>
+
+Get the sender of the message.
+
+<a id="chatmessage-own"></a>
+### message.own(): bool
+
+Returns true if the message was sent by the logged-in user, or false if it was
+sent by someone else.
+
+```js
+mp.chat('My own message').then((message) => {
+  assert.ok(message.own() === true)
+})
+
+mp.on('chat', (message) => {
+  // True if it was sent using mp.chat() or mp.emote().
+  // False if it was sent by some other user.
+  message.own()
+})
+```
+
+<a id="chatmessage-reply"></a>
+### message.reply(text): Promise<[ChatMessage](#class-chatmessage)>
+
+Reply to the sender of the message using an @-mention.
+
+```js
+mp.on('chat', (message) => {
+  if (message.message === '!myid') {
+    // Sends "@Username Your user ID is 123456"
+    message.reply('Your user ID is ' + message.uid)
+  }
+})
+```
+
+<a id="chatmessage-emote"></a>
+### message.emote(text): Promise<[ChatMessage](#class-chatmessage)>
+
+Reply to the sender of the message using an @-mention in an [emote](#mp-emote)
+message.
+
+<a id="chatmessage-delete"></a>
+### message.delete(): Promise
+
+Delete the message.
+
+```js
+mp.on('chat', (message) => {
+  message.delete().then(() => {
+    console.log('Deleted message from ' + message.un)
+  })
 })
 ```
 
