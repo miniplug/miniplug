@@ -10,7 +10,7 @@ export default function wrapMessage (mp, message) {
   return Object.assign(message, {
     id: message.cid,
     message: unescape(message.message),
-    own () { return mp.me().id === message.uid },
+    own: () => mp.me().id === message.uid,
 
     chat: mp.chat,
     reply: partial(mp.chat, `@${message.un}`),

@@ -1,4 +1,4 @@
-import _login from 'plug-login'
+import loginCallback from 'plug-login'
 import socket from 'plug-socket'
 import request from 'request'
 import partial from 'lodash.partial'
@@ -29,7 +29,7 @@ export default exports
 
 // Implementation
 
-const login = Promise.promisify(_login)
+const login = Promise.promisify(loginCallback)
 const debug = createDebug('miniplug:miniplug')
 const defaultOptions = {
   host: 'https://plug.dj'
@@ -77,8 +77,8 @@ function miniplug (opts = {}) {
     .catch(e => { mp.emit('error', e) })
 
   // wait until connections are complete before sending off requests
-  const _request = (url, opts) =>
-    connectionPromise.then(() => new Promise((resolve, reject) => {
+  const sendRequest = (url, opts) =>
+    mp.connected.then(() => new Promise((resolve, reject) => {
       debug(opts.method, url, opts.body || opts.qs)
 
       req(url, opts, (e, resp) => {
@@ -91,17 +91,17 @@ function miniplug (opts = {}) {
         }
       })
     }))
-  const post = (url, data) => _request(url, { method: 'post', body: data })
-  const get = (url, data) => _request(url, { method: 'get', qs: data })
-  const put = (url, data) => _request(url, { method: 'put', body: data })
-  const del = (url, data) => _request(url, { method: 'delete', body: data })
+  const post = (url, data) => sendRequest(url, { method: 'post', body: data })
+  const get = (url, data) => sendRequest(url, { method: 'get', qs: data })
+  const put = (url, data) => sendRequest(url, { method: 'put', body: data })
+  const del = (url, data) => sendRequest(url, { method: 'delete', body: data })
 
   // make miniplug!
   Object.assign(mp, {
     ws: ws,
     // http yaddayadda
     _jar: jar,
-    request: _request,
+    request: sendRequest,
     get,
     post,
     put,
