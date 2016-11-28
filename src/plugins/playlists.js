@@ -16,6 +16,10 @@ export default function playlists () {
     Object.assign(mp, {
       getPlaylists: () =>
         mp.get('playlists').map(wrapPlaylist),
+      getActivePlaylist: () =>
+        mp.get('playlists')
+          .filter((playlist) => playlist.active)
+          .get(0).then(wrapPlaylist),
       createPlaylist: (name/*, initialMedia */) =>
         mp.post('playlists', { name: name }),
       deletePlaylist: (pid) =>
