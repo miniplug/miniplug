@@ -27,7 +27,7 @@ export default function playlists () {
       activatePlaylist: (pid) =>
         mp.put(`playlists/${pid}/activate`),
       renamePlaylist: (pid, name) =>
-        mp.put(`playlist/${pid}/rename`, { name: name }),
+        mp.put(`playlists/${pid}/rename`, { name: name }),
       shufflePlaylist: (pid) =>
         mp.put(`playlists/${pid}/shuffle`),
 
