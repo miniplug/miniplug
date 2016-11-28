@@ -10,6 +10,19 @@
  - [mp.favoriteRoom(id)](#mp-favoriteroom)
  - [mp.unfavoriteRoom(id)](#mp-unfavoriteroom)
  - [mp.getRoomState()](#mp-getroomstate)
+ - [mp.me()](#mp-me)
+ - [mp.user(id)](#mp-user)
+ - [mp.users()](#mp-users)
+ - [mp.guests()](#mp-guests)
+ - [mp.getMe()](#mp-getme)
+ - [mp.getUser(id)](#mp-getuser)
+ - [mp.getUsers(...ids)](#mp-getusers)
+ - [mp.saveSettings(settings)](#mp-savesettings)
+ - [mp.setAvatar(avatar)](#mp-setavatar)
+ - [mp.setBadge(badge)](#mp-setbadge)
+ - [mp.setBlurb(blurb)](#mp-setblurb)
+ - [mp.setLanguage(lang)](#mp-setlanguage)
+ - [mp.getTransactions()](#mp-gettransactions)
  - [mp.chat(message)](#mp-chat)
  - [mp.emote(message)](#mp-emote)
  - [mp.deleteChat(id)](#mp-deletechat)
@@ -20,6 +33,21 @@
    - [room.join()](#room-join)
    - [room.favorite()](#room-favorite)
    - [room.unfavorite()](#room-unfavorite)
+ - [User](#class-user)
+   - [user.chat(text)](#user-chat)
+   - [user.emote(text)](#user-emote)
+   - [user.add()](#user-add)
+   - [user.move(position)](#user-move)
+   - [user.remove()](#user-remove)
+   - [user.skip(historyId)](#user-skip)
+   - [user.befriend()](#user-befriend)
+   - [user.rejectRequest()](#user-rejectrequest)
+   - [user.ignore()](#user-ignore)
+   - [user.unignore()](#user-unignore)
+   - [user.mute(duration, reason)](#user-mute)
+   - [user.unmute()](#user-unmute)
+   - [user.ban(duration, reason)](#user-ban)
+   - [user.unban()](#user-unban)
  - [ChatMessage](#class-chatmessage)
    - [message.id](#chatmessage-id)
    - [message.message](#chatmessage-message)
@@ -30,6 +58,10 @@
    - [message.reply(text)](#chatmessage-reply)
    - [message.emote(text)](#chatmessage-emote)
    - [message.delete()](#chatmessage-delete)
+ - [Mute Durations](#muteduration)
+ - [Mute Reasons](#mutereason)
+ - [Ban Durations](#banduration)
+ - [Ban Reasons](#banreason)
  - [REST methods](#mp-rest)
 
 <a id="mp-constructor"></a>
@@ -153,6 +185,96 @@ should be preferred whenever possible.
 
 <hr>
 
+<a id="mp-me"></a>
+## mp.me(): [User](#class-user)
+
+Get the current logged-in user. Will be `null` when logged in as a guest user.
+
+```js
+console.log('Logged in as', mp.me().username)
+```
+
+<a id="mp-user"></a>
+## mp.user(id): [User](#class-user)
+
+Synchronously get a user object from the current room. Returns `null` if the
+requested user is not in the room.
+
+```js
+console.log('Some other user:', mp.user(123456).username)
+```
+
+<a id="mp-users"></a>
+## mp.users(): Array<[User](#class-user)>
+
+Synchronously get all user objects from the current room.
+
+```js
+console.log('Users:', mp.users().map((user) => user.username))
+```
+
+<a id="mp-guests"></a>
+## mp.guests(): number
+
+Get the number of guests in the current room.
+
+<a id="mp-getme"></a>
+## mp.getMe(): Promise<[User](#class-user)>
+
+Get the current logged-in user from the plug.dj web API. [mp.me()](#mp-me)
+should be used instead whenever possible.
+
+<a id="mp-getuser"></a>
+## mp.getUser(id): Promise<[User](#class-user)>
+
+Get a user object by ID. The user does not have to be in the same room as the
+bot.
+
+<a id="mp-getusers"></a>
+## mp.getUsers(...ids): Promise&lt;Array&lt;[User](#class-user)>>
+
+Get multiple users. User IDs can be passed in an array or as separate arguments.
+Up to 50 user objects can be requested at a time.
+
+```js
+mp.getUsers(123456, 654321).then((users) => {
+  console.log('Found:', users)
+})
+```
+
+<a id="mp-savesettings"></a>
+## mp.saveSettings(settings): Promise
+
+Save user settings. See the [PlugCommunity documentation](https://github.com/plugcommunity/documentation/blob/master/api/endpoints/users_settings.md#parameters)
+for a list of available settings.
+
+<a id="mp-setavatar"></a>
+## mp.setAvatar(avatar): Promise
+
+Set the bot user's avatar.
+
+<a id="mp-setbadge"></a>
+## mp.setBadge(badge): Promise
+
+Set the bot user's badge.
+
+<a id="mp-setblurb"></a>
+## mp.setBlurb(blurb): Promise
+
+Set the bot user's profile blurb / bio.
+
+<a id="mp-setlanguage"></a>
+## mp.setLanguage(lang): Promise
+
+Set the bot user's language preference.
+
+<a id="mp-gettransactions"></a>
+## mp.getTransactions(): Promise&lt;Array>
+
+Get the bot user's transaction history.
+
+<hr>
+
 <a id="mp-chat"></a>
 ## mp.chat(message): Promise<[ChatMessage](#class-chatmessage)>
 
@@ -252,6 +374,93 @@ mp.room().unfavorite().then(() => {
 })
 ```
 
+<a id="class-user"></a>
+## User
+
+<a id="user-chat"></a>
+### user.chat(text): Promise<[ChatMessage](#class-chatmessage)>
+
+Send a chat message directed at this user. Prepends `@Username` to the provided
+text.
+
+```js
+mp.user(123456).chat('Hello!')
+// → "@Username Hello!"
+```
+
+<a id="user-emote"></a>
+### user.emote(text): Promise<[ChatMessage](#class-chatmessage)>
+
+Send an emote chat message directed at this user.
+
+```js
+mp.user(123456).emote('Hello!')
+// → "/me @Username Hello!"
+```
+
+<a id="user-add"></a>
+### user.add()
+
+Add the user to the waitlist.
+
+<a id="user-move"></a>
+### user.move(position)
+
+Move the user to a different position in the waitlist.
+
+<a id="user-remove"></a>
+### user.remove()
+
+Remove the user from the waitlist or the DJ Booth.
+
+<a id="user-skip"></a>
+### user.skip(historyId)
+
+Skip the user. `historyId` is the ID of the currently playing track, i.e.
+`mp.historyEntry().id`.
+
+<a id="user-befriend"></a>
+### user.befriend()
+
+Send or accept a friend request to/from this user.
+
+<a id="user-rejectrequest"></a>
+### user.rejectRequest()
+
+Reject a friend request from this user.
+
+<a id="user-ignore"></a>
+### user.ignore()
+
+Ignore the user in chat.
+
+<a id="user-unignore"></a>
+### user.unignore()
+
+Stop ignoring the user in chat.
+
+<a id="user-mute"></a>
+### user.mute(duration, reason)
+
+Mute the user in chat. `duration` is a [MUTE_DURATION](#muteduration). `reason`
+is a [MUTE_REASON](#mutereason).
+
+<a id="user-unmute"></a>
+### user.unmute()
+
+Unmute the user in chat.
+
+<a id="user-ban"></a>
+### user.ban(duration, reason)
+
+Ban the user from the room. `duration` is a [BAN_DURATION](#banduration).
+`reason` is a [BAN_REASON](#banreason).
+
+<a id="user-unban"></a>
+### user.unban()
+
+Unban the user from the room.
+
 <a id="class-chatmessage"></a>
 ## ChatMessage
 
@@ -330,6 +539,100 @@ mp.on('chat', (message) => {
   })
 })
 ```
+
+<hr>
+
+<a id="muteduration"></a>
+## Mute Durations
+
+```js
+import { MUTE_DURATION } from 'miniplug'
+```
+
+### MUTE_DURATION.SHORT
+
+15 minutes.
+
+### MUTE_DURATION.MEDIUM
+
+30 minutes.
+
+### MUTE_DURATION.LONG
+
+45 minutes.
+
+<a id="mutereason"></a>
+## Mute Reasons
+
+```js
+import { MUTE_REASON } from 'miniplug'
+```
+
+### MUTE_REASON.VIOLATING_RULES
+
+Violating community rules.
+
+### MUTE_REASON.VERBAL_ABUSE
+
+Verbal abuse or harassment.
+
+### MUTE_REASON.SPAMMING
+
+Spamming or trolling.
+
+### MUTE_REASON.LANGUAGE
+
+Offensive language.
+
+### MUTE_REASON.ATTITUDE
+
+Negative attitude
+
+<a id="banduration"></a>
+## Ban Durations
+
+```js
+import { BAN_DURATION } from 'miniplug'
+```
+
+### BAN_DURATION.HOUR
+
+A 1 hour ban.
+
+### BAN_DURATION.DAY
+
+A 1 day ban.
+
+### BAN_DURATION.PERMA
+
+A permanent ban.
+
+<a id="banreason"></a>
+## Ban Reasons
+
+```js
+import { BAN_REASON } from 'miniplug'
+```
+
+### BAN_REASON.SPAMMING
+
+Spamming or trolling.
+
+### BAN_REASON.VERBAL_ABUSE
+
+Verbal abuse or offensive language.
+
+### BAN_REASON.OFFENSIVE_PLAYS
+
+Playing offensive videos/songs.
+
+### BAN_REASON.GENRE
+
+Repeatedly playing inappropriate genre(s).
+
+### BAN_REASON.ATTITUDE
+
+Negative attitude.
 
 <a id="mp-rest"></a>
 ## mp.get/post/put/del(url: string, data: object): Promise
