@@ -5,7 +5,7 @@ export default {
   entry: 'es/index.js',
   format: 'cjs',
   dest: 'index.js',
-  exports: 'named',
+  exports: 'default',
   external: [ 'events', 'querystring' ].concat(
     Object.keys(require('./package.json').dependencies)
   ),

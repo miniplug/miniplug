@@ -6,12 +6,7 @@ import Promise from 'bluebird'
 import { EventEmitter } from 'events'
 import createDebug from 'debug'
 
-import {
-  BAN_DURATION,
-  BAN_REASON,
-  MUTE_DURATION,
-  MUTE_REASON
-} from './constants'
+import * as constants from './constants'
 import usersPlugin from './plugins/users'
 import boothPlugin from './plugins/booth'
 import chatPlugin from './plugins/chat'
@@ -21,18 +16,16 @@ import playlistsPlugin from './plugins/playlists'
 
 // Exports
 
-export default miniplug
+const exports = miniplug
+exports.usersPlugin = usersPlugin
+exports.boothPlugin = boothPlugin
+exports.chatPlugin = chatPlugin
+exports.friendsPlugin = friendsPlugin
+exports.roomsPlugin = roomsPlugin
+exports.playlistsPlugin = playlistsPlugin
+Object.assign(exports, constants)
 
-export {
-  usersPlugin,
-  boothPlugin,
-  chatPlugin,
-  friendsPlugin,
-  roomsPlugin,
-  playlistsPlugin
-}
-
-export * from './constants'
+export default exports
 
 // Implementation
 
@@ -124,7 +117,7 @@ function miniplug (opts = {}) {
 
     // REST: Ban APIs
     getBans: partial(get, 'bans'),
-    ban: (uid, duration = BAN_DURATION.HOUR, reason = BAN_REASON.SPAMMING) =>
+    ban: (uid, duration = constants.BAN_DURATION.HOUR, reason = constants.BAN_REASON.SPAMMING) =>
       post('bans/add', {
         userID: uid,
         reason: reason,
@@ -146,7 +139,7 @@ function miniplug (opts = {}) {
 
     // REST: Mutes APIs
     getMutes: partial(get, 'mutes'),
-    mute: (uid, duration = MUTE_DURATION.SHORT, reason = MUTE_REASON.VIOLATING_RULES) =>
+    mute: (uid, duration = constants.MUTE_DURATION.SHORT, reason = constants.MUTE_REASON.VIOLATING_RULES) =>
       post('mutes', {
         userID: uid,
         duration: duration,
