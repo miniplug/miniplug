@@ -44,7 +44,7 @@ export default function playlists () {
       moveMedia: (pid, mids, before) =>
         mp.put(`playlists/${pid}/media/move`, {
           ids: getMediaIds(mids),
-          beforeID: before
+          beforeID: getId(before)
         }),
       insertMedia: (pid, media, append = true) =>
         mp.post(`playlists/${pid}/media/insert`, {

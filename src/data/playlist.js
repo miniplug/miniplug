@@ -15,6 +15,8 @@ export default function wrapPlaylist (mp, playlist) {
           // cachedMedia = media
         }),
     insert: (media, append = true) =>
-      mp.insertMedia(playlist.id, media, append)
+      mp.insertMedia(playlist.id, media, append),
+    move: (media, before) =>
+      mp.moveMedia(playlist.id, media, before)
   })
 }
