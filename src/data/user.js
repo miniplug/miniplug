@@ -1,5 +1,5 @@
 import partial from 'lodash.partial'
-import unescape from 'unescape'
+import { unescape } from 'plug-message-split'
 
 export default function wrapUser (mp, user) {
   return Object.assign(user, {

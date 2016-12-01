@@ -16,10 +16,9 @@
     "flatten": "^1.0.2",
     "got": "^6.6.3",
     "lodash.partial": "^4.2.1",
-    "object-assign": "^4.1.0",
     "plug-login": "^1.0.0",
-    "plug-socket": "^0.1.0",
-    "unescape": "^0.2.0"
+    "plug-message-split": "^1.0.0",
+    "plug-socket": "^0.1.0"
   },
   "devDependencies": {
     "buble": "^0.14.2",

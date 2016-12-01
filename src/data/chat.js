@@ -1,5 +1,5 @@
 import partial from 'lodash.partial'
-import unescape from 'unescape'
+import { unescape } from 'plug-message-split'
 import Promise from 'bluebird'
 
 export default function wrapMessage (mp, message) {
