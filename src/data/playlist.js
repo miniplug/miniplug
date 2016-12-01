@@ -1,4 +1,4 @@
-import partial from 'lodash.partial'
+import partial from 'lodash-es/partial'
 import wrapMedia from './media'
 
 export default function wrapPlaylist (mp, playlist) {

@@ -10,6 +10,9 @@
   "repository": "goto-bus-stop/miniplug",
   "bugs": "https://github.com/goto-bus-stop/miniplug/issues",
   "author": "René Kooi <rene@kooi.me>",
+  "engines": {
+    "node": ">= 4"
+  },
   "files": [
     "index.js"
   ],
@@ -17,7 +20,6 @@
     "bluebird": "^3.4.6",
     "debug": "^2.3.3",
     "got": "^6.6.3",
-    "lodash.partial": "^4.2.1",
     "plug-login": "^1.0.0",
     "plug-message-split": "^1.0.0",
     "plug-socket": "^0.1.0"

@@ -1,4 +1,4 @@
-import partial from 'lodash.partial'
+import partial from 'lodash-es/partial'
 
 export default function wrapMedia (mp, playlistId, media) {
   return Object.assign(media, {

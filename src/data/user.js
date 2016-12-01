@@ -1,4 +1,4 @@
-import partial from 'lodash.partial'
+import partial from 'lodash-es/partial'
 import { unescape } from 'plug-message-split'
 
 export default function wrapUser (mp, user) {
