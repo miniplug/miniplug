@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "buble": "^0.14.2",
+    "builtin-modules": "^1.1.1",
     "lodash-es": "^4.17.2",
     "mocha": "3.2.0",
     "rollup": "^0.36.4",
@@ -38,7 +39,7 @@
     "build:buble": "buble src --output es --no modules --objectAssign Object.assign",
     "build:rollup": "rollup -c rollup.config.js",
     "build": "npm run build:buble && npm run build:rollup",
-    "lint": "standard gulpfile.js src/**/*.js test/**/*.js",
+    "lint": "standard rollup.config.js src/**/*.js test/**/*.js",
     "test": "npm run lint && mocha --require buble/register"
   },
   "standard": {
