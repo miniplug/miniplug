@@ -10,6 +10,9 @@
   "repository": "goto-bus-stop/miniplug",
   "bugs": "https://github.com/goto-bus-stop/miniplug/issues",
   "author": "René Kooi <rene@kooi.me>",
+  "files": [
+    "index.js"
+  ],
   "dependencies": {
     "bluebird": "^3.4.6",
     "debug": "^2.3.3",
