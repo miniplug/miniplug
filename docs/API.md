@@ -46,6 +46,8 @@
    - [room.favorite()](#room-favorite)
    - [room.unfavorite()](#room-unfavorite)
  - [User](#class-user)
+   - [user.id](#user-id)
+   - [user.username](#user-username)
    - [user.chat(text)](#user-chat)
    - [user.emote(text)](#user-emote)
    - [user.add()](#user-add)
@@ -530,6 +532,16 @@ mp.room().unfavorite().then(() => {
 
 <a id="class-user"></a>
 ## User
+
+<a id="user-id"></a>
+### user.id: number
+
+User ID.
+
+<a id="user-username"></a>
+### user.username: string
+
+Username.
 
 <a id="user-chat"></a>
 ### user.chat(text): Promise<[ChatMessage](#class-chatmessage)>
