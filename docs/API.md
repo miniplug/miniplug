@@ -82,10 +82,21 @@
    - [playlist.getMedia()](#playlist-getmedia)
    - [playlist.insert(media, append)](#playlist-insert)
    - [playlist.move(media, before)](#playlist-move)
+ - [Media](#class-media)
+   - [media.id](#media-id)
+   - [media.format](#media-format)
+   - [media.cid](#media-cid)
+   - [media.author](#media-author)
+   - [media.title](#media-title)
+   - [media.duration](#media-duration)
+   - [media.image](#media-image)
+   - [media.update(author, title)](#media-update)
+   - [media.delete()](#media-delete)
  - [Mute Durations](#muteduration)
  - [Mute Reasons](#mutereason)
  - [Ban Durations](#banduration)
  - [Ban Reasons](#banreason)
+ - [Media Sources](#mediasource)
  - [REST methods](#mp-rest)
 
 <a id="mp-constructor"></a>
@@ -429,7 +440,6 @@ resolves with the new actual author and title as used by plug.dj, with HTML
 escapes.
 
 ```js
-// Using ES async-await:
 mp.updateMedia(playlist.id, media.id, 'Test Author', '& Test Title').then(({ author, title }) => {
   // author == "Test Author"
   // title == "&amp; Test Title"
@@ -755,6 +765,56 @@ If `before` is -1, the items will be moved to the end of the playlist.
 Returns a Promise that resolves with the Media items in the playlist after the
 move was finished.
 
+<a id="class-media"></a>
+## Media
+
+<a id="media-id"></a>
+### media.id: number
+
+The media ID on plug.dj.
+
+<a id="media-format"></a>
+### media.format: [MEDIA_SOURCE](#mediasource)
+
+The media source. Can be `MEDIA_SOURCE.YOUTUBE` or `MEDIA_SOURCE.SOUNDCLOUD`.
+
+<a id="media-cid"></a>
+### media.cid: string
+
+The media ID on the relevant source.
+
+<a id="media-author"></a>
+### media.author: string
+
+The author / artist tag of the media.
+
+<a id="media-title"></a>
+### media.title: string
+
+The title tag of the media.
+
+<a id="media-duration"></a>
+### media.duration: number
+
+Duration in seconds of the media.
+
+<a id="media-image"></a>
+### media.image: string
+
+A URL pointing to a thumbnail image.
+
+<a id="media-update"></a>
+### media.update(author, title): Promise&lt;{author, title}>
+
+Update the author and title tags of a media item. Returns a Promise that
+resolves with the new actual author and title as used by plug.dj, with HTML
+escapes.
+
+<a id="media-delete"></a>
+### media.delete(): Promise
+
+Delete the media from the playlist it belongs to.
+
 <hr>
 
 <a id="muteduration"></a>
@@ -848,6 +908,21 @@ Repeatedly playing inappropriate genre(s).
 ### BAN_REASON.ATTITUDE
 
 Negative attitude.
+
+<a id="mediasource"></a>
+## Media Sources
+
+```js
+import { MEDIA_SOURCE } from 'miniplug'
+```
+
+### MEDIA_SOURCE.YOUTUBE
+
+Identifies a YouTube video.
+
+### MEDIA_SOURCE.SOUNDCLOUD
+
+Identifies a SoundCloud track.
 
 <a id="mp-rest"></a>
 ## mp.get/post/put/del(url: string, data: object): Promise
