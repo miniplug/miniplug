@@ -16,7 +16,7 @@
     "flatten": "^1.0.2",
     "lodash.partial": "^4.2.1",
     "object-assign": "^4.1.0",
-    "plug-login": "^0.4.0",
+    "plug-login": "^1.0.0",
     "plug-socket": "^0.1.0",
     "request": "^2.60.0",
     "unescape": "^0.2.0"
