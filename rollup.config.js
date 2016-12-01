@@ -2,7 +2,7 @@ import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
 import builtins from 'builtin-modules'
 
-const { dependencies } = require('./package.json')
+const pkg = require('./package.json')
 
 export default {
   entry: 'es/index.js',
@@ -11,7 +11,7 @@ export default {
     { format: 'es', dest: 'index.es.js' }
   ],
   exports: 'default',
-  external: [ ...builtins, ...Object.keys(dependencies) ],
+  external: builtins.concat(Object.keys(pkg.dependencies)),
   plugins: [
     commonjs({
       include: 'node_modules/**'
