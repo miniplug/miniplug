@@ -1,6 +1,6 @@
-import loginCallback from 'plug-login'
+import login from 'plug-login'
 import socket from 'plug-socket'
-import request from 'request'
+import got from 'got'
 import partial from 'lodash.partial'
 import Promise from 'bluebird'
 import { EventEmitter } from 'events'
@@ -29,32 +29,26 @@ export default exports
 
 // Implementation
 
-const login = Promise.promisify(loginCallback)
 const debug = createDebug('miniplug:miniplug')
 const defaultOptions = {
   host: 'https://plug.dj'
 }
 
 function miniplug (opts = {}) {
-  const jar = request.jar()
   const mp = new EventEmitter()
 
   opts = { ...defaultOptions, ...opts }
 
   // trim trailing slashes
-  opts.host = opts.host.replace(/\/+$/, '')
-
-  const req = request.defaults({
-    jar: jar,
-    baseUrl: `${opts.host}/_/`,
-    json: true
-  })
+  const plugHost = opts.host.replace(/\/+$/, '')
 
   // log in
-  const loginOpts = { jar, host: opts.host, authToken: true }
-  const loginPromise = opts.guest
-    ? login(loginOpts)
-    : login(opts.email, opts.password, loginOpts)
+  const loginOpts = { host: plugHost, authToken: true }
+  const loginPromise = Promise.resolve(
+    opts.email
+      ? login.user(opts.email, opts.password, loginOpts)
+      : login.guest(loginOpts)
+  )
 
   const ws = socket()
 
@@ -68,7 +62,7 @@ function miniplug (opts = {}) {
 
       const me = mp.getMe()
       ws.once('ack', () => {
-        resolve()
+        resolve({ cookie: res.cookie })
         ws.removeListener('error', reject)
 
         me.then((user) => mp.emit('connected', user))
@@ -78,21 +72,27 @@ function miniplug (opts = {}) {
 
   // wait until connections are complete before sending off requests
   const sendRequest = (url, opts) =>
-    mp.connected.then(() => new Promise((resolve, reject) => {
-      debug(opts.method, url, opts.body || opts.qs)
-
-      req(url, opts, (e, resp) => {
-        if (e) {
-          reject(e)
-        } else if (resp.body.status !== 'ok') {
-          reject(resp.body.data.length ? resp.body.data[0] : resp.body.status)
-        } else {
-          resolve(resp.body.data)
+    mp.connected
+      .tap(() => debug(opts.method, url, opts.body || opts.query))
+      .then((session) =>
+        got(`${plugHost}/_/${url}`, {
+          headers: {
+            cookie: session.cookie,
+            'content-type': 'application/json'
+          },
+          json: true,
+          ...opts,
+          body: opts.body ? JSON.stringify(opts.body) : undefined
+        })
+      )
+      .then((resp) => {
+        if (resp.body.status !== 'ok') {
+          throw new Error(resp.body.data.length ? resp.body.data[0] : resp.body.status)
         }
+        return resp.body.data
       })
-    }))
   const post = (url, data) => sendRequest(url, { method: 'post', body: data })
-  const get = (url, data) => sendRequest(url, { method: 'get', qs: data })
+  const get = (url, data) => sendRequest(url, { method: 'get', query: data })
   const put = (url, data) => sendRequest(url, { method: 'put', body: data })
   const del = (url, data) => sendRequest(url, { method: 'delete', body: data })
 
@@ -100,7 +100,6 @@ function miniplug (opts = {}) {
   Object.assign(mp, {
     ws: ws,
     // http yaddayadda
-    _jar: jar,
     request: sendRequest,
     get,
     post,
