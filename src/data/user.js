@@ -3,7 +3,7 @@ import { unescape } from 'plug-message-split'
 
 export default function wrapUser (mp, user) {
   return Object.assign(user, {
-    username: unescape(user.username),
+    username: user.guest ? null : unescape(user.username || ''),
 
     chat: partial(mp.chat, `@${user.username}`),
     emote: partial(mp.chat, `/me @${user.username}`),
