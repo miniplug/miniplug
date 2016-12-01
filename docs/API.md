@@ -399,65 +399,65 @@ mp.user(123456).emote('Hello!')
 ```
 
 <a id="user-add"></a>
-### user.add()
+### user.add(): Promise
 
 Add the user to the waitlist.
 
 <a id="user-move"></a>
-### user.move(position)
+### user.move(position): Promise
 
 Move the user to a different position in the waitlist.
 
 <a id="user-remove"></a>
-### user.remove()
+### user.remove(): Promise
 
 Remove the user from the waitlist or the DJ Booth.
 
 <a id="user-skip"></a>
-### user.skip(historyId)
+### user.skip(historyId): Promise
 
 Skip the user. `historyId` is the ID of the currently playing track, i.e.
 `mp.historyEntry().id`.
 
 <a id="user-befriend"></a>
-### user.befriend()
+### user.befriend(): Promise
 
 Send or accept a friend request to/from this user.
 
 <a id="user-rejectrequest"></a>
-### user.rejectRequest()
+### user.rejectRequest(): Promise
 
 Reject a friend request from this user.
 
 <a id="user-ignore"></a>
-### user.ignore()
+### user.ignore(): Promise
 
 Ignore the user in chat.
 
 <a id="user-unignore"></a>
-### user.unignore()
+### user.unignore(): Promise
 
 Stop ignoring the user in chat.
 
 <a id="user-mute"></a>
-### user.mute(duration, reason)
+### user.mute(duration, reason): Promise
 
 Mute the user in chat. `duration` is a [MUTE_DURATION](#muteduration). `reason`
 is a [MUTE_REASON](#mutereason).
 
 <a id="user-unmute"></a>
-### user.unmute()
+### user.unmute(): Promise
 
 Unmute the user in chat.
 
 <a id="user-ban"></a>
-### user.ban(duration, reason)
+### user.ban(duration, reason): Promise
 
 Ban the user from the room. `duration` is a [BAN_DURATION](#banduration).
 `reason` is a [BAN_REASON](#banreason).
 
 <a id="user-unban"></a>
-### user.unban()
+### user.unban(): Promise
 
 Unban the user from the room.
 
