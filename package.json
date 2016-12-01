@@ -3,6 +3,9 @@
   "description": "Teeny-tiny plug.dj library/API",
   "version": "0.0.0",
   "license": "MIT",
+  "main": "index.js",
+  "module": "index.es.js",
+  "jsnext:main": "index.es.js",
   "keywords": [
     "plug",
     "plug.dj"
@@ -14,7 +17,8 @@
     "node": ">= 4"
   },
   "files": [
-    "index.js"
+    "index.js",
+    "index.es.js"
   ],
   "dependencies": {
     "bluebird": "^3.4.6",

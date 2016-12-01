@@ -6,8 +6,10 @@ const { dependencies } = require('./package.json')
 
 export default {
   entry: 'es/index.js',
-  format: 'cjs',
-  dest: 'index.js',
+  targets: [
+    { format: 'cjs', dest: 'index.js' },
+    { format: 'es', dest: 'index.es.js' }
+  ],
   exports: 'default',
   external: [ ...builtins, ...Object.keys(dependencies) ],
   plugins: [
