@@ -26,6 +26,18 @@
  - [mp.chat(message)](#mp-chat)
  - [mp.emote(message)](#mp-emote)
  - [mp.deleteChat(id)](#mp-deletechat)
+ - [mp.getPlaylists()](#mp-getplaylists)
+ - [mp.getActivePlaylist()](#mp-getactiveplaylist)
+ - [mp.createPlaylist(name)](#mp-createplaylist)
+ - [mp.deletePlaylist(id)](#mp-deleteplaylist)
+ - [mp.activatePlaylist(id)](#mp-activateplaylist)
+ - [mp.renamePlaylist(id, name)](#mp-renameplaylist)
+ - [mp.shufflePlaylist(id)](#mp-shuffleplaylist)
+ - [mp.getMedia(id)](#mp-getmedia)
+ - [mp.updateMedia(pid, mid, author, title)](#mp-updatemedia)
+ - [mp.moveMedia(pid, mids, before)](#mp-movemedia)
+ - [mp.insertMedia(id, media, append)](#mp-insertmedia)
+ - [mp.deleteMedia(pid, mids)](#mp-deletemedia)
  - [Room](#class-room)
    - [room.id](#room-id)
    - [room.name](#room-name)
@@ -58,6 +70,18 @@
    - [message.reply(text)](#chatmessage-reply)
    - [message.emote(text)](#chatmessage-emote)
    - [message.delete()](#chatmessage-delete)
+ - [Playlist](#class-playlist)
+   - [playlist.id](#playlist-id)
+   - [playlist.name](#playlist-name)
+   - [playlist.count](#playlist-count)
+   - [playlist.active](#playlist-active)
+   - [playlist.delete()](#playlist-delete)
+   - [playlist.activate()](#playlist-activate)
+   - [playlist.rename(name)](#playlist-rename)
+   - [playlist.shuffle()](#playlist-shuffle)
+   - [playlist.getMedia()](#playlist-getmedia)
+   - [playlist.insert(media, append)](#playlist-insert)
+   - [playlist.move(media, before)](#playlist-move)
  - [Mute Durations](#muteduration)
  - [Mute Reasons](#mutereason)
  - [Ban Durations](#banduration)
@@ -313,6 +337,126 @@ mp.on('chat', (message) => {
 })
 ```
 
+<hr>
+
+<a id="mp-getplaylists"></a>
+## mp.getPlaylists(): Promise&lt;Array&lt;[Playlist](#class-playlist)>>
+
+Get all the user's playlists.
+
+```js
+// Using Bluebird's `.each()` method
+mp.getPlaylists().each((playlist) => {
+  console.log(`${playlist.name} (${playlist.count})`)
+})
+```
+
+<a id="mp-getactiveplaylist"></a>
+## mp.getActivePlaylist(): Promise&lt;[Playlist](#class-playlist)>
+
+Get the user's active playlist.
+
+```js
+mp.getActivePlaylist().then((playlist) => {
+  return playlist.insert({
+    format: mp.MEDIA_SOURCE.YOUTUBE,
+    cid: 'UT4zZzAtWm4',
+    author: 'Ovcoco',
+    title: 'Your Ghost',
+    duration: 209,
+    image: 'https://i.ytimg.com/vi/UT4zZzAtWm4/default.jpg'
+  })
+})
+```
+
+<a id="mp-createplaylist"></a>
+## mp.createPlaylist(name): Promise&lt;[Playlist](#class-playlist)>
+
+Create a new playlist.
+
+```js
+mp.createPlaylist('Test playlist').then((playlist) => {
+  return Promise.all([
+    playlist.insert([
+      // your favourite songs
+    ]),
+    playlist.activate()
+  ])
+})
+```
+
+<a id="mp-deleteplaylist"></a>
+## mp.deletePlaylist(id): Promise
+
+Permanently delete a playlist by ID.
+
+Alias: [`playlist.delete()`](#playlist-delete)
+
+<a id="mp-activateplaylist"></a>
+## mp.activatePlaylist(id): Promise
+
+Set a playlist to active by ID.
+
+Alias: [`playlist.activate()`](#playlist-activate)
+
+<a id="mp-renameplaylist"></a>
+## mp.renamePlaylist(id, name): Promise
+
+Rename a playlist.
+
+Alias: [`playlist.rename(name)`](#playlist-rename)
+
+<a id="mp-shuffleplaylist"></a>
+## mp.shufflePlaylist(id): Promise&lt;Array&lt;[Media](#class-media)>
+
+Shuffle a playlist. Returns a Promise that resolves with the shuffled media
+items.
+
+Alias: [`playlist.shuffle()`](#playlist-shuffle)
+
+<a id="mp-getmedia"></a>
+## mp.getMedia(id): Promise&lt;Array&lt;[Media](#class-media)>
+
+Get the media items in a playlist.
+
+Alias: [`playlist.getMedia()`](#playlist-getmedia)
+
+<a id="mp-updatemedia"></a>
+## mp.updateMedia(pid, mid, author, title): Promise&lt;{author, title}>
+
+Update the author and title tags of a media item. Returns a Promise that
+resolves with the new actual author and title as used by plug.dj, with HTML
+escapes.
+
+```js
+// Using ES async-await:
+mp.updateMedia(playlist.id, media.id, 'Test Author', '& Test Title').then(({ author, title }) => {
+  // author == "Test Author"
+  // title == "&amp; Test Title"
+})
+```
+
+Alias: [`media.update(author, title)`](#media-update)
+
+<a id="mp-movemedia"></a>
+## mp.moveMedia(pid, mids, before): Promise
+
+Move existing media items to a different position in the playlist.
+
+Alias: [`playlist.move()`](#playlist-move)
+
+<a id="mp-insertmedia"></a>
+## mp.insertMedia(id, media, append=true): Promise
+
+Insert new media items into a playlist.
+
+Alias: [`playlist.insert()`](#playlist-insert)
+
+<a id="mp-deletemedia"></a>
+## mp.deleteMedia(pid, mids): Promise&lt;Array&lt;[Media](#class-media)>
+
+Alias: [`media.delete()`](#media-delete)
+
 <a id="class-room"></a>
 ## Room
 
@@ -539,6 +683,77 @@ mp.on('chat', (message) => {
   })
 })
 ```
+
+<a id="class-playlist"></a>
+## Playlist
+
+<a id="playlist-id"></a>
+### playlist.id: number
+
+The playlist ID.
+
+<a id="playlist-name"></a>
+### playlist.name: string
+
+Playlist name.
+
+<a id="playlist-count"></a>
+### playlist.count: number
+
+The amount of media items in the playlist.
+
+<a id="playlist-active"></a>
+### playlist.active: bool
+
+True if this is the active playlist.
+
+<a id="playlist-delete"></a>
+### playlist.delete(): Promise
+
+Permanently delete the playlist.
+
+<a id="playlist-activate"></a>
+### playlist.activate(): Promise
+
+Set this playlist to active.
+
+<a id="playlist-rename"></a>
+### playlist.rename(name): Promise
+
+Rename the playlist.
+
+<a id="playlist-shuffle"></a>
+### playlist.shuffle(): Promise&lt;Array&lt;[Media](#class-media)>>
+
+Shuffle the items in the playlist. Returns a Promise that resolves to the
+shuffled media items in the playlist.
+
+<a id="playlist-getmedia"></a>
+### playlist.getMedia(): Promise&lt;Array&lt;[Media](#class-media)>>
+
+Get the items in the playlist.
+
+<a id="playlist-insert"></a>
+### playlist.insert(media, append=true): Promise&lt;{id, count}>
+
+Add media items to the playlist. `media` can be a [Media](#class-media) object
+or ID, or an array of [Media](#class-media) objects or IDs. When `append` is
+true, the medias are added to the end of the playlist. When `append` is false,
+they are added to the front.
+
+Returns a Promise that resolves to an object containing the playlist `id`, and
+the new total `count` of items in the playlist.
+
+<a id="playlist-move"></a>
+### playlist.move(media, before): Promise&lt;Array&lt;[Media](#class-media)>>
+
+Move media items in the playlist. `media` can be a [Media](#class-media) object
+or ID, or an array of [Media](#class-media) objects or IDs. The items will be
+moved in front of the [Media](#class-media) objects or ID given in `before`.
+If `before` is -1, the items will be moved to the end of the playlist.
+
+Returns a Promise that resolves with the Media items in the playlist after the
+move was finished.
 
 <hr>
 
