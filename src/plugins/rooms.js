@@ -1,4 +1,4 @@
-import partial from 'lodash.partial'
+import partial from 'lodash-es/partial'
 import { stringify as stringifyQS } from 'querystring'
 import _wrapRoom from '../data/room'
 

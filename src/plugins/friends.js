@@ -1,4 +1,4 @@
-import partial from 'lodash.partial'
+import partial from 'lodash-es/partial'
 import wrapUser from '../data/user'
 
 export default function friends () {

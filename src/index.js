@@ -1,7 +1,7 @@
 import login from 'plug-login'
 import socket from 'plug-socket'
 import got from 'got'
-import partial from 'lodash.partial'
+import partial from 'lodash-es/partial'
 import Promise from 'bluebird'
 import { EventEmitter } from 'events'
 import createDebug from 'debug'

@@ -1,4 +1,4 @@
-import partial from 'lodash.partial'
+import partial from 'lodash-es/partial'
 import _wrapPlaylist from '../data/playlist'
 import _wrapMedia from '../data/media'
 

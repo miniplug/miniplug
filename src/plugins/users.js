@@ -1,5 +1,5 @@
-import flatten from 'flatten'
-import partial from 'lodash.partial'
+import flatten from 'lodash-es/flatten'
+import partial from 'lodash-es/partial'
 import createDebug from 'debug'
 import _wrapUser from '../data/user'
 
