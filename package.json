@@ -12,7 +12,7 @@
   ],
   "repository": "goto-bus-stop/miniplug",
   "bugs": "https://github.com/goto-bus-stop/miniplug/issues",
-  "author": "René Kooi <rene@kooi.me>",
+  "author": "Renée Kooi <renee@kooi.me>",
   "engines": {
     "node": ">= 4"
   },
