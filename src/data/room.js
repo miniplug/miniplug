@@ -1,6 +1,7 @@
 import partial from 'lodash-es/partial'
-import wrapUser from './user'
 import { unescape } from 'plug-message-split'
+import makeProto from '../wrap'
+import wrapUser from './user'
 
 export default function wrapRoom (mp, room) {
   if (room.users) {
@@ -16,7 +17,7 @@ export default function wrapRoom (mp, room) {
     }
   }
 
-  return Object.assign(room, {
+  return makeProto(room, {
     join: partial(mp.join, room.slug),
 
     favorite: partial(mp.favoriteRoom, room.id),

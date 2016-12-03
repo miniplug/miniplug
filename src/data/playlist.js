@@ -1,8 +1,9 @@
 import partial from 'lodash-es/partial'
+import makeProto from '../wrap'
 import wrapMedia from './media'
 
 export default function wrapPlaylist (mp, playlist) {
-  return Object.assign(playlist, {
+  return makeProto(playlist, {
     delete: partial(mp.deletePlaylist, playlist.id),
     activate: partial(mp.activatePlaylist, playlist.id),
     rename: partial(mp.renamePlaylist, playlist.id),

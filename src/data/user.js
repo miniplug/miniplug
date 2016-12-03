@@ -1,10 +1,13 @@
 import partial from 'lodash-es/partial'
 import { unescape } from 'plug-message-split'
+import makeProto from '../wrap'
 
 export default function wrapUser (mp, user) {
-  return Object.assign(user, {
-    username: user.guest ? null : unescape(user.username || ''),
+  Object.assign(user, {
+    username: user.guest ? null : unescape(user.username || '')
+  })
 
+  return makeProto(user, {
     chat: partial(mp.chat, `@${user.username}`),
     emote: partial(mp.chat, `/me @${user.username}`),
 

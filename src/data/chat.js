@@ -1,15 +1,18 @@
 import partial from 'lodash-es/partial'
 import { unescape } from 'plug-message-split'
 import Promise from 'bluebird'
+import makeProto from '../wrap'
 
 export default function wrapMessage (mp, message) {
   if (message.un) {
     message.un = unescape(message.un)
   }
-
-  return Object.assign(message, {
+  Object.assign(message, {
     id: message.cid,
-    message: unescape(message.message),
+    message: unescape(message.message)
+  })
+
+  return makeProto(message, {
     own: () => mp.me().id === message.uid,
 
     chat: mp.chat,
