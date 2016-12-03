@@ -13,6 +13,7 @@ import chatPlugin from './plugins/chat'
 import friendsPlugin from './plugins/friends'
 import roomsPlugin from './plugins/rooms'
 import playlistsPlugin from './plugins/playlists'
+import storePlugin from './plugins/store'
 
 // Exports
 
@@ -23,6 +24,7 @@ exports.chatPlugin = chatPlugin
 exports.friendsPlugin = friendsPlugin
 exports.roomsPlugin = roomsPlugin
 exports.playlistsPlugin = playlistsPlugin
+exports.storePlugin = storePlugin
 Object.assign(exports, constants)
 
 export default exports
@@ -157,6 +159,7 @@ function miniplug (opts = {}) {
   mp.use(friendsPlugin())
   mp.use(roomsPlugin())
   mp.use(playlistsPlugin())
+  mp.use(storePlugin())
 
   return mp
 }

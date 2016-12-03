@@ -38,6 +38,15 @@
  - [mp.moveMedia(pid, mids, before)](#mp-movemedia)
  - [mp.insertMedia(id, media, append)](#mp-insertmedia)
  - [mp.deleteMedia(pid, mids)](#mp-deletemedia)
+ - [mp.getProducts(type, category)](#mp-getproducts)
+ - [mp.getStoreAvatars(category)](#mp-getstoreavatars)
+ - [mp.getStoreBadges(category)](#mp-getstorebadges)
+ - [mp.getStoreMisc(category)](#mp-getstoremisc)
+ - [mp.getInventory(type)](#mp-getinventory)
+ - [mp.getOwnedAvatars()](#mp-getownedavatars)
+ - [mp.getOwnedBadges()](#mp-getownedbadges)
+ - [mp.purchase(product)](#mp-purchase)
+ - [mp.purchaseNameChange(username)](#mp-purchasenamechange)
  - [Room](#class-room)
    - [room.id](#room-id)
    - [room.name](#room-name)
@@ -94,11 +103,26 @@
    - [media.image](#media-image)
    - [media.update(author, title)](#media-update)
    - [media.delete()](#media-delete)
+ - [StoreProduct](#class-storeproduct)
+   - [product.type](#storeproduct-type)
+   - [product.category](#storeproduct-category)
+   - [product.id](#storeproduct-id)
+   - [product.name](#storeproduct-name)
+   - [product.level](#storeproduct-level)
+   - [product.pp](#storeproduct-pp)
+   - [product.sub](#storeproduct-sub)
+   - [product.cash](#storeproduct-cash)
+   - [product.purchase()](#storeproduct-purchase)
+ - [InventoryProduct](#class-inventoryproduct)
+   - [product.type](#inventoryproduct-type)
+   - [product.category](#inventoryproduct-category)
+   - [product.id](#inventoryproduct-id)
  - [Mute Durations](#muteduration)
  - [Mute Reasons](#mutereason)
  - [Ban Durations](#banduration)
  - [Ban Reasons](#banreason)
  - [Media Sources](#mediasource)
+ - [Product Categories](#productcategories)
  - [REST methods](#mp-rest)
 
 <a id="mp-constructor"></a>
@@ -469,6 +493,64 @@ Alias: [`playlist.insert()`](#playlist-insert)
 
 Alias: [`media.delete()`](#media-delete)
 
+<hr>
+
+<a id="mp-getproducts"></a>
+## mp.getProducts(type, category='all'): Promise&lt;[StoreProduct](#class-storeproduct)>
+
+Get the product listing from a store category. `type` is one of 'avatars',
+'badges' or 'misc'. `category` selects a specific category, like a page in the
+store. See [Product Categories](#productcategories) for an overview of available
+categories for each product type.
+
+```js
+import randomItem from 'random-item'
+mp.getProducts('avatars', 'island').then((products) => {
+  return randomItem(products).purchase()
+})
+```
+
+<a id="mp-getstoreavatars"></a>
+## mp.getStoreAvatars(category='all'): Promise&lt;[StoreProduct](#class-storeproduct)>
+
+Get the avatars store listing. Shorthand to `getProducts('avatars', category)`.
+
+<a id="mp-getstorebadges"></a>
+## mp.getStoreBadges(category='all'): Promise&lt;[StoreProduct](#class-storeproduct)>
+
+Get the badges store listing. Shorthand to `getProducts('badges', category)`.
+
+<a id="mp-getstoremisc"></a>
+## mp.getStoreMisc(category='all'): Promise&lt;[StoreProduct](#class-storeproduct)>
+
+Get the miscellaneous store listing. Shorthand to `getProducts('misc', category)`.
+
+<a id="mp-getinventory"></a>
+## mp.getInventory(type): Promise&lt;[InventoryProduct](#class-inventoryproduct)>
+
+Get the products purchased by the user.
+
+<a id="mp-getownedavatars"></a>
+## mp.getOwnedAvatars(): Promise&lt;[InventoryProduct](#class-inventoryproduct)>
+
+Get the avatars purchased by the user.
+
+<a id="mp-getownedbadges"></a>
+## mp.getOwnedBadges(): Promise&lt;[InventoryProduct](#class-inventoryproduct)>
+
+Get the badges purchased by the user.
+
+<a id="mp-purchase"></a>
+## mp.purchase(product): Promise
+
+Purchase an avatar or a badge. `product` is a product ID, or a
+[StoreProduct](#class-storeproduct).
+
+<a id="mp-purchasenamechange"></a>
+## mp.purchaseNameChange(username): Promise
+
+Purchase a name change.
+
 <a id="class-room"></a>
 ## Room
 
@@ -827,6 +909,99 @@ escapes.
 
 Delete the media from the playlist it belongs to.
 
+<a id="class-storeproduct"></a>
+## StoreProduct
+
+<a id="storeproduct-type"></a>
+### product.type: string
+
+The product type: 'avatars', 'badges', or 'misc'.
+
+<a id="storeproduct-category"></a>
+### product.category: string
+
+The product category, i.e. the page on which it appears in the store. See
+[Product Categories](#productcategories).
+
+<a id="storeproduct-id"></a>
+### product.id: number
+
+The product ID.
+
+<a id="storeproduct-name"></a>
+### product.name: string
+
+The product name. This is _not_ a human-readable name. Examples include
+"classic01" and "admin-o01".
+
+<a id="storeproduct-level"></a>
+### product.level: number
+
+The minimum level the user has to have to unlock the product.
+
+<a id="storeproduct-pp"></a>
+### product.pp: number?
+
+The price of the product in plug points. If the product cannot be purchased with
+points, this property will not exist (i.e. be `undefined`).
+
+<a id="storeproduct-sub"></a>
+### product.sub: number?
+
+`1` if the product is for Subscribers only. Subscriber-only products are
+automatically added to the inventories of subscribed users. If the product is
+not automatically available to subscribers, this property will not exist
+(i.e. be `undefined`).
+
+Note that `1` is a "truthy" value and `undefined` is falsy, so a simple `if`
+statement can be used to check if a product is subscriber-only:
+
+```js
+mp.getStoreAvatars().each((avatar) => {
+  let description = `Avatar: ${avatar.name}`
+  if ('pp' in avatar) {
+    description += ` - Points: ${avatar.pp}`
+  }
+  if ('cash' in avatar) {
+    description += ` - $${avatar.cash}`
+  }
+  if (avatar.sub) {
+    description += ' - Free for Subscribers'
+  }
+  console.log(description)
+})
+```
+
+<a id="storeproduct-cash"></a>
+### product.cash: number?
+
+The price of the product in US dollars. If the product cannot be purchased with
+real money, this property will not exist (i.e. be `undefined`).
+
+<a id="storeproduct-purchase"></a>
+### product.purchase(): Promise
+
+Purchase the product. Only works for products that can be purchased with points.
+
+<a id="class-inventoryproduct"></a>
+## InventoryProduct
+
+<a id="inventoryproduct-type"></a>
+### product.type: string
+
+The product type: 'avatars', 'badges', or 'misc'.
+
+<a id="inventoryproduct-category"></a>
+### product.category: string
+
+The product category, i.e. the page on which it appears in the user's inventory.
+See [Product Categories](#productcategories).
+
+<a id="inventoryproduct-id"></a>
+### product.name: string
+
+The internal product name.
+
 <hr>
 
 <a id="muteduration"></a>
@@ -935,6 +1110,57 @@ Identifies a YouTube video.
 ### MEDIA_SOURCE.SOUNDCLOUD
 
 Identifies a SoundCloud track.
+
+<a id="productcategories"></a>
+## Product Categories
+
+Note: These listings were last updated on 03 December 2016. It's not guaranteed
+to be 100% correct. If you spot a mistake or a missing category, please send a
+PR!
+
+### Avatars
+
+ - 'classic'
+ - 'hiphop'
+ - 'rave'
+ - 'base'
+ - 'country'
+ - '80s'
+ - 'rock'
+ - '2014hw'
+ - 'robot'
+ - 'zoo'
+ - 'warrior'
+ - 'dragon'
+ - '2014winter'
+ - 'sea'
+ - 'island'
+ - 'diner'
+ - 'beach'
+ - 'nyc'
+
+### Badges
+
+ - 'b-original'
+ - 'b-sea'
+ - 'b-island'
+ - 'b-rave'
+ - 'b-base'
+ - 'b-food'
+ - 'b-diner'
+ - 'b-country'
+ - 'b-robot'
+ - 'b-zoo'
+ - 'b-hiphop'
+ - 'b-80s'
+ - 'b-warrior'
+ - 'b-beach'
+ - 'b-nyc'
+
+### Misc
+
+ - 'username'
+ - 'boost' is obsolete, but used to contain XP boost items in the past.
 
 <a id="mp-rest"></a>
 ## mp.get/post/put/del(url: string, data: object): Promise
