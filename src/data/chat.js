@@ -7,10 +7,9 @@ export default function wrapMessage (mp, message) {
   if (message.un) {
     message.un = unescape(message.un)
   }
-  Object.assign(message, {
-    id: message.cid,
-    message: unescape(message.message)
-  })
+
+  message.id = message.cid
+  message.message = unescape(message.message)
 
   return makeProto(message, {
     own: () => mp.me().id === message.uid,

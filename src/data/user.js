@@ -3,9 +3,7 @@ import { unescape } from 'plug-message-split'
 import makeProto from '../wrap'
 
 export default function wrapUser (mp, user) {
-  Object.assign(user, {
-    username: user.guest ? null : unescape(user.username || '')
-  })
+  user.username = user.guest ? null : unescape(user.username || '')
 
   return makeProto(user, {
     chat: partial(mp.chat, `@${user.username}`),

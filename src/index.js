@@ -17,17 +17,18 @@ import storePlugin from './plugins/store'
 
 // Exports
 
-const exports = miniplug
-exports.usersPlugin = usersPlugin
-exports.boothPlugin = boothPlugin
-exports.chatPlugin = chatPlugin
-exports.friendsPlugin = friendsPlugin
-exports.roomsPlugin = roomsPlugin
-exports.playlistsPlugin = playlistsPlugin
-exports.storePlugin = storePlugin
-Object.assign(exports, constants)
+Object.assign(miniplug, {
+  usersPlugin,
+  boothPlugin,
+  chatPlugin,
+  friendsPlugin,
+  roomsPlugin,
+  playlistsPlugin,
+  storePlugin,
+  ...constants
+})
 
-export default exports
+export default miniplug
 
 // Implementation
 
