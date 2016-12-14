@@ -34,7 +34,7 @@
     "lodash-es": "^4.17.2",
     "mocha": "3.2.0",
     "rollup": "^0.37.0",
-    "rollup-plugin-commonjs": "^5.0.5",
+    "rollup-plugin-commonjs": "^6.0.0",
     "rollup-plugin-node-resolve": "^2.0.0",
     "standard": "^8.6.0"
   },
