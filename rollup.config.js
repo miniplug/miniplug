@@ -1,4 +1,3 @@
-import commonjs from 'rollup-plugin-commonjs'
 import resolve from 'rollup-plugin-node-resolve'
 import builtins from 'builtin-modules'
 
@@ -13,9 +12,6 @@ export default {
   exports: 'default',
   external: builtins.concat(Object.keys(pkg.dependencies)),
   plugins: [
-    commonjs({
-      include: 'node_modules/**'
-    }),
     resolve({
       module: true,
       jsnext: true,
