@@ -59,6 +59,7 @@
    - [user.username](#user-username)
    - [user.chat(text)](#user-chat)
    - [user.emote(text)](#user-emote)
+   - [user.mention()](#user-mention)
    - [user.add()](#user-add)
    - [user.move(position)](#user-move)
    - [user.remove()](#user-remove)
@@ -644,6 +645,24 @@ Send an emote chat message directed at this user.
 ```js
 mp.user(123456).emote('Hello!')
 // → "/me @Username Hello!"
+```
+
+<a id="user-mention"></a>
+### user.mention(): string
+
+Get a string to mention the user in the chat.
+
+```js
+const mentionStr = mp.user(123456).mention()
+// → "@Username"
+```
+
+This function is also used when stringifying a user object, for example when
+embedding it in a template string:
+
+```js
+const message = `Hello ${mp.user(123456)}!`
+// → "Hello @Username!"
 ```
 
 <a id="user-add"></a>

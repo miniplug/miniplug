@@ -5,9 +5,12 @@ import makeProto from '../wrap'
 export default function wrapUser (mp, user) {
   user.username = user.guest ? null : unescape(user.username || '')
 
+  // Chat mention string for this user.
+  const mention = `@${user.username}`
+
   return makeProto(user, {
-    chat: partial(mp.chat, `@${user.username}`),
-    emote: partial(mp.chat, `/me @${user.username}`),
+    chat: partial(mp.chat, mention),
+    emote: partial(mp.chat, `/me ${mention}`),
 
     add: partial(mp.addDJ, user.id),
     move: partial(mp.moveDJ, user.id),
@@ -24,6 +27,10 @@ export default function wrapUser (mp, user) {
     unmute: partial(mp.unmute, user.id),
 
     ban: partial(mp.ban, user.id),
-    unban: partial(mp.unban, user.id)
+    unban: partial(mp.unban, user.id),
+
+    mention: () => mention,
+    // Allows mentioning users by doing `Hello ${user}` in chat messages.
+    toString: () => mention
   })
 }
