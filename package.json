@@ -33,7 +33,7 @@
     "builtin-modules": "^1.1.1",
     "lodash-es": "^4.17.2",
     "mocha": "3.2.0",
-    "rollup": "^0.38.0",
+    "rollup": "^0.39.0",
     "rollup-plugin-node-resolve": "^2.0.0",
     "standard": "^8.6.0"
   },
