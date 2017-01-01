@@ -31,6 +31,11 @@ export default function rooms () {
         })
         .tap(mp.emit.bind(mp, 'roomState'))
 
+    const validateRoomName = (name) =>
+      mp.get(`rooms/validate/${encodeURIComponent(name)}`)
+        .get(0)
+        .catch(() => Promise.reject(new Error('Room name unavailable.')))
+
     Object.assign(mp, {
       // local
       room,
@@ -38,6 +43,7 @@ export default function rooms () {
       getRooms,
       getFavorites,
       createRoom,
+      validateRoomName,
       // favorites
       favoriteRoom,
       unfavoriteRoom,

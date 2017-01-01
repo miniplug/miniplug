@@ -6,6 +6,7 @@
  - [mp.room()](#mp-room)
  - [mp.getRooms(query, page, limit)](#mp-getrooms)
  - [mp.getFavorites(query, page, limit)](#mp-getfavorites)
+ - [mp.validateRoomName(name)](#mp-validateroomname)
  - [mp.createRoom(name, isPrivate)](#mp-createroom)
  - [mp.favoriteRoom(id)](#mp-favoriteroom)
  - [mp.unfavoriteRoom(id)](#mp-unfavoriteroom)
@@ -46,6 +47,7 @@
  - [mp.getOwnedAvatars()](#mp-getownedavatars)
  - [mp.getOwnedBadges()](#mp-getownedbadges)
  - [mp.purchase(product)](#mp-purchase)
+ - [mp.validateUsername(name)](#mp-validateusername)
  - [mp.purchaseNameChange(username)](#mp-purchasenamechange)
  - [Room](#class-room)
    - [room.id](#room-id)
@@ -203,6 +205,19 @@ mp.getRooms('reggae').then((rooms) => {
 List the current user's favorites.
 
 `query` is a search query. `page` and `limit` can be used for pagination.
+
+<a id="mp-validateroomname"></a>
+## mp.validateRoomName(name): Promise&lt;{slug: string}>
+
+Check if a room name is valid and available. Returns a Promise that resolves
+with an object containing the room's `slug` if the name is valid and available,
+and rejects if the name is invalid or unavailable.
+
+```js
+mp.validateRoomName('Tastycat')
+  .then((o) => console.log('Room is available with slug:', o.slug))
+  .catch((err) => console.log(err.message))
+```
 
 <a id="mp-createroom"></a>
 ## mp.createRoom(name, isPrivate = false): Promise<[Room](#class-room)>
@@ -546,6 +561,19 @@ Get the badges purchased by the user.
 
 Purchase an avatar or a badge. `product` is a product ID, or a
 [StoreProduct](#class-storeproduct).
+
+<a id="mp-validateusername"></a>
+## mp.validateUsername(name): Promise&lt;{slug: string}>
+
+Check if a user name is valid and available. Returns a Promise that resolves
+with an object containing the new profile `slug` if the name is valid and
+available, and rejects if the name is invalid or unavailable.
+
+```js
+mp.validateUsername('Burkes')
+  .then((o) => console.log('Username is available with slug:', o.slug))
+  .catch((err) => console.log(err.message))
+```
 
 <a id="mp-purchasenamechange"></a>
 ## mp.purchaseNameChange(username): Promise

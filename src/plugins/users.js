@@ -83,6 +83,8 @@ export default function users () {
 
     const validateUsername = (name) =>
       mp.get(`users/validate/${encodeURIComponent(name)}`)
+        .get(0)
+        .catch(() => Promise.reject(new Error('Username unavailable.')))
 
     // Public API
     Object.assign(mp, {
