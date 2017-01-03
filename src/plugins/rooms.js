@@ -17,6 +17,35 @@ export default function rooms () {
       mp[currentRoom] = wrapRoom(state.meta)
     })
 
+    // Add a handler to process a room property update.
+    //
+    //  * `eventName` - Plug.dj socket event name for the property.
+    //  * `sockProp` - Property name of the new value on the plug.dj socket
+    //        event parameter.
+    //  * `roomProp` - Property name for the value on the miniplug room object.
+    function addUpdateHandler (eventName, sockProp, roomProp) {
+      mp.ws.on(eventName, (data, targetSlug) => {
+        const user = mp.user(data.u)
+        const value = data[sockProp]
+
+        debug(eventName, user && user.id, value)
+
+        if (mp[currentRoom] && mp[currentRoom].slug === targetSlug) {
+          mp[currentRoom][roomProp] = value
+        }
+
+        mp.emit(eventName, value, user)
+        mp.emit('roomUpdate', {
+          [roomProp]: value
+        }, user)
+      })
+    }
+
+    addUpdateHandler('roomNameUpdate', 'n', 'name')
+    addUpdateHandler('roomDescriptionUpdate', 'd', 'description')
+    addUpdateHandler('roomWelcomeUpdate', 'w', 'welcome')
+    addUpdateHandler('roomMinChatLevelUpdate', 'm', 'minChatLevel')
+
     const room = () => mp[currentRoom]
 
     const getRooms = (query = '', page = 0, limit = 50) =>
