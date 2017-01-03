@@ -1,14 +1,16 @@
 import partial from 'lodash-es/partial'
 
 export default function booth (opts = {}) {
+  const currentHistoryEntry = Symbol('History entry')
+
   return (mp) => {
     // Local state API
-    const historyEntry = () => mp._historyEntry
-    const dj = () => mp._historyEntry ? mp._historyEntry.dj : null
-    const media = () => mp._historyEntry ? mp._historyEntry.media : null
+    const historyEntry = () => mp[currentHistoryEntry]
+    const dj = () => mp[currentHistoryEntry] ? mp[currentHistoryEntry].dj : null
+    const media = () => mp[currentHistoryEntry] ? mp[currentHistoryEntry].media : null
 
     mp.on('roomState', (state) => {
-      mp._historyEntry = {
+      mp[currentHistoryEntry] = {
         id: state.playback.historyID,
         dj: mp.user(state.booth.currentDJ),
         media: state.playback.media,
@@ -35,7 +37,7 @@ export default function booth (opts = {}) {
 
         time = new Date(`${time} UTC`)
 
-        mp._historyEntry = {
+        mp[currentHistoryEntry] = {
           id: historyId,
           dj: mp.user(djId),
           media: media,

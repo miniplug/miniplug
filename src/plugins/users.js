@@ -8,33 +8,36 @@ const debug = createDebug('miniplug:users')
 const GUEST_ID = 0
 
 export default function users () {
+  const currentGuestsCount = Symbol('Guests count')
+  const currentUsers = Symbol('Users')
+  const currentUser = Symbol('Me')
+
   return (mp) => {
     const wrapUser = partial(_wrapUser, mp)
 
     // local user cache/collection API
-    mp._guests = 0
-    mp._users = []
+    mp[currentGuestsCount] = 0
+    mp[currentUsers] = []
 
     mp.on('connected', (user) => {
-      mp._user = wrapUser(user)
+      mp[currentUser] = wrapUser(user)
     })
 
     // keeping things in sync
     mp.on('roomState', ({ users, meta: { guests } }) => {
-      mp._users.length = mp._guests = 0
-      mp._users = users.map(wrapUser)
-      mp._guests = guests
+      mp[currentUsers] = users.map(wrapUser)
+      mp[currentGuestsCount] = guests
     })
 
     mp.on('login', () => {
-      mp.ws.on('userJoin', user => {
+      mp.ws.on('userJoin', (user) => {
         debug('join', user.id)
         if (user.guest) {
-          mp._guests++
+          mp[currentGuestsCount] += 1
           mp.emit('guestJoin')
         } else {
           user = wrapUser(user)
-          mp._users.push(user)
+          mp[currentUsers].push(user)
           mp.emit('userJoin', user)
         }
       })
@@ -42,23 +45,23 @@ export default function users () {
       mp.ws.on('userLeave', (id) => {
         debug('leave', id)
         if (id === GUEST_ID) {
-          mp._guests--
+          mp[currentGuestsCount] -= 1
           mp.emit('guestLeave')
         } else {
-          const i = mp._users.findIndex((user) => user.id === id)
+          const i = mp[currentUsers].findIndex((user) => user.id === id)
           if (i !== -1) {
-            const user = mp._users[i]
-            mp._users.splice(i, 1)
+            const user = mp[currentUsers][i]
+            mp[currentUsers].splice(i, 1)
             mp.emit('userLeave', user)
           }
         }
       })
     })
 
-    const me = () => mp._user
-    const user = (id) => mp._users.find((user) => user.id === id)
-    const users = () => mp._users
-    const guests = () => mp._guests
+    const me = () => mp[currentUser]
+    const user = (id) => mp[currentUsers].find((user) => user.id === id)
+    const users = () => mp[currentUsers]
+    const guests = () => mp[currentGuestsCount]
 
     // REST API
     const getMe = () => mp.get('users/me').get(0).then(wrapUser)
