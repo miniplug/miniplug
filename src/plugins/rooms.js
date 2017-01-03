@@ -1,12 +1,23 @@
 import partial from 'lodash-es/partial'
 import { stringify as stringifyQS } from 'querystring'
+import createDebug from 'debug'
 import _wrapRoom from '../data/room'
 
+const debug = createDebug('miniplug:rooms')
+
 export default function rooms () {
+  const currentRoom = Symbol('Current room')
+
   return (mp) => {
     const wrapRoom = partial(_wrapRoom, mp)
 
-    const room = () => mp._room
+    mp[currentRoom] = null
+
+    mp.on('roomState', (state) => {
+      mp[currentRoom] = wrapRoom(state.meta)
+    })
+
+    const room = () => mp[currentRoom]
 
     const getRooms = (query = '', page = 0, limit = 50) =>
       mp.get(`rooms?${stringifyQS({ q: query, page, limit })}`)
@@ -25,10 +36,6 @@ export default function rooms () {
       mp.post('rooms/join', { slug: slug }).then(getRoomState)
     const getRoomState = () =>
       mp.get('rooms/state').get(0)
-        .then(wrapRoom)
-        .tap((room) => {
-          mp._room = room
-        })
         .tap(mp.emit.bind(mp, 'roomState'))
 
     const validateRoomName = (name) =>

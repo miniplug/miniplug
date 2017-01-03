@@ -1,20 +1,13 @@
 import partial from 'lodash-es/partial'
 import { unescape } from 'plug-message-split'
 import makeProto from '../wrap'
-import wrapUser from './user'
 
 export default function wrapRoom (mp, room) {
-  if (room.users) {
-    room.users = room.users.map(partial(wrapUser, mp))
+  if (room.welcome) {
+    room.welcome = unescape(room.welcome)
   }
-
-  if (room.meta) {
-    if (room.meta.welcome) {
-      room.meta.welcome = unescape(room.meta.welcome)
-    }
-    if (room.meta.description) {
-      room.meta.description = unescape(room.meta.description)
-    }
+  if (room.description) {
+    room.description = unescape(room.description)
   }
 
   return makeProto(room, {
