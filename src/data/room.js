@@ -10,6 +10,9 @@ export default function wrapRoom (mp, room) {
     room.description = unescape(room.description)
   }
 
+  room.isFavorite = room.favorite
+  delete room.favorite
+
   return makeProto(room, {
     join: partial(mp.join, room.slug),
 
