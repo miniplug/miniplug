@@ -9,6 +9,7 @@ import createDebug from 'debug'
 import * as constants from './constants'
 import usersPlugin from './plugins/users'
 import boothPlugin from './plugins/booth'
+import waitlistPlugin from './plugins/waitlist'
 import chatPlugin from './plugins/chat'
 import friendsPlugin from './plugins/friends'
 import roomsPlugin from './plugins/rooms'
@@ -21,6 +22,7 @@ import votePlugin from './plugins/vote'
 Object.assign(miniplug, {
   usersPlugin,
   boothPlugin,
+  waitlistPlugin,
   chatPlugin,
   friendsPlugin,
   roomsPlugin,
@@ -162,6 +164,7 @@ function miniplug (opts = {}) {
 
   mp.use(usersPlugin())
   mp.use(boothPlugin())
+  mp.use(waitlistPlugin())
   mp.use(chatPlugin())
   mp.use(friendsPlugin())
   mp.use(roomsPlugin())

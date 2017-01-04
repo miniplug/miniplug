@@ -28,6 +28,19 @@
  - [mp.vote(direction)](#mp-vote)
  - [mp.woot()](#mp-woot)
  - [mp.meh()](#mp-meh)
+ - [mp.dj()](#mp-dj)
+ - [mp.waitlist()](#mp-waitlist)
+ - [mp.joinWaitlist()](#mp-joinwaitlist)
+ - [mp.leaveWaitlist()](#mp-leavewaitlist)
+ - [mp.setCycle(cycle)](#mp-setcycle)
+ - [mp.enableCycle()](#mp-enablecycle)
+ - [mp.disableCycle()](#mp-disablecycle)
+ - [mp.setLock(lock)](#mp-setlock)
+ - [mp.lockWaitlist()](#mp-lockwaitlist)
+ - [mp.unlockWaitlist()](#mp-unlockwaitlist)
+ - [mp.addDJ(uid)](#mp-adddj)
+ - [mp.moveDJ(uid, position)](#mp-movedj)
+ - [mp.removeDJ(uid)](#mp-removedj)
  - [mp.chat(message)](#mp-chat)
  - [mp.emote(message)](#mp-emote)
  - [mp.deleteChat(id)](#mp-deletechat)
@@ -78,6 +91,9 @@
    - [user.unmute()](#user-unmute)
    - [user.ban(duration, reason)](#user-ban)
    - [user.unban()](#user-unban)
+ - [Waitlist](#class-waitlist)
+   - [waitlist.contains(user)](#waitlist-contains)
+   - [waitlist.positionOf(user)](#waitlist-positionof)
  - [ChatMessage](#class-chatmessage)
    - [message.id](#chatmessage-id)
    - [message.message](#chatmessage-message)
@@ -404,6 +420,132 @@ Meh the currently playing media.
 ```js
 mp.meh().then(() => {
   mp.chat('Ew, I don\'t like this. :(')
+})
+```
+
+<hr>
+
+<a id="mp-dj"></a>
+## mp.dj(): [User](#class-user)
+
+Get the current DJ. Returns `null` if there is no DJ.
+
+```js
+mp.dj().chat('Nice play!')
+// → "@Username Nice play!"
+```
+
+<a id="mp-waitlist"></a>
+## mp.waitlist(): [Waitlist](#class-waitlist)
+
+Get the current waitlist. A [Waitlist](#class-waitlist) object is a JavaScript
+array containing [User](#class-user) objects, so the typical JavaScript array
+methods can be used:
+
+```js
+mp.waitlist().forEach((user, position) => {
+  console.log(`#${position + 1} - ${user.username}`)
+})
+```
+
+There are also some additional methods:
+
+```js
+// By user ID
+mp.waitlist().contains(762534)
+// or by user object.
+mp.waitlist().contains(mp.me())
+
+mp.waitlist().positionOf(mp.me())
+```
+
+<a id="mp-joinwaitlist"></a>
+## mp.joinWaitlist(): Promise
+
+Join the waitlist.
+
+<a id="mp-leavewaitlist"></a>
+## mp.leaveWaitlist(): Promise
+
+Leave the waitlist.
+
+<a id="mp-setcycle"></a>
+## mp.setCycle(cycle): Promise
+
+Change whether the waitlist should cycle.
+
+```js
+// Disable waitlist cycle when there are 20 or more DJs.
+mp.on('waitlistUpdate', (waitlist) => {
+  if (waitlist.length < 20) {
+    mp.setCycle(true)
+  } else {
+    mp.setCycle(false)
+  }
+})
+```
+
+<a id="mp-enablecycle"></a>
+## mp.enableCycle(): Promise
+
+Enable waitlist cycle. Shorthand to <code>[setCycle](#mp-setcycle)(true)</code>.
+
+<a id="mp-disablecycle"></a>
+## mp.disableCycle(): Promise
+
+Disable waitlist cycle. Shorthand to <code>[setCycle](#mp-setcycle)(false)</code>.
+
+<a id="mp-setlock"></a>
+## mp.setLock(lock): Promise
+
+Change whether normal users can join the waitlist. If the waitlist is locked,
+only Resident DJs and up can join.
+
+```js
+mp.setLock(true).then(() => {
+  mp.chat('Sorry! Only staff can join the waitlist at the moment.')
+})
+```
+
+<a id="mp-lockwaitlist"></a>
+## mp.lockWaitlist(): Promise
+
+Lock the waitlist, preventing users from joining.
+Shorthand to <code>[setLock](#mp-setlock)(true)</code>.
+
+<a id="mp-unlockwaitlist"></a>
+## mp.unlockWaitlist(): Promise
+
+Unlock the waitlist, allowing everyone to join.
+Shorthand to <code>[setLock](#mp-setlock)(false)</code>.
+
+<a id="mp-adddj"></a>
+## mp.addDJ(uid): Promise
+
+Add a user to the end of the waitlist. `uid` is the user's ID.
+
+<a id="mp-movedj"></a>
+## mp.moveDJ(uid, position): Promise
+
+Move a user in the waitlist.  `uid` is the user's ID. `position` is the target
+position, starting at 0.
+
+```js
+// Add a user to position #2 in the waitlist.
+mp.addDJ(123456).then(() => {
+  return mp.moveDJ(123456, 1)
+})
+```
+
+<a id="mp-removedj"></a>
+## mp.removeDJ(uid): Promise
+
+Remove a user from the waitlist. `uid` is the user's ID.
+
+```js
+const user = mp.user(123456)
+mp.removeDJ(user.id).then(() => {
+  return user.chat('I removed you from the waitlist. Sorry! 🙈')
 })
 ```
 
@@ -812,6 +954,58 @@ Ban the user from the room. `duration` is a [BAN_DURATION](#banduration).
 ### user.unban(): Promise
 
 Unban the user from the room.
+
+<a id="class-waitlist"></a>
+## Waitlist
+
+Waitlist objects are JavaScript arrays of [User](#class-user) objects. Like
+JavaScript arrays, Waitlist objects are zero-indexed, so the user on top of the
+waitlist (#1 on plug.dj) is `waitlist[0]`.
+
+```js
+// Notify users when they're about to play.
+mp.on('advance', () => {
+  const waitlist = mp.waitlist()
+  if (waitlist.length >= 1) {
+    waitlist[0].chat('You\'re up next!')
+  }
+})
+```
+
+Because Waitlist objects are JavaScript arrays, all the usual JavaScript array
+methods can be used. Note that most native JavaScript array methods return plain
+JavaScript arrays, and _not_ Waitlist objects.
+
+```js
+const firstTen = mp.waitlist().slice(0, 10)
+// firstTen is NOT a Waitlist object--just an array of the first ten users.
+```
+
+<a id="waitlist-contains"></a>
+### waitlist.contains(user): bool
+
+Check if a user is in the waitlist. `user` is a [User](#class-user) object or a
+user ID.
+
+```js
+if (mp.waitlist().contains(123456)) {
+  mp.user(123456).chat('You\'re in the waitlist, Hermione!')
+}
+```
+
+This is similar to the `Array#includes` method of JavaScript arrays. However,
+`includes` only checks that exactly the given object is in the array, whereas
+`contains` checks whether an object representing the same user as the given
+object or ID is in the array.
+
+<a id="waitlist-positionof"></a>
+### waitlist.positionOf(user): number
+
+Returns the position of a user in the waitlist. `user` is a [User](#class-user)
+object or a user ID. Returns -1 if the given user is not in the waitlist.
+
+This is similar to the `Array#indexOf` method of JavaScript arrays. The same
+differences apply as with <code>[waitlist.contains](#waitlist-contains)</code>.
 
 <a id="class-chatmessage"></a>
 ## ChatMessage

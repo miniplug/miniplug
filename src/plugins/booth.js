@@ -51,26 +51,6 @@ export default function booth (opts = {}) {
 
     // Rest API
     Object.assign(mp, {
-      joinWaitlist: partial(mp.post, 'booth'),
-      leaveWaitlist: partial(mp.del, 'booth'),
-      setCycle: (val = true) =>
-        mp.put('booth/cycle', { shouldCycle: val }),
-      enableCycle: () =>
-        mp.setCycle(true),
-      disableCycle: () =>
-        mp.setCycle(false),
-      setLock: (locked = true, clear = false) =>
-        mp.put('booth/lock', { isLocked: locked, removeAllDJs: clear }),
-      lockWaitlist: (clear = false) =>
-        mp.setLock(true, clear),
-      unlockWaitlist: () =>
-        mp.setLock(false, false),
-      addDJ: (uid) =>
-        mp.post('booth/add', { id: uid }),
-      moveDJ: (uid, pos) =>
-        mp.post('booth/move', { userID: uid, position: pos }),
-      removeDJ: (uid) =>
-        mp.del(`booth/remove/${uid}`),
       skipDJ: (uid, hid) =>
         mp.post('booth/skip', { userID: uid, historyID: hid }),
       skipMe: partial(mp.post, 'booth/skip/me')
