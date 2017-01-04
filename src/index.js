@@ -74,7 +74,10 @@ function miniplug (opts = {}) {
         me.then((user) => mp.emit('connected', user))
       })
     }))
-    .catch(e => { mp.emit('error', e) })
+    .catch((err) => {
+      mp.emit('error', err)
+      throw err
+    })
 
   // wait until connections are complete before sending off requests
   const sendRequest = (url, opts) =>
