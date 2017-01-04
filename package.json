@@ -39,7 +39,7 @@
   },
   "scripts": {
     "prepublish": "npm run build",
-    "build:buble": "buble src --output es --no modules --objectAssign Object.assign",
+    "build:buble": "buble src --output es --target node:4 --no modules --objectAssign Object.assign",
     "build:rollup": "rollup -c rollup.config.js",
     "build": "npm run build:buble && npm run build:rollup",
     "lint": "standard rollup.config.js src/**/*.js test/**/*.js",
