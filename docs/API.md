@@ -24,6 +24,10 @@
  - [mp.setBlurb(blurb)](#mp-setblurb)
  - [mp.setLanguage(lang)](#mp-setlanguage)
  - [mp.getTransactions()](#mp-gettransactions)
+ - [mp.score()](#mp-score)
+ - [mp.vote(direction)](#mp-vote)
+ - [mp.woot()](#mp-woot)
+ - [mp.meh()](#mp-meh)
  - [mp.chat(message)](#mp-chat)
  - [mp.emote(message)](#mp-emote)
  - [mp.deleteChat(id)](#mp-deletechat)
@@ -349,6 +353,59 @@ Set the bot user's language preference.
 ## mp.getTransactions(): Promise&lt;Array>
 
 Get the bot user's transaction history.
+
+<hr>
+
+<a id="mp-score"></a>
+## mp.score(): {positive, negative, grabs, listeners}
+
+Get the score for the currently playing media.
+
+Returns an object with properties:
+
+  - `positive` - Amount of woots.
+  - `negative` - Amount of mehs.
+  - `grabs` - Amount of grabs.
+  - `listeners` - Amount of listeners.
+
+```js
+const score = mp.score()
+mp.chat(`Score: ${score.positive} woots - ${score.negative} mehs - ${score.grabs} grabs`)
+```
+
+<a id="mp-vote"></a>
+## mp.vote(direction): Promise
+
+Vote on the currently playing media.
+
+`direction` is 1 for woot, -1 for meh.
+
+```js
+const direction = Math.random() < 0.5 ? -1 : 1
+mp.vote(direction)
+```
+
+<a id="mp-woot"></a>
+## mp.woot(): Promise
+
+Woot the currently playing media.
+
+```js
+mp.woot().then(() => {
+  mp.chat('Great track! Wooted!')
+})
+```
+
+<a id="mp-meh"></a>
+## mp.meh(): Promise
+
+Meh the currently playing media.
+
+```js
+mp.meh().then(() => {
+  mp.chat('Ew, I don\'t like this. :(')
+})
+```
 
 <hr>
 

@@ -14,6 +14,7 @@ import friendsPlugin from './plugins/friends'
 import roomsPlugin from './plugins/rooms'
 import playlistsPlugin from './plugins/playlists'
 import storePlugin from './plugins/store'
+import votePlugin from './plugins/vote'
 
 // Exports
 
@@ -163,6 +164,7 @@ function miniplug (opts = {}) {
   mp.use(roomsPlugin())
   mp.use(playlistsPlugin())
   mp.use(storePlugin())
+  mp.use(votePlugin())
 
   return mp
 }
