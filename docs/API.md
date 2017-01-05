@@ -66,6 +66,9 @@
  - [mp.purchase(product)](#mp-purchase)
  - [mp.validateUsername(name)](#mp-validateusername)
  - [mp.purchaseNameChange(username)](#mp-purchasenamechange)
+ - [mp.notifications()](#mp-notifications)
+ - [mp.getNotifications()](#mp-notifications)
+ - [mp.acknowledgeNotification(id)](#mp-notifications)
  - [Room](#class-room)
    - [room.id](#room-id)
    - [room.name](#room-name)
@@ -140,6 +143,16 @@
    - [product.type](#inventoryproduct-type)
    - [product.category](#inventoryproduct-category)
    - [product.id](#inventoryproduct-id)
+ - [Notification](#class-notification)
+   - [notification.id](#notification-id)
+   - [notification.action](#notification-action)
+   - [notification.timestamp](#notification-timestamp)
+   - [notification.value](#notification-value)
+   - [notification.level](#notification-level)
+   - [notification.message](#notification-message)
+   - [notification.from](#notification-from)
+   - [notification.amount](#notification-amount)
+   - [notification.acknowledge()](#notification-acknowledge)
  - [Mute Durations](#muteduration)
  - [Mute Reasons](#mutereason)
  - [Ban Durations](#banduration)
@@ -779,6 +792,40 @@ mp.validateUsername('Burkes')
 
 Purchase a name change.
 
+<hr>
+
+<a id="mp-notifications"></a>
+## mp.notifications(): Array&lt;[Notification](#class-notification)>
+
+Get a list of current notifications.
+
+```js
+// Acknowledge all notifications.
+const promises = mp.notifications().map((notif) => {
+  return notif.acknowledge()
+})
+
+// Wait for all acknowledgements to go through.
+Promise.all(promises).then(() => {
+  console.log('All clear!')
+})
+```
+
+<a id="mp-notifications"></a>
+## mp.getNotifications(): Promise&lt;Array&lt;[Notification](#class-notification)>>
+
+Get current notifications from the plug.dj Web API. Normally
+[mp.notifications()](#mp-notifications) should be preferred instead, because
+it's instant.
+
+<a id="mp-notifications"></a>
+## mp.acknowledgeNotification(id): Promise
+
+Acknowledge and remove a notification. `id` is the numeric unique ID of the
+notification.
+
+<hr>
+
 <a id="class-room"></a>
 ## Room
 
@@ -1299,6 +1346,77 @@ See [Product Categories](#productcategories).
 ### product.name: string
 
 The internal product name.
+
+<hr>
+
+<a id="class-notification"></a>
+## Notification
+
+A plug.dj service notification. These are the notifications listed on your user
+profile under My Profile » Notifications.
+
+<a id="notification-id"></a>
+## notification.id: number
+
+Unique ID of the notification.
+
+<a id="notification-action"></a>
+## notification.action: string
+
+Type of notification.
+This determines what the [Notification](#class-notification)'s
+[`value`](#notification-value) stands for. Miniplug parses the `value` for some
+notification types.
+
+ - `levelUp` - The user leveled up. `level` is the new level.
+ - `custom` - A custom notification sent by plug.dj. `message` contains the
+   notification message. Note that the message can contain HTML.
+ - `gift` - The user received a gift. `from` contains the username of the
+   sender, and `amount` contains the amount of PP that was gifted.
+ - `boostExpired` - An XP boost purchased by the user has expired. Obsolete,
+   since plug.dj doesn't sell XP boosts anymore.
+
+<a id="notification-timestamp"></a>
+## notification.timestamp: Date
+
+Date and time when the notification came in.
+
+<a id="notification-value"></a>
+## notification.value: string
+
+Raw value of the notification. This can mean different things for different
+actions. It's best to use one of the other properties documented below if you
+can.
+
+See [`notification.action`](#notification-action).
+
+<a id="notification-level"></a>
+## notification.level: number
+
+The user's new level after leveling up. Only present when the notification
+`action` is `levelUp`.
+
+<a id="notification-message"></a>
+## notification.message: string
+
+HTML message contents of a plug.dj announcement notification. Only present when
+the notification `action` is `custom`.
+
+<a id="notification-from"></a>
+## notification.from: string
+
+Nickname of the sender of a gift. Only present when the notification `action` is
+`gift`.
+
+<a id="notification-amount"></a>
+## notification.amount: number
+
+Amount of PP in a gift. Only present when the notification `action` is `gift`.
+
+<a id="notification-acknowledge"></a>
+## notification.acknowledge(): Promise
+
+Acknowledge and remove the notification.
 
 <hr>
 
