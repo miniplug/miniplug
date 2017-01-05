@@ -8,6 +8,7 @@ import createDebug from 'debug'
 
 import * as constants from './constants'
 import usersPlugin from './plugins/users'
+import notificationsPlugin from './plugins/notifications'
 import boothPlugin from './plugins/booth'
 import waitlistPlugin from './plugins/waitlist'
 import historyPlugin from './plugins/history'
@@ -22,6 +23,7 @@ import votePlugin from './plugins/vote'
 
 Object.assign(miniplug, {
   usersPlugin,
+  notificationsPlugin,
   boothPlugin,
   waitlistPlugin,
   historyPlugin,
@@ -165,6 +167,7 @@ function miniplug (opts = {}) {
   })
 
   mp.use(usersPlugin())
+  mp.use(notificationsPlugin())
   mp.use(boothPlugin())
   mp.use(waitlistPlugin())
   mp.use(historyPlugin())
