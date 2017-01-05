@@ -5,6 +5,20 @@ export default function wrapNotification (mp, notif) {
   notif.id = Number(notif.id)
   notif.timestamp = new Date(`${notif.timestamp} UTC`)
 
+  if (notif.action === 'levelUp') {
+    notif.level = Number(notif.value)
+  }
+
+  if (notif.action === 'gift') {
+    const parts = notif.value.split('\u2800')
+    notif.from = parts[0]
+    notif.amount = Number(parts[1])
+  }
+
+  if (notif.action === 'custom') {
+    notif.message = notif.value
+  }
+
   return makeProto(notif, {
     acknowledge: partial(mp.acknowledgeNotification, notif.id)
   })
