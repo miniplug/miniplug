@@ -10,6 +10,7 @@ import * as constants from './constants'
 import usersPlugin from './plugins/users'
 import boothPlugin from './plugins/booth'
 import waitlistPlugin from './plugins/waitlist'
+import historyPlugin from './plugins/history'
 import chatPlugin from './plugins/chat'
 import friendsPlugin from './plugins/friends'
 import roomsPlugin from './plugins/rooms'
@@ -23,6 +24,7 @@ Object.assign(miniplug, {
   usersPlugin,
   boothPlugin,
   waitlistPlugin,
+  historyPlugin,
   chatPlugin,
   friendsPlugin,
   roomsPlugin,
@@ -165,6 +167,7 @@ function miniplug (opts = {}) {
   mp.use(usersPlugin())
   mp.use(boothPlugin())
   mp.use(waitlistPlugin())
+  mp.use(historyPlugin())
   mp.use(chatPlugin())
   mp.use(friendsPlugin())
   mp.use(roomsPlugin())
