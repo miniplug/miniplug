@@ -136,10 +136,6 @@ function miniplug (opts = {}) {
     unban: (uid) =>
       mp.del(`bans/${uid}`),
 
-    // REST: Grab APIs
-    grab: (targetPlaylist, hid) =>
-      mp.post('grabs', { playlistID: targetPlaylist, historyID: hid }).get(0),
-
     // REST: Ignores APIs
     getIgnoredUsers: partial(mp.get, 'ignores'),
     ignore: (uid) =>

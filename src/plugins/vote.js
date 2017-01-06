@@ -62,13 +62,18 @@ export default function vote (opts = {}) {
       }
     }
 
-    mp.vote = (direction) =>
-      mp.post('votes', {
-        historyID: mp.historyEntry().id,
-        direction: direction
-      })
+    Object.assign(mp, {
+      grab: (targetPlaylist, hid) =>
+        mp.post('grabs', { playlistID: targetPlaylist, historyID: hid }).get(0),
 
-    mp.woot = partial(mp.vote, 1)
-    mp.meh = partial(mp.vote, -1)
+      vote: (direction) =>
+        mp.post('votes', {
+          historyID: mp.historyEntry().id,
+          direction: direction
+        }),
+
+      woot: partial(mp.vote, 1),
+      meh: partial(mp.vote, -1)
+    })
   }
 }
