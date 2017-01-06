@@ -1,0 +1,42 @@
+import got from 'got'
+import createDebug from 'debug'
+
+const debug = createDebug('miniplug:http')
+
+export default function httpPlugin ({ host }) {
+  return (mp) => {
+    // wait until connections are complete before sending off requests
+    const request = (url, opts) =>
+      mp.connected
+        .tap(() => debug(opts.method, url, opts.body || opts.query))
+        .then((session) =>
+          got(`${host}/_/${url}`, {
+            headers: {
+              cookie: session.cookie,
+              'content-type': 'application/json'
+            },
+            json: true,
+            ...opts,
+            body: opts.body ? JSON.stringify(opts.body) : undefined
+          })
+        )
+        .then((resp) => {
+          if (resp.body.status !== 'ok') {
+            throw new Error(resp.body.data.length ? resp.body.data[0] : resp.body.status)
+          }
+          return resp.body.data
+        })
+    const post = (url, data) => request(url, { method: 'post', body: data })
+    const get = (url, data) => request(url, { method: 'get', query: data })
+    const put = (url, data) => request(url, { method: 'put', body: data })
+    const del = (url, data) => request(url, { method: 'delete', body: data })
+
+    Object.assign(mp, {
+      request,
+      post,
+      get,
+      put,
+      del
+    })
+  }
+}
