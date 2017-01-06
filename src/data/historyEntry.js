@@ -11,13 +11,11 @@ export default function wrapHistoryEntry (mp, raw) {
     media: wrapMedia(mp, null, raw),
     room: wrapRoom(mp, raw.room),
     user: wrapUser(mp, raw.user),
-    time: new Date(`${raw.timestamp} UTC`)
+    time: new Date(`${raw.timestamp} UTC`),
+    score: raw.score
   }
 
-  const score = raw.score
-
   return makeProto(entry, {
-    score: () => score,
     getUser: partial(mp.getUser, raw.user.id)
   })
 }
