@@ -6,6 +6,7 @@ import { EventEmitter } from 'events'
 import createDebug from 'debug'
 
 import * as constants from './constants'
+import createBackoff from './createBackoff'
 import httpPlugin from './plugins/http'
 import usersPlugin from './plugins/users'
 import notificationsPlugin from './plugins/notifications'
@@ -102,13 +103,21 @@ function miniplug (opts = {}) {
     connected
   })
 
-  use(httpPlugin({ host: plugHost }))
+  use(httpPlugin({
+    host: plugHost,
+    // This is the same backoff as used in Sooyou/plugged:
+    // https://github.com/SooYou/plugged/blob/856bd0ef47307491c0ad95cba7006cd4721828fd/query.js#L4
+    // And that seems pretty robust.
+    backoff: createBackoff({ increment: 200, max: 2200 })
+  }))
   use(usersPlugin())
   use(notificationsPlugin())
   use(boothPlugin())
   use(waitlistPlugin())
   use(historyPlugin())
-  use(chatPlugin())
+  use(chatPlugin({
+    backoff: createBackoff({ increment: 70, max: 700 })
+  }))
   use(friendsPlugin())
   use(roomsPlugin())
   use(playlistsPlugin())

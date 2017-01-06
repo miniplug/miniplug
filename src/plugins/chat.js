@@ -29,9 +29,10 @@ export default function chat (opts) {
       mp.del(`chat/${cid}`)
 
     // Socket API
-    const chat = opts.backoff((...args) => {
+    const chat = opts.backoff(function (...args) {
       const ws = mp.ws
       const message = args.join(' ')
+      debug('send', message)
       ws.chat(message)
       // attempt to resolve when the message comes back
       return new Promise((resolve, reject) => {
