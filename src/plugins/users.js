@@ -29,33 +29,31 @@ export default function users () {
       mp[currentGuestsCount] = guests
     })
 
-    mp.on('login', () => {
-      mp.ws.on('userJoin', (user) => {
-        debug('join', user.id)
-        if (user.guest) {
-          mp[currentGuestsCount] += 1
-          mp.emit('guestJoin')
-        } else {
-          user = wrapUser(user)
-          mp[currentUsers].push(user)
-          mp.emit('userJoin', user)
-        }
-      })
+    mp.ws.on('userJoin', (user) => {
+      debug('join', user.id)
+      if (user.guest) {
+        mp[currentGuestsCount] += 1
+        mp.emit('guestJoin')
+      } else {
+        user = wrapUser(user)
+        mp[currentUsers].push(user)
+        mp.emit('userJoin', user)
+      }
+    })
 
-      mp.ws.on('userLeave', (id) => {
-        debug('leave', id)
-        if (id === GUEST_ID) {
-          mp[currentGuestsCount] -= 1
-          mp.emit('guestLeave')
-        } else {
-          const i = mp[currentUsers].findIndex((user) => user.id === id)
-          if (i !== -1) {
-            const user = mp[currentUsers][i]
-            mp[currentUsers].splice(i, 1)
-            mp.emit('userLeave', user)
-          }
+    mp.ws.on('userLeave', (id) => {
+      debug('leave', id)
+      if (id === GUEST_ID) {
+        mp[currentGuestsCount] -= 1
+        mp.emit('guestLeave')
+      } else {
+        const i = mp[currentUsers].findIndex((user) => user.id === id)
+        if (i !== -1) {
+          const user = mp[currentUsers][i]
+          mp[currentUsers].splice(i, 1)
+          mp.emit('userLeave', user)
         }
-      })
+      }
     })
 
     const me = () => mp[currentUser]
