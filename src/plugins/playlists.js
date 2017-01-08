@@ -1,14 +1,7 @@
 import partial from 'lodash-es/partial'
 import _wrapPlaylist from '../data/playlist'
 import _wrapMedia from '../data/media'
-
-const getId = (item) =>
-  typeof item === 'object' ? item.id : item
-
-const getMediaIds = (medias) => {
-  const arr = Array.isArray(medias) ? medias : [ medias ]
-  return arr.map(getId)
-}
+import { getId, getIds } from '../util'
 
 export default function playlistsPlugin () {
   return (mp) => {
@@ -43,7 +36,7 @@ export default function playlistsPlugin () {
         }).get(0),
       moveMedia: (pid, mids, before) =>
         mp.put(`playlists/${pid}/media/move`, {
-          ids: getMediaIds(mids),
+          ids: getIds(mids),
           beforeID: getId(before)
         }),
       insertMedia: (pid, media, append = true) =>
@@ -53,7 +46,7 @@ export default function playlistsPlugin () {
         }),
       deleteMedia: (pid, mids) =>
         mp.post(`playlists/${pid}/media/delete`, {
-          ids: getMediaIds(mids)
+          ids: getIds(mids)
         })
     })
   }

@@ -1,9 +1,10 @@
 import partial from 'lodash-es/partial'
 import makeProto from '../wrap'
+import { parseDate } from '../util'
 
 export default function wrapNotification (mp, notif) {
   notif.id = Number(notif.id)
-  notif.timestamp = new Date(`${notif.timestamp} UTC`)
+  notif.timestamp = parseDate(notif.timestamp)
 
   if (notif.action === 'levelUp') {
     notif.level = Number(notif.value)

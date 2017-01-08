@@ -1,4 +1,5 @@
 import partial from 'lodash-es/partial'
+import { parseDate } from '../util'
 
 export default function boothPlugin (opts = {}) {
   const currentHistoryEntry = Symbol('History entry')
@@ -15,18 +16,19 @@ export default function boothPlugin (opts = {}) {
         dj: mp.user(state.booth.currentDJ),
         media: state.playback.media,
         playlistId: state.playback.playlistID,
-        time: new Date(`${state.playback.startTime} UTC`)
+        time: parseDate(state.playback.startTime)
       }
     })
 
     // Socket API
     mp.on('login', () => {
-      mp.ws.on('advance', e => {
+      mp.ws.on('advance', (e) => {
         const previous = historyEntry()
         if (!e || !e.m) {
           mp.emit('advance', null, previous)
           return
         }
+
         let {
           h: historyId,
           m: media,
@@ -35,7 +37,7 @@ export default function boothPlugin (opts = {}) {
           t: time
         } = e
 
-        time = new Date(`${time} UTC`)
+        time = parseDate(time)
 
         mp[currentHistoryEntry] = {
           id: historyId,

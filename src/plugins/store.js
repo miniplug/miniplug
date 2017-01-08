@@ -2,9 +2,7 @@ import partial from 'lodash-es/partial'
 import Promise from 'bluebird'
 import _wrapStoreProduct from '../data/storeProduct'
 import _wrapInventoryProduct from '../data/inventoryProduct'
-
-const getId = (item) =>
-  typeof item === 'object' ? item.id : item
+import { getId } from '../util'
 
 export default function storePlugin () {
   return (mp) => {

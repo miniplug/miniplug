@@ -1,5 +1,6 @@
 import partial from 'lodash-es/partial'
 import makeProto from '../wrap'
+import { parseDate } from '../util'
 import wrapMedia from './media'
 import wrapRoom from './room'
 import wrapUser from './user'
@@ -11,7 +12,7 @@ export default function wrapHistoryEntry (mp, raw) {
     media: wrapMedia(mp, null, raw),
     room: wrapRoom(mp, raw.room),
     user: wrapUser(mp, raw.user),
-    time: new Date(`${raw.timestamp} UTC`),
+    time: parseDate(raw.timestamp),
     score: raw.score
   }
 
