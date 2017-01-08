@@ -1,7 +1,7 @@
 import partial from 'lodash-es/partial'
 import wrapUser from '../data/user'
 
-export default function friends () {
+export default function friendsPlugin () {
   return (mp) => {
     // REST Friend API
     const getFriends = () =>

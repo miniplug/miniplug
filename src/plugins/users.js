@@ -7,7 +7,7 @@ const debug = createDebug('miniplug:users')
 
 const GUEST_ID = 0
 
-export default function users () {
+export default function usersPlugin () {
   const currentGuestsCount = Symbol('Guests count')
   const currentUsers = Symbol('Users')
   const currentUser = Symbol('Me')

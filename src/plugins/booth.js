@@ -1,6 +1,6 @@
 import partial from 'lodash-es/partial'
 
-export default function booth (opts = {}) {
+export default function boothPlugin (opts = {}) {
   const currentHistoryEntry = Symbol('History entry')
 
   return (mp) => {

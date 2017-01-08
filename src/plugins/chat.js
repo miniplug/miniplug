@@ -5,7 +5,7 @@ import wrapMessage from '../data/chat'
 
 const debug = createDebug('miniplug:chat')
 
-export default function chat (opts) {
+export default function chatPlugin (opts) {
   opts = {
     // how long to wait for chat messages to come back
     timeout: 7000,

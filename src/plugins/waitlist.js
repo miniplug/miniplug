@@ -4,7 +4,7 @@ import _wrapWaitlist from '../data/waitlist'
 
 const debug = createDebug('miniplug:waitlist')
 
-export default function waitlist () {
+export default function waitlistPlugin () {
   const currentWaitlist = Symbol('Waitlist')
 
   return (mp) => {

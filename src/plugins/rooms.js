@@ -5,7 +5,7 @@ import _wrapRoom from '../data/room'
 
 const debug = createDebug('miniplug:rooms')
 
-export default function rooms () {
+export default function roomsPlugin () {
   const currentRoom = Symbol('Current room')
 
   return (mp) => {

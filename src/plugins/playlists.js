@@ -10,7 +10,7 @@ const getMediaIds = (medias) => {
   return arr.map(getId)
 }
 
-export default function playlists () {
+export default function playlistsPlugin () {
   return (mp) => {
     const wrapPlaylist = partial(_wrapPlaylist, mp)
     const wrapMedia = partial(_wrapMedia, mp)
