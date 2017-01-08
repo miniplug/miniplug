@@ -44,7 +44,9 @@ export default function users () {
     mp.ws.on('userLeave', (id) => {
       debug('leave', id)
       if (id === GUEST_ID) {
-        mp[currentGuestsCount] -= 1
+        if (mp[currentGuestsCount] > 0) {
+          mp[currentGuestsCount] -= 1
+        }
         mp.emit('guestLeave')
       } else {
         const i = mp[currentUsers].findIndex((user) => user.id === id)
