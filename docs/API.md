@@ -197,7 +197,7 @@ mp.use(lotteryPlugin())
 ```
 
 <a id="mp-join"></a>
-## mp.join(room): Promise<[Room](#class-room)>
+## mp.join(room): Promise&lt;[Room](#class-room)>
 
 Join a room. The parameter is the room's slug. If your room URL is
 `https://plug.dj/loves-kpop`, the slug is `loves-kpop`.
@@ -253,7 +253,7 @@ mp.validateRoomName('Tastycat')
 ```
 
 <a id="mp-createroom"></a>
-## mp.createRoom(name, isPrivate = false): Promise<[Room](#class-room)>
+## mp.createRoom(name, isPrivate = false): Promise&lt;[Room](#class-room)>
 
 Create a new room. Note that plug.dj will derive an unchangeable URL slug from
 the name. This slug may collide with existing rooms.
@@ -287,7 +287,7 @@ mp.unfavoriteRoom(123456).then(() => {
 ```
 
 <a id="mp-getroomstate"></a>
-## mp.getRoomState(): Promise<[Room](#class-room)>
+## mp.getRoomState(): Promise&lt;[Room](#class-room)>
 
 Get the current room object, but fresh from the plug.dj API and not cached. This
 is like an async version of [mp.room()](#mp-room). Using [mp.room()](#mp-room)
@@ -315,7 +315,7 @@ console.log('Some other user:', mp.user(123456).username)
 ```
 
 <a id="mp-users"></a>
-## mp.users(): Array<[User](#class-user)>
+## mp.users(): Array&lt;[User](#class-user)>
 
 Synchronously get all user objects from the current room.
 
@@ -329,13 +329,13 @@ console.log('Users:', mp.users().map((user) => user.username))
 Get the number of guests in the current room.
 
 <a id="mp-getme"></a>
-## mp.getMe(): Promise<[User](#class-user)>
+## mp.getMe(): Promise&lt;[User](#class-user)>
 
 Get the current logged-in user from the plug.dj web API. [mp.me()](#mp-me)
 should be used instead whenever possible.
 
 <a id="mp-getuser"></a>
-## mp.getUser(id): Promise<[User](#class-user)>
+## mp.getUser(id): Promise&lt;[User](#class-user)>
 
 Get a user object by ID. The user does not have to be in the same room as the
 bot.
@@ -565,7 +565,7 @@ mp.removeDJ(user.id).then(() => {
 <hr>
 
 <a id="mp-chat"></a>
-## mp.chat(message): Promise<[ChatMessage](#class-chatmessage)>
+## mp.chat(message): Promise&lt;[ChatMessage](#class-chatmessage)>
 
 Send a chat message. Returns a Promise that will resolve with the message once
 it is sent.
@@ -581,7 +581,7 @@ mp.chat('Hello!')
 ```
 
 <a id="mp-emote"></a>
-## mp.emote(message): Promise<[ChatMessage](#class-chatmessage)>
+## mp.emote(message): Promise&lt;[ChatMessage](#class-chatmessage)>
 
 Send an emote chat message, like `/me` or `/em` on the plug.dj web client.
 
@@ -901,7 +901,7 @@ User ID.
 Username.
 
 <a id="user-chat"></a>
-### user.chat(text): Promise<[ChatMessage](#class-chatmessage)>
+### user.chat(text): Promise&lt;[ChatMessage](#class-chatmessage)>
 
 Send a chat message directed at this user. Prepends `@Username` to the provided
 text.
@@ -912,7 +912,7 @@ mp.user(123456).chat('Hello!')
 ```
 
 <a id="user-emote"></a>
-### user.emote(text): Promise<[ChatMessage](#class-chatmessage)>
+### user.emote(text): Promise&lt;[ChatMessage](#class-chatmessage)>
 
 Send an emote chat message directed at this user.
 
@@ -1078,7 +1078,7 @@ User ID of the sender of the message.
 Username of the sender of the message.
 
 <a id="chatmessage-getuser"></a>
-### message.getUser(): Promise<[User](#class-user)>
+### message.getUser(): Promise&lt;[User](#class-user)>
 
 Get the sender of the message.
 
@@ -1101,7 +1101,7 @@ mp.on('chat', (message) => {
 ```
 
 <a id="chatmessage-reply"></a>
-### message.reply(text): Promise<[ChatMessage](#class-chatmessage)>
+### message.reply(text): Promise&lt;[ChatMessage](#class-chatmessage)>
 
 Reply to the sender of the message using an @-mention.
 
@@ -1115,7 +1115,7 @@ mp.on('chat', (message) => {
 ```
 
 <a id="chatmessage-emote"></a>
-### message.emote(text): Promise<[ChatMessage](#class-chatmessage)>
+### message.emote(text): Promise&lt;[ChatMessage](#class-chatmessage)>
 
 Reply to the sender of the message using an @-mention in an [emote](#mp-emote)
 message.
