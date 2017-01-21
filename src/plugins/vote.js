@@ -62,18 +62,20 @@ export default function votePlugin (opts = {}) {
       }
     }
 
+    const vote = (direction) =>
+      mp.post('votes', {
+        historyID: mp.historyEntry().id,
+        direction: direction
+      })
+
     Object.assign(mp, {
       grab: (targetPlaylist, hid) =>
         mp.post('grabs', { playlistID: targetPlaylist, historyID: hid }).get(0),
 
-      vote: (direction) =>
-        mp.post('votes', {
-          historyID: mp.historyEntry().id,
-          direction: direction
-        }),
+      vote,
 
-      woot: partial(mp.vote, 1),
-      meh: partial(mp.vote, -1)
+      woot: partial(vote, 1),
+      meh: partial(vote, -1)
     })
   }
 }
