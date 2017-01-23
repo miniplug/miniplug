@@ -15,7 +15,7 @@ export default function wrapWaitlist (mp, waitlist) {
   const wrapped = new Waitlist()
 
   waitlist.forEach((id) => {
-    wrapped.push(mp.user(id))
+    wrapped.push(mp.user(id) || id)
   })
 
   return wrapped
