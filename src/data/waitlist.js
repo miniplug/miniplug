@@ -1,3 +1,5 @@
+import wrapUser from './user'
+
 export default function wrapWaitlist (mp, waitlist) {
   const getId = (item) =>
     typeof item === 'object' ? item.id : item
@@ -15,7 +17,7 @@ export default function wrapWaitlist (mp, waitlist) {
   const wrapped = new Waitlist()
 
   waitlist.forEach((id) => {
-    wrapped.push(mp.user(id))
+    wrapped.push(mp.user(id) || wrapUser(mp, { id: id }))
   })
 
   return wrapped
