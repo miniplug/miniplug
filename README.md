@@ -2,6 +2,11 @@
 
 Small but complete Promise-based [plug.dj][] API client for Node.js.
 
+[Installation](#installation) -
+[Usage](#usage) -
+[Contributing](#contributing) -
+[License: MIT](#license)
+
 ## Installation
 
 > Note: Node v4 or higher is required. Run `node -v` in your console to check
@@ -31,6 +36,20 @@ mp.on('chat', (message) => {
 ```
 
 Full API documentation is available in [docs/API.md][].
+
+## Contributing
+
+Issues/PRs are appreciated!
+
+To build the library, run:
+
+```
+npm run build
+```
+
+The built version will be placed in `index.js`.
+
+There's not much in the way of tests yet, sorry! Should be coming soon.
 
 ## License
 
