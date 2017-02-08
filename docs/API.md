@@ -129,6 +129,14 @@
    - [media.image](#media-image)
    - [media.update(author, title)](#media-update)
    - [media.delete()](#media-delete)
+ - [HistoryEntry](#class-historyentry)
+   - [entry.id](#historyentry-id)
+   - [entry.media](#historyentry-media)
+   - [entry.room](#historyentry-room)
+   - [entry.user](#historyentry-user)
+   - [entry.time](#historyentry-time)
+   - [entry.score](#historyentry-score)
+   - [entry.getUser()](#historyentry-getuser)
  - [StoreProduct](#class-storeproduct)
    - [product.type](#storeproduct-type)
    - [product.category](#storeproduct-category)
@@ -1254,6 +1262,67 @@ escapes.
 
 Delete the media from the playlist it belongs to.
 
+<a id="class-historyentry"></a>
+## HistoryEntry
+
+<a id="historyentry-id"></a>
+### entry.id: string
+
+The unique ID of the history entry.
+
+<a id="historyentry-media"></a>
+### entry.media: [Media](#class-media)
+
+The media that was played.
+
+<a id="historyentry-room"></a>
+### entry.room: [Room](#class-room)
+
+The room where the history entry was played. Note that this `.room` object only
+contains three of the Room class properties:
+
+ - `entry.room.name` - The name of the room;
+ - `entry.room.slug` - The URL slug of the room;
+ - `entry.room.private` - Whether the room is private.
+
+There is not currently a way to load a full Room object if you need more
+information. This will hopefully be added in a future update.
+
+<a id="historyentry-user"></a>
+### entry.user: [User](#class-user)
+
+The user that played this song. Note that this `.user` object only contains two
+of the User class properties:
+
+ - `entry.user.id` - The user's ID. This allows you to use most User class
+   methods.
+ - `entry.user.username` - The user's name.
+
+If you need anything else, use the [entry.getUser()](#historyentry-getuser)
+method to load a full User object.
+
+<a id="historyentry-time"></a>
+### entry.time: Date
+
+Timestamp at which the history entry was played.
+
+<a id="historyentry-score"></a>
+### entry.score: {positive, negative, grabs, listeners}
+
+An object describing audience response to the song. Contains four properties,
+all numbers:
+
+ - `entry.score.positive` - The amount of woots.
+ - `entry.score.negative` - The amount of mehs.
+ - `entry.score.grabs` - The amount of grabs.
+ - `entry.score.listeners` - The amount of people in the room at the time the
+   song was played.
+
+<a id="historyentry-getuser"></a>
+### entry.getUser(): Promise&lt;[User](#class-user)>
+
+Get the full user object of the user who played this song.
+
 <a id="class-storeproduct"></a>
 ## StoreProduct
 
@@ -1599,3 +1668,21 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
 ```
 
 # Events
+
+## 'advance'
+
+ - `next` - The new [HistoryEntry](#class-historyentry), or `null` if there is
+   no new DJ.
+ - `previous` - The previous [HistoryEntry](#class-historyentry), or `null` if
+   there was no DJ earlier.
+
+```js
+mp.on('advance', (next, previous) => {
+  if (previous) {
+    console.log('Last song:', previous.media.author, '-', previous.media.title)
+  }
+  if (next) {
+    console.log('Next song:', next.media.author, '-', next.media.title)
+  }
+})
+```
