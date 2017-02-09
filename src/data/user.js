@@ -29,6 +29,8 @@ export default function wrapUser (mp, user) {
     ban: partial(mp.ban, user.id),
     unban: partial(mp.unban, user.id),
 
+    getHistory: partial(mp.getUserHistory, user.id),
+
     mention: () => mention,
     // Allows mentioning users by doing `Hello ${user}` in chat messages.
     toString: () => mention
