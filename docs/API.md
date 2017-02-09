@@ -1,5 +1,9 @@
 # API
 
+ - [Introduction](#introduction)
+
+---
+
  - [miniplug(opts)](#mp-constructor)
  - [mp.use(plugin)](#mp-use)
  - [mp.join(room)](#mp-join)
@@ -168,6 +172,27 @@
  - [Media Sources](#mediasource)
  - [Product Categories](#productcategories)
  - [REST methods](#mp-rest)
+
+## Introduction
+
+The miniplug API is heavily Promise-based. Most methods return Promises.
+
+miniplug uses the [Bluebird][] library. That means that Promises returned by
+miniplug have all the useful methods from Bluebird, too. See its
+[API reference][Bluebird API] for a list.
+
+Promises work really well with JavaScript [async functions][].
+If you are using [Babel][], you can use the [babel-plugin-transform-async-to-generator][async-to-generator]
+transform to compile async functions to generator functions. If you are not
+using Babel, you can use the [Bluebird .coroutine][coroutine] method to write
+similar-looking code with generator functions.
+
+[Bluebird]: http://bluebirdjs.com
+[Bluebird API]: http://bluebirdjs.com/docs/api-reference.html
+[async functions]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
+[Babel]: https://babeljs.io
+[async-to-generator]: https://babeljs.io/docs/plugins/transform-async-to-generator/
+[coroutine]: http://bluebirdjs.com/docs/api/promise.coroutine.html
 
 <a id="mp-constructor"></a>
 ## mp = miniplug(opts={})
