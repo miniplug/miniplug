@@ -182,16 +182,18 @@ miniplug uses the [Bluebird][] library. That means that Promises returned by
 miniplug have all the useful methods from Bluebird, too. See its
 [API reference][Bluebird API] for a list.
 
-Promises work really well with JavaScript [async functions][].
-If you are using [Babel][], you can use the [babel-plugin-transform-async-to-generator][async-to-generator]
-transform to compile async functions to generator functions. If you are not
-using Babel, you can use the [Bluebird .coroutine][coroutine] method to write
-similar-looking code with generator functions.
+Promises work really well with JavaScript [async functions][]. Async functions
+are not available in most engines yet. You can compile async functions to
+generator functions, which are widely supported, using [async-to-gen][], or
+using [Babel][] with the [babel-plugin-transform-async-to-generator][async-to-generator]
+transform. If you do not want a build step, you can use the [Bluebird .coroutine][coroutine]
+method to write similar-looking code with generator functions.
 
 [Bluebird]: http://bluebirdjs.com
 [Bluebird API]: http://bluebirdjs.com/docs/api-reference.html
 [async functions]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
 [Babel]: https://babeljs.io
+[async-to-gen]: https://github.com/leebyron/async-to-gen
 [async-to-generator]: https://babeljs.io/docs/plugins/transform-async-to-generator/
 [coroutine]: http://bluebirdjs.com/docs/api/promise.coroutine.html
 
