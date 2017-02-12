@@ -1699,6 +1699,11 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
  - [advance](#event-advance)
  - [guestJoin](#event-guestjoin)
  - [guestLeave](#event-guestleave)
+ - [roomUpdate](#event-roomupdate)
+ - [roomNameUpdate](#event-roomnameupdate)
+ - [roomDescriptionUpdate](#event-roomdescriptionupdate)
+ - [roomWelcomeUpdate](#event-roomwelcomeupdate)
+ - [roomMinChatLevelUpdate](#event-roomminchatlevelupdate)
  - [userJoin](#event-userjoin)
  - [userLeave](#event-userleave)
  - [waitlistUpdate](#event-waitlistupdate)
@@ -1745,6 +1750,92 @@ Fired when a guest leaves the room. Does not receive any parameters.
 ```js
 mp.on('guestLeave', () => {
   console.log('A guest left the room.')
+})
+```
+
+<a id="event-roomupdate"></a>
+## 'roomUpdate'
+
+Fired when an attribute of the current room updates.
+
+**Parameters**
+
+ - `change` - Object containing the new attribute/value pair. For example, if
+   the welcome message was changed, the object may contain
+   `{ welcome: 'Hello!' }`.
+ - `user` - The staff [User](#class-user) who made the change.
+
+```js
+const roomProperties = mp.room().toJSON()
+
+mp.on('roomUpdate', (change) => {
+  Object.assign(roomProperties, change)
+})
+```
+
+<a id="event-roomnameupdate"></a>
+## 'roomNameUpdate'
+
+Fired when the room name was changed.
+
+**Parameters**
+
+ - `name` - The new room name.
+ - `user` - The staff [User](#class-user) who made the change.
+
+```js
+mp.on('roomNameUpdate', (name, user) => {
+  console.log(user.mention(), 'changed the room name to', name)
+})
+```
+
+<a id="event-roomdescriptionupdate"></a>
+## 'roomDescriptionUpdate'
+
+Fired when the room description was changed.
+
+**Parameters**
+
+ - `description` - The new room description.
+ - `user` - The staff [User](#class-user) who made the change.
+
+```js
+mp.on('roomDescriptionUpdate', (description, user) => {
+  console.log(user.mention(), 'changed the room description to:')
+  console.log(description)
+})
+```
+
+<a id="event-roomwelcomeupdate"></a>
+## 'roomWelcomeUpdate'
+
+Fired when the room welcome message was changed.
+
+**Parameters**
+
+ - `welcome` - The new welcome message.
+ - `user` - The staff [User](#class-user) who made the change.
+
+```js
+mp.on('roomWelcomeUpdate', (welcome, user) => {
+  console.log(user.mention(), 'changed the welcome message.')
+  console.log('New users will now see', welcome)
+})
+```
+
+<a id="event-roomminchatlevelupdate"></a>
+## 'roomMinChatLevelUpdate'
+
+Fired when the room's minimum chat level changes.
+
+**Parameters**
+
+ - `minChatLevel` - The new minimum chat level.
+ - `user` - The staff [User](#class-user) who made the change.
+
+```js
+mp.on('roomMinChatLevelUpdate', (level, user) => {
+  console.log(user.mention(), 'changed the minimum chat level to', level)
 })
 ```
 
