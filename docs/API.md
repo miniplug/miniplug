@@ -1701,6 +1701,7 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
  - [guestLeave](#event-guestleave)
  - [userJoin](#event-userjoin)
  - [userLeave](#event-userleave)
+ - [waitlistUpdate](#event-waitlistupdate)
 
 <a id="event-advance"></a>
 ## 'advance'
@@ -1776,5 +1777,29 @@ import { BAN_DURATION, BAN_REASON } from 'miniplug'
 mp.on('userLeave', (user) => {
   // Alright then. GOOD BYE AND NEVER COME BACK!! 😠💢
   user.ban(BAN_DURATION.PERMANENT, BAN_REASON.ATTITUDE)
+})
+```
+
+<a id="event-waitlistupdate"></a>
+## 'waitlistUpdate'
+
+Fired when the waitlist changes.
+
+**Parameters**
+
+ - `next` - The new [Waitlist](#class-waitlist).
+ - `previous` - The previous [Waitlist](#class-waitlist).
+
+```js
+mp.on('waitlistUpdate', (next, previous) => {
+  const me = mp.me()
+
+  // Notify the next DJ that it is almost their turn.
+  if (next.length > 0) {
+    next[0].send('You are next!')
+  }
+
+  // Both parameters are full Waitlist objects.
+  console.log('I moved from', previous.positionOf(me), 'to', next.positionOf(me))
 })
 ```
