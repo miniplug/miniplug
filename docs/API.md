@@ -172,6 +172,7 @@
  - [Media Sources](#mediasource)
  - [Product Categories](#productcategories)
  - [REST methods](#mp-rest)
+ - [Events](#events)
 
 ## Introduction
 
@@ -1692,9 +1693,21 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
 // { "userID": 123456, "historyID": "ab0c47eb-6c92-45f8-8711-75e27977db06" }
 ```
 
+<a id="events"></a>
 # Events
 
+ - [advance](#event-advance)
+ - [guestJoin](#event-guestjoin)
+ - [guestLeave](#event-guestleave)
+ - [userJoin](#event-userjoin)
+ - [userLeave](#event-userleave)
+
+<a id="event-advance"></a>
 ## 'advance'
+
+Fired when the DJ booth advances, and the next song starts playing.
+
+**Parameters**
 
  - `next` - The new [HistoryEntry](#class-historyentry), or `null` if there is
    no new DJ.
@@ -1709,5 +1722,59 @@ mp.on('advance', (next, previous) => {
   if (next) {
     console.log('Next song:', next.media.author, '-', next.media.title)
   }
+})
+```
+
+<a id="event-guestjoin"></a>
+## 'guestJoin'
+
+Fired when a guest joins the room. Does not receive any parameters.
+
+```js
+mp.on('guestJoin', () => {
+  console.log('A wild guest appeared!')
+})
+```
+
+<a id="event-guestleave"></a>
+## 'guestLeave'
+
+Fired when a guest leaves the room. Does not receive any parameters.
+
+```js
+mp.on('guestLeave', () => {
+  console.log('A guest left the room.')
+})
+```
+
+<a id="event-userjoin"></a>
+## 'userJoin'
+
+Fired when a user joins the room.
+
+**Parameters**
+
+ - `user` - The [User](#class-user) object of the new user.
+
+```js
+mp.on('userJoin', (user) => {
+  user.send('Welcome!')
+})
+```
+
+<a id="event-userleave"></a>
+## 'userLeave'
+
+Fired when a user leaves the room.
+
+**Parameters**
+
+ - `user` - The [User](#class-user) object of the leaving user.
+
+```js
+import { BAN_DURATION, BAN_REASON } from 'miniplug'
+mp.on('userLeave', (user) => {
+  // Alright then. GOOD BYE AND NEVER COME BACK!! 😠💢
+  user.ban(BAN_DURATION.PERMANENT, BAN_REASON.ATTITUDE)
 })
 ```
