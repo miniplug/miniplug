@@ -1697,6 +1697,7 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
 # Events
 
  - [advance](#event-advance)
+ - [chat](#event-chat)
  - [guestJoin](#event-guestjoin)
  - [guestLeave](#event-guestleave)
  - [roomUpdate](#event-roomupdate)
@@ -1727,6 +1728,23 @@ mp.on('advance', (next, previous) => {
   }
   if (next) {
     console.log('Next song:', next.media.author, '-', next.media.title)
+  }
+})
+```
+
+<a id="event-chat"></a>
+## 'chat'
+
+Fired when a chat message is received.
+
+**Parameters**
+
+ - `message` - The incoming [ChatMessage](#class-chatmessage).
+
+```js
+mp.on('chat', (message) => {
+  if (/^!whoami/.test(message.message)) {
+    message.reply(`You are ${message.un}, #${message.uid}.`)
   }
 })
 ```
