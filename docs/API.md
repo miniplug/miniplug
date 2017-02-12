@@ -1698,6 +1698,7 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
 
  - [advance](#event-advance)
  - [chat](#event-chat)
+ - [grab](#event-grab)
  - [guestJoin](#event-guestjoin)
  - [guestLeave](#event-guestleave)
  - [roomUpdate](#event-roomupdate)
@@ -1707,6 +1708,7 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
  - [roomMinChatLevelUpdate](#event-roomminchatlevelupdate)
  - [userJoin](#event-userjoin)
  - [userLeave](#event-userleave)
+ - [vote](#event-vote)
  - [waitlistUpdate](#event-waitlistupdate)
 
 <a id="event-advance"></a>
@@ -1746,6 +1748,22 @@ mp.on('chat', (message) => {
   if (/^!whoami/.test(message.message)) {
     message.reply(`You are ${message.un}, #${message.uid}.`)
   }
+})
+```
+
+<a id="event-grab"></a>
+## 'grab'
+
+Fired when a user grabs the current song.
+
+**Parameters**
+
+ - `user` - The [User](#class-user) who grabbed the song.
+
+```js
+mp.on('grab', (user) => {
+  const media = mp.media()
+  console.log(user.mention(), 'grabbed', media.author, '-', media.title)
 })
 ```
 
@@ -1886,6 +1904,27 @@ import { BAN_DURATION, BAN_REASON } from 'miniplug'
 mp.on('userLeave', (user) => {
   // Alright then. GOOD BYE AND NEVER COME BACK!! 😠💢
   user.ban(BAN_DURATION.PERMANENT, BAN_REASON.ATTITUDE)
+})
+```
+
+<a id="event-vote"></a>
+## 'vote'
+
+Fired when a user woots or mehs a song.
+
+**Parameters**
+
+ - `data` - An object with two properties:
+   - `user` - The [User](#class-user) who voted.
+   - `vote` - The direction of the vote: `1` for a woot, `-1` for a meh.
+
+```js
+mp.on('vote', (data) => {
+  if (data.vote === 1) {
+    console.log(data.user.mention(), 'wooted this track!')
+  } else if (data.vote === -1) {
+    console.log(data.user.mention(), 'meh\'d this track…')
+  }
 })
 ```
 
