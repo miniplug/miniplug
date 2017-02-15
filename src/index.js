@@ -1,6 +1,6 @@
 import login from 'plug-login'
 import socket from 'plug-socket'
-import partial from 'lodash-es/partial'
+import { partial } from 'ap'
 import Promise from 'bluebird'
 import { EventEmitter } from 'events'
 import createDebug from 'debug'

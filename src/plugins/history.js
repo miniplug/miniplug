@@ -1,4 +1,4 @@
-import partial from 'lodash-es/partial'
+import { partial } from 'ap'
 import _wrapHistoryEntry from '../data/historyEntry'
 
 export default function historyPlugin () {

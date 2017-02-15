@@ -1,4 +1,4 @@
-import partial from 'lodash-es/partial'
+import { partial } from 'ap'
 import { unescape } from 'plug-message-split'
 import makeProto from '../wrap'
 

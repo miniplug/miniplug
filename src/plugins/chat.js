@@ -1,5 +1,5 @@
 import Promise from 'bluebird'
-import partial from 'lodash-es/partial'
+import { partial } from 'ap'
 import createDebug from 'debug'
 import wrapMessage from '../data/chat'
 

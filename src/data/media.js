@@ -1,4 +1,4 @@
-import partial from 'lodash-es/partial'
+import { partial } from 'ap'
 import makeProto from '../wrap'
 
 export default function wrapMedia (mp, playlistId, media) {

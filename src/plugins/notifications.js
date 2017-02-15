@@ -1,5 +1,4 @@
-import partial from 'lodash-es/partial'
-import remove from 'lodash-es/remove'
+import { partial } from 'ap'
 import _wrapNotification from '../data/notification'
 
 export default function notificationsPlugin () {
@@ -32,7 +31,9 @@ export default function notificationsPlugin () {
 
       acknowledgeNotification: (id) =>
         mp.del(`notifications/${id}`).tap(() =>
-          remove(mp[currentNotifications], { id: Number(id) })
+          // Remove the notification from the local notifications list.
+          mp[currentNotifications] = mp[currentNotifications]
+            .filter((notif) => notif.id !== Number(id))
         )
     })
   }

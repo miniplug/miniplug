@@ -1,4 +1,4 @@
-import partial from 'lodash-es/partial'
+import { partial } from 'ap'
 import { parseDate } from '../util'
 
 export default function boothPlugin (opts = {}) {

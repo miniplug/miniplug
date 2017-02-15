@@ -1,4 +1,4 @@
-import partial from 'lodash-es/partial'
+import { partial } from 'ap'
 import createDebug from 'debug'
 import _wrapWaitlist from '../data/waitlist'
 

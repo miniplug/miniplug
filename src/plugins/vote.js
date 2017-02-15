@@ -1,4 +1,4 @@
-import partial from 'lodash-es/partial'
+import { partial } from 'ap'
 
 export default function votePlugin (opts = {}) {
   const currentVoteStats = Symbol('Votes')
