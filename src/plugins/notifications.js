@@ -30,11 +30,11 @@ export default function notificationsPlugin () {
           .map(wrapNotification),
 
       acknowledgeNotification: (id) =>
-        mp.del(`notifications/${id}`).tap(() =>
+        mp.del(`notifications/${id}`).tap(() => {
           // Remove the notification from the local notifications list.
           mp[currentNotifications] = mp[currentNotifications]
             .filter((notif) => notif.id !== Number(id))
-        )
+        })
     })
   }
 }
