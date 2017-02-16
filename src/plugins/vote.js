@@ -13,23 +13,27 @@ export default function votePlugin (opts = {}) {
       mp[currentGrabs] = []
     })
 
-    mp.on('login', () => {
-      mp.ws.on('vote', ({ i, v }) => {
-        mp[currentVoteStats].push({
-          uid: i,
-          vote: v
-        })
-        const user = mp.user(i)
-        mp.emit('vote', {
-          user,
-          vote: v
-        })
+    function onVote ({ i, v }) {
+      mp[currentVoteStats].push({
+        uid: i,
+        vote: v
       })
-      mp.ws.on('grab', (uid) => {
-        mp[currentGrabs].push(uid)
-        const user = mp.user(uid)
-        mp.emit('grab', user)
+      const user = mp.user(i)
+      mp.emit('vote', {
+        user,
+        vote: v
       })
+    }
+
+    function onGrab (uid) {
+      mp[currentGrabs].push(uid)
+      const user = mp.user(uid)
+      mp.emit('grab', user)
+    }
+
+    mp.on('connected', () => {
+      mp.ws.on('vote', onVote)
+      mp.ws.on('grab', onGrab)
     })
 
     mp.on('roomState', (state) => {

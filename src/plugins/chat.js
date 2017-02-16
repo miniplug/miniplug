@@ -17,11 +17,13 @@ export default function chatPlugin (opts) {
 
   return (mp) => {
     // translate raw socket events to wrapped miniplug events
-    mp.on('login', () => {
-      mp.ws.on('chat', (msg) => {
-        debug('chat', msg.uid, msg.un, msg.message)
-        mp.emit('chat', wrapMessage(mp, msg))
-      })
+    function onChat (msg) {
+      debug('chat', msg.uid, msg.un, msg.message)
+      mp.emit('chat', wrapMessage(mp, msg))
+    }
+
+    mp.on('connected', () => {
+      mp.ws.on('chat', onChat)
     })
 
     // REST API

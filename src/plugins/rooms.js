@@ -41,10 +41,12 @@ export default function roomsPlugin () {
       })
     }
 
-    addUpdateHandler('roomNameUpdate', 'n', 'name')
-    addUpdateHandler('roomDescriptionUpdate', 'd', 'description')
-    addUpdateHandler('roomWelcomeUpdate', 'w', 'welcome')
-    addUpdateHandler('roomMinChatLevelUpdate', 'm', 'minChatLevel')
+    mp.on('connected', () => {
+      addUpdateHandler('roomNameUpdate', 'n', 'name')
+      addUpdateHandler('roomDescriptionUpdate', 'd', 'description')
+      addUpdateHandler('roomWelcomeUpdate', 'w', 'welcome')
+      addUpdateHandler('roomMinChatLevelUpdate', 'm', 'minChatLevel')
+    })
 
     const room = () => mp[currentRoom]
 

@@ -19,17 +19,7 @@ export default function usersPlugin () {
     mp[currentGuestsCount] = 0
     mp[currentUsers] = []
 
-    mp.on('connected', (user) => {
-      mp[currentUser] = wrapUser(user)
-    })
-
-    // keeping things in sync
-    mp.on('roomState', ({ users, meta: { guests } }) => {
-      mp[currentUsers] = users.map(wrapUser)
-      mp[currentGuestsCount] = guests
-    })
-
-    mp.ws.on('userJoin', (user) => {
+    function onUserJoin (user) {
       debug('join', user.id)
       if (user.guest) {
         mp[currentGuestsCount] += 1
@@ -39,9 +29,9 @@ export default function usersPlugin () {
         mp[currentUsers].push(user)
         mp.emit('userJoin', user)
       }
-    })
+    }
 
-    mp.ws.on('userLeave', (id) => {
+    function onUserLeave (id) {
       debug('leave', id)
       if (id === GUEST_ID) {
         if (mp[currentGuestsCount] > 0) {
@@ -56,6 +46,19 @@ export default function usersPlugin () {
           mp.emit('userLeave', user)
         }
       }
+    }
+
+    mp.on('connected', (user) => {
+      mp[currentUser] = wrapUser(user)
+
+      mp.ws.on('userJoin', onUserJoin)
+      mp.ws.on('userLeave', onUserLeave)
+    })
+
+    // keeping things in sync
+    mp.on('roomState', ({ users, meta: { guests } }) => {
+      mp[currentUsers] = users.map(wrapUser)
+      mp[currentGuestsCount] = guests
     })
 
     const me = () => mp[currentUser]

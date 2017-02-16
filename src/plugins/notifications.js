@@ -9,13 +9,15 @@ export default function notificationsPlugin () {
 
     mp[currentNotifications] = []
 
-    mp.on('connected', (user) => {
-      mp[currentNotifications] = user && user.notifications || []
-    })
-
-    mp.ws.on('notify', (notif) => {
+    function onNotify (notif) {
       mp[currentNotifications].push(notif)
       mp.emit('notify', wrapNotification(notif))
+    }
+
+    mp.on('connected', (user) => {
+      mp[currentNotifications] = user && user.notifications || []
+
+      mp.ws.on('notify', onNotify)
     })
 
     Object.assign(mp, {

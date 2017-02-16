@@ -21,34 +21,36 @@ export default function boothPlugin (opts = {}) {
     })
 
     // Socket API
-    mp.on('login', () => {
-      mp.ws.on('advance', (e) => {
-        const previous = historyEntry()
-        if (!e || !e.m) {
-          mp.emit('advance', null, previous)
-          return
-        }
+    function onAdvance (event) {
+      const previous = historyEntry()
+      if (!event || !event.m) {
+        mp.emit('advance', null, previous)
+        return
+      }
 
-        let {
-          h: historyId,
-          m: media,
-          c: djId,
-          p: playlistId,
-          t: time
-        } = e
+      let {
+        h: historyId,
+        m: media,
+        c: djId,
+        p: playlistId,
+        t: time
+      } = event
 
-        time = parseDate(time)
+      time = parseDate(time)
 
-        mp[currentHistoryEntry] = {
-          id: historyId,
-          dj: mp.user(djId),
-          media: media,
-          playlistId: playlistId,
-          time: time
-        }
+      mp[currentHistoryEntry] = {
+        id: historyId,
+        dj: mp.user(djId),
+        media: media,
+        playlistId: playlistId,
+        time: time
+      }
 
-        mp.emit('advance', historyEntry(), previous)
-      })
+      mp.emit('advance', historyEntry(), previous)
+    }
+
+    mp.on('connected', () => {
+      mp.ws.on('advance', onAdvance)
     })
 
     // Rest API

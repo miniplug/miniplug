@@ -16,23 +16,31 @@ export default function waitlistPlugin () {
       mp[currentWaitlist] = wrapWaitlist(state.booth.waitingDJs)
       mp.emit('waitlistUpdate', mp.waitlist(), [])
     })
-    mp.ws.on('djListUpdate', (ids) => {
+
+    function onDjListUpdate (ids) {
       debug('update', ids)
 
       const previous = mp.waitlist()
 
       mp[currentWaitlist] = wrapWaitlist(ids)
       mp.emit('waitlistUpdate', mp.waitlist(), previous)
-    })
+    }
 
-    mp.ws.on('modAddDJ', () => {
+    function onModAddDj () {
       // TODO
-    })
-    mp.ws.on('modMoveDJ', () => {
+    }
+    function onModMoveDj () {
       // TODO
-    })
-    mp.ws.on('modRemoveDJ', () => {
+    }
+    function onModRemoveDj () {
       // TODO
+    }
+
+    mp.on('connected', () => {
+      mp.ws.on('djListUpdate', onDjListUpdate)
+      mp.ws.on('modAddDJ', onModAddDj)
+      mp.ws.on('modMoveDJ', onModMoveDj)
+      mp.ws.on('modRemoveDJ', onModRemoveDj)
     })
 
     const setCycle = (val = true) =>
