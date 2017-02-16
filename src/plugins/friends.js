@@ -1,8 +1,32 @@
 import { partial } from 'ap'
-import wrapUser from '../data/user'
+import { unescape } from 'plug-message-split'
+import _wrapUser from '../data/user'
 
 export default function friendsPlugin () {
   return (mp) => {
+    const wrapUser = partial(_wrapUser, mp)
+
+    function onFriendRequest (name) {
+      getFriendRequests().each((request) => {
+        if (unescape(request.username) === unescape(name)) {
+          mp.emit('friendRequest', wrapUser(request))
+        }
+      })
+    }
+
+    function onFriendAccept (name) {
+      getFriends().each((friend) => {
+        if (friend.username === unescape(name)) {
+          mp.emit('friendAccept', friend)
+        }
+      })
+    }
+
+    mp.on('connected', () => {
+      mp.ws.on('friendRequest', onFriendRequest)
+      mp.ws.on('friendAccept', onFriendAccept)
+    })
+
     // REST Friend API
     const getFriends = () =>
       mp.get('friends').map(wrapUser)
