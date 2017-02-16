@@ -1700,6 +1700,8 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
 
  - [advance](#event-advance)
  - [chat](#event-chat)
+ - [friendAccept](#event-friendaccept)
+ - [friendRequest](#event-friendrequest)
  - [grab](#event-grab)
  - [guestJoin](#event-guestjoin)
  - [guestLeave](#event-guestleave)
@@ -1749,6 +1751,43 @@ Fired when a chat message is received.
 mp.on('chat', (message) => {
   if (/^!whoami/.test(message.message)) {
     message.reply(`You are ${message.un}, #${message.uid}.`)
+  }
+})
+```
+
+<a id="event-friendaccept"></a>
+## 'friendAccept'
+
+Fired when a user accepts a friend request.
+
+**Parameters**
+
+ - `user` - The [User](#class-user) that accepted the request.
+
+```js
+mp.on('friendAccept', (user) => {
+  mp.chat(`Thanks ${user}, for accepting my friend request!`)
+})
+```
+
+<a id="event-friendrequest"></a>
+## 'friendRequest'
+
+Fired when a user sends you a friend request. The [User](#class-user) methods
+[.befriend](#user-befriend) and [.rejectRequest](#user-rejectrequest) can be
+used to respond to the request.
+
+**Parameters**
+
+ - `user` - The [User](#class-user) that sent the request.
+
+```js
+mp.on('friendRequest', (user) => {
+  if (user.level < 5) {
+    user.befriend()
+  } else {
+    user.chat('I only befriend users whose level is below 5, sorry.')
+    user.rejectRequest()
   }
 })
 ```

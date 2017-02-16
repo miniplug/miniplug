@@ -6,6 +6,11 @@ export default function friendsPlugin () {
   return (mp) => {
     const wrapUser = partial(_wrapUser, mp)
 
+    // Friendship events only include the requesting/accepting user's name.
+    // Plug.dj refreshes its client-side friends or invites list when these
+    // events come in. Miniplug requests the friends or invites list and emits
+    // the events with a user object, so it's easy to respond to the events
+    // using the `user.befriend` and `user.rejectRequest` methods.
     function onFriendRequest (name) {
       getFriendRequests().each((request) => {
         if (unescape(request.username) === unescape(name)) {
