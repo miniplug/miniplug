@@ -9,6 +9,11 @@ export default function wrapUser (mp, user) {
   const mention = `@${user.username}`
 
   return makeProto(user, {
+    hasPermission: (role) =>
+      (user.role >= role || user.gRole >= role),
+    hasGlobalPermission: (role) =>
+      user.gRole >= role,
+
     chat: partial(mp.chat, mention),
     emote: partial(mp.chat, `/me ${mention}`),
 

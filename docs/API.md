@@ -83,6 +83,10 @@
  - [User](#class-user)
    - [user.id](#user-id)
    - [user.username](#user-username)
+   - [user.role](#user-role)
+   - [user.gRole](#user-grole)
+   - [user.hasPermission(role)](#user-haspermission)
+   - [user.hasGlobalPermission(role)](#user-hasglobalpermission)
    - [user.chat(text)](#user-chat)
    - [user.emote(text)](#user-emote)
    - [user.mention()](#user-mention)
@@ -165,6 +169,7 @@
    - [notification.from](#notification-from)
    - [notification.amount](#notification-amount)
    - [notification.acknowledge()](#notification-acknowledge)
+ - [User Roles](#role)
  - [Mute Durations](#muteduration)
  - [Mute Reasons](#mutereason)
  - [Ban Durations](#banduration)
@@ -936,6 +941,61 @@ User ID.
 
 Username.
 
+<a id="user-role"></a>
+### user.role: [ROLE](#role)
+
+The user's role in the current room. One of
+
+ - `ROLE.NONE`,
+ - `ROLE.DJ`,
+ - `ROLE.BOUNCER`,
+ - `ROLE.MANAGER`,
+ - `ROLE.COHOST`,
+ - `ROLE.HOST`.
+
+<a id="user-grole"></a>
+### user.gRole: [ROLE](#role)
+
+The user's global role. One of
+
+ - `ROLE.NONE`,
+ - `ROLE.AMBASSADOR`,
+ - `ROLE.ADMIN`.
+
+<a id="user-haspermission"></a>
+### user.hasPermission(role: [ROLE](#role)): bool
+
+Check if the user has a role in the current room.
+
+This function checks if either one of the role in the current room, or the
+global role is equal to or higher than the given role.
+
+**Parameters**
+
+ - `role` - The permission to check for.
+
+```js
+import { ROLE } from 'miniplug'
+mp.me().hasPermission(ROLE.NONE) // → true
+mp.me().hasPermission(ROLE.BOUNCER) // depends on your role in the current room
+```
+
+<a id="user-hasglobalpermission"></a>
+### user.hasGlobalPermission(role: [ROLE](#role)): bool
+
+Check if the user has the given global role. Returns `true` if the user's global
+role is equal to or higher than the given role.
+
+**Parameters**
+
+ - `role` - The role to check for.
+
+```js
+import { ROLE } from 'miniplug'
+mp.me().hasGlobalPermission(ROLE.NONE) // → true
+mp.me().hasGlobalPermission(ROLE.AMBASSADOR)
+```
+
 <a id="user-chat"></a>
 ### user.chat(text): Promise&lt;[ChatMessage](#class-chatmessage)>
 
@@ -1516,6 +1576,45 @@ Amount of PP in a gift. Only present when the notification `action` is `gift`.
 Acknowledge and remove the notification.
 
 <hr>
+
+<a id="role"></a>
+## User Roles
+
+```js
+import { ROLE } from 'miniplug'
+```
+
+### ROLE.NONE
+
+A normal user.
+
+### ROLE.DJ
+
+A Resident DJ in the current room.
+
+### ROLE.BOUNCER
+
+A Bouncer in the current room.
+
+### ROLE.MANAGER
+
+A Manager in the current room.
+
+### ROLE.COHOST
+
+A Cohost in the current room.
+
+### ROLE.HOST
+
+The current room's host.
+
+### ROLE.AMBASSADOR
+
+A plug.dj Brand Ambassador.
+
+### ROLE.ADMIN
+
+A plug.dj site admin.
 
 <a id="muteduration"></a>
 ## Mute Durations
