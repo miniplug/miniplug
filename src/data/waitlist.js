@@ -1,20 +1,18 @@
+import { getId } from '../util'
 import wrapUser from './user'
 
-export default function wrapWaitlist (mp, waitlist) {
-  const getId = (item) =>
-    typeof item === 'object' ? item.id : item
+// Have to use a real class to get working inheritance from Array. Methods are
+// still added inside wrapWaitlist, as usual.
+class Waitlist extends Array {}
 
-  // Have to use a real class to get working inheritance from Array.
-  class Waitlist extends Array {
-    contains (user) {
-      return wrapped.some((waiting) => waiting.id === getId(user))
-    }
-    positionOf (user) {
-      return wrapped.findIndex((waiting) => waiting.id === getId(user))
-    }
-    toJSON () { return waitlist }
-  }
-  const wrapped = new Waitlist()
+export default function wrapWaitlist (mp, waitlist) {
+  const wrapped = Object.assign(new Waitlist(), {
+    contains: (user) =>
+      wrapped.some((waiting) => waiting.id === getId(user)),
+    positionOf: (user) =>
+      wrapped.findIndex((waiting) => waiting.id === getId(user)),
+    toJSON: () => waitlist
+  })
 
   waitlist.forEach((id) => {
     wrapped.push(mp.user(id) || wrapUser(mp, { id: id }))
