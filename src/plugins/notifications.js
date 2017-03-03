@@ -15,7 +15,7 @@ export default function notificationsPlugin () {
     }
 
     mp.on('connected', (user) => {
-      mp[currentNotifications] = user && user.notifications || []
+      mp[currentNotifications] = (user && user.notifications) || []
 
       mp.ws.on('notify', onNotify)
     })

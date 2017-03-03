@@ -40,7 +40,7 @@ export default function chatPlugin (opts) {
       return new Promise((resolve, reject) => {
         const intv = setTimeout(() => {
           mp.removeListener('chat', onChat)
-          reject()
+          reject(new Error('Waiting for chat message to come back timed out.'))
         }, opts.timeout)
 
         const onChat = (chat) => {
