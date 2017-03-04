@@ -1,5 +1,4 @@
 import { partial } from 'ap'
-import { stringify as stringifyQS } from 'querystring'
 import createDebug from 'debug'
 import _wrapRoom from '../data/room'
 
@@ -51,10 +50,10 @@ export default function roomsPlugin () {
     const room = () => mp[currentRoom]
 
     const getRooms = (query = '', page = 0, limit = 50) =>
-      mp.get(`rooms?${stringifyQS({ q: query, page, limit })}`)
+      mp.get('rooms', { q: query, page, limit })
         .map(wrapRoom)
     const getFavorites = (query = '', page = 0, limit = 50) =>
-      mp.get(`rooms/favorites?${stringifyQS({ q: query, page, limit })}`)
+      mp.get('rooms/favorites', { q: query, page, limit })
         .map(wrapRoom)
     const createRoom = (name, isPrivate = false) =>
       mp.post('rooms', { name: name, private: isPrivate }).get(0)
