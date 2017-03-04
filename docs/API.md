@@ -78,6 +78,7 @@
    - [room.name](#room-name)
    - [room.slug](#room-slug)
    - [room.join()](#room-join)
+   - [room.getHost()](#room-gethost)
    - [room.favorite()](#room-favorite)
    - [room.unfavorite()](#room-unfavorite)
  - [User](#class-user)
@@ -899,6 +900,25 @@ Join this room. See [mp.join(room)](#mp-join).
 mp.getRooms().then((rooms) => {
   const room = rooms[0]
   return room.join()
+})
+```
+
+<a id="room-gethost"></a>
+### room.getHost(): Promise&lt;[User](#class-user)>
+
+Get this room's host.
+
+```js
+// Attempt to befriend the host of the most populated room.
+mp.getRooms().get(0).then((room) => {
+  return room.getHost()
+}).then((host) => {
+  return host.befriend()
+})
+
+// To get the host from the current room, use:
+mp.room().getHost().then((host) => {
+  // Do whatever
 })
 ```
 

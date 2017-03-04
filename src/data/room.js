@@ -14,6 +14,8 @@ export default function wrapRoom (mp, room) {
   delete room.favorite
 
   return makeProto(room, {
+    getHost: partial(mp.getUser, room.hostID),
+
     join: partial(mp.join, room.slug),
 
     favorite: partial(mp.favoriteRoom, room.id),
