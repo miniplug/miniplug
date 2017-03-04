@@ -9,6 +9,9 @@ import * as constants from './constants'
 import createBackoff from './createBackoff'
 import httpPlugin from './plugins/http'
 import usersPlugin from './plugins/users'
+import ignoresPlugin from './plugins/ignores'
+import mutesPlugin from './plugins/mutes'
+import bansPlugin from './plugins/bans'
 import notificationsPlugin from './plugins/notifications'
 import boothPlugin from './plugins/booth'
 import waitlistPlugin from './plugins/waitlist'
@@ -25,6 +28,9 @@ import votePlugin from './plugins/vote'
 Object.assign(miniplug, {
   httpPlugin,
   usersPlugin,
+  ignoresPlugin,
+  mutesPlugin,
+  bansPlugin,
   notificationsPlugin,
   boothPlugin,
   waitlistPlugin,
@@ -111,6 +117,9 @@ function miniplug (opts = {}) {
     backoff: createBackoff({ increment: 200, max: 2200 })
   }))
   use(usersPlugin())
+  use(ignoresPlugin())
+  use(mutesPlugin())
+  use(bansPlugin())
   use(notificationsPlugin())
   use(boothPlugin())
   use(waitlistPlugin())
@@ -124,36 +133,8 @@ function miniplug (opts = {}) {
   use(storePlugin())
   use(votePlugin())
 
+  // Misc
   Object.assign(mp, {
-    // REST: Ban APIs
-    getBans: partial(mp.get, 'bans'),
-    ban: (uid, duration = constants.BAN_DURATION.HOUR, reason = constants.BAN_REASON.SPAMMING) =>
-      mp.post('bans/add', {
-        userID: uid,
-        reason: reason,
-        duration: duration
-      }).get(0),
-    unban: (uid) =>
-      mp.del(`bans/${uid}`),
-
-    // REST: Ignores APIs
-    getIgnoredUsers: partial(mp.get, 'ignores'),
-    ignore: (uid) =>
-      mp.post('ignores', { id: uid }).get(0),
-    unignore: (uid) =>
-      mp.del(`ignores/${uid}`),
-
-    // REST: Mutes APIs
-    getMutes: partial(mp.get, 'mutes'),
-    mute: (uid, duration = constants.MUTE_DURATION.SHORT, reason = constants.MUTE_REASON.VIOLATING_RULES) =>
-      mp.post('mutes', {
-        userID: uid,
-        duration: duration,
-        reason: reason
-      }),
-    unmute: (uid) =>
-      mp.del(`mutes/${uid}`),
-
     // REST: News APIs
     getNews: partial(mp.get, 'news'),
   })
