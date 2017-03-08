@@ -7,7 +7,7 @@ test('plug.dj is reachable', (t) => {
   got('https://plug.dj/').then((response) => {
     if (response.body.indexOf('<title>maintenance') !== -1) {
       t.fail('plug.dj is currently in maintenance mode.')
-    } {
+    } else {
       t.pass('plug.dj is reachable')
     }
   }).catch((err) => t.fail(err.message))

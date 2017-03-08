@@ -1,0 +1,21 @@
+{
+  "data": [
+    {
+      "avatarID": "base01",
+      "badge": "bt-g",
+      "gRole": 0,
+      "guest": false,
+      "id": 123456,
+      "joined": "2012-07-13 21:47:10.132000",
+      "language": null,
+      "level": 3,
+      "silver": false,
+      "slug": null,
+      "sub": 0,
+      "username": "Username"
+    }
+  ],
+  "meta": {},
+  "status": "ok",
+  "time": 5.37109375
+}
