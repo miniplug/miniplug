@@ -38,12 +38,10 @@ export default function httpPlugin (httpOpts) {
     const put = (url, data) => request(url, { method: 'put', body: data })
     const del = (url, data) => request(url, { method: 'delete', body: data })
 
-    Object.assign(mp, {
-      request,
-      post,
-      get,
-      put,
-      del
-    })
+    mp.request = request
+    mp.post = post
+    mp.get = get
+    mp.put = put
+    mp.del = del
   }
 }
