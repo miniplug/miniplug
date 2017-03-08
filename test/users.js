@@ -13,3 +13,15 @@ test('Retrieving a user', (t) => {
     t.fail(err.message)
   })
 })
+
+test('Get the current user', (t) => {
+  t.plan(1)
+
+  nock.get('/_/users/me').reply(200, require('./mocks/users/me.json'))
+
+  miniplug().getMe().then((user) => {
+    t.equal(user.username, 'ReAnna')
+  }).catch((err) => {
+    t.fail(err.message)
+  })
+})
