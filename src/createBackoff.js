@@ -44,7 +44,9 @@ export default function createBackoff ({ increment, max }) {
     const result = lastCall.then(() => fn(...args))
 
     // `lastCall` will resolve after the backoff duration is over.
-    lastCall = result.return(null) // Ignore return value of previous call.
+    lastCall = result
+      .return(null) // Ignore return value of previous call.
+      .catch(() => null) // Ignore errors.
       .delay(currentDelay)
       .tap(unqueueCall)
 
