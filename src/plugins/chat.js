@@ -20,9 +20,17 @@ export default function chatPlugin (opts) {
       debug('chat', msg.uid, msg.un, msg.message)
       mp.emit('chat', wrapMessage(mp, msg))
     }
+    function onChatDelete({ c, mi }) {
+      debug('chatDelete', mi, c)
+      mp.emit('chatDelete', {
+        cid: c,
+        user: mp.user(mi)
+      })
+    }
 
     mp.on('connected', () => {
       mp.ws.on('chat', onChat)
+      mp.ws.on('chatDelete', onChatDelete)
     })
 
     // REST API

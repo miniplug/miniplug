@@ -1819,6 +1819,7 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
 
  - [advance](#event-advance)
  - [chat](#event-chat)
+ - [chatDelete](#event-chatdelete)
  - [friendAccept](#event-friendaccept)
  - [friendRequest](#event-friendrequest)
  - [grab](#event-grab)
@@ -1871,6 +1872,23 @@ mp.on('chat', (message) => {
   if (/^!whoami/.test(message.message)) {
     message.reply(`You are ${message.un}, #${message.uid}.`)
   }
+})
+```
+
+<a id="event-chatdelete"></a>
+## 'chatDelete'
+
+Fired when a chat message is deleted.
+
+**Parameters**
+
+ - `del` - An object with two properties:
+   - `cid` - The ID of the chat message that is being deleted;
+   - `user` - The [User](#class-user) that deleted the message.
+
+```js
+mp.on('chatDelete', (del) => {
+  console.info(`${del.user.username} deleted message #${del.cid}.`)
 })
 ```
 
