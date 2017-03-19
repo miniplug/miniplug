@@ -33,17 +33,19 @@
   "devDependencies": {
     "buble": "^0.15.2",
     "builtin-modules": "^1.1.1",
-    "mocha": "3.2.0",
+    "nock": "^9.0.9",
     "rollup": "^0.41.0",
     "rollup-plugin-buble": "^0.15.0",
     "rollup-plugin-node-resolve": "^2.0.0",
-    "standard": "^10.0.0-beta.0"
+    "standard": "^10.0.0-beta.0",
+    "tape": "^4.6.3"
   },
   "scripts": {
     "prepublish": "npm run build",
     "build": "rollup -c",
     "lint": "standard rollup.config.js src/**/*.js test/**/*.js",
-    "test": "npm run lint && mocha --require buble/register"
+    "tap": "tape -r buble/register test/*.js",
+    "test": "npm run lint && npm run tap"
   },
   "standard": {
     "env": "mocha"

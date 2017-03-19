@@ -1,0 +1,38 @@
+{
+  "data": [
+    {
+      "avatarID": "rave11",
+      "badge": "animal-o03",
+      "blurb": "now at https://welovekpop.club/ &lt;3",
+      "gRole": 0,
+      "guest": false,
+      "id": 4393540,
+      "ignores": [],
+      "joined": "2013-03-13 05:38:59.942000",
+      "language": "en",
+      "level": 17,
+      "notifications": [],
+      "pp": 117951,
+      "pw": true,
+      "settings": {
+        "chatImages": false,
+        "chatTimestamps": 24,
+        "emoji": true,
+        "friendAvatarsOnly": false,
+        "notifyDJ": false,
+        "notifyFriendJoin": true,
+        "notifyScore": false,
+        "tooltips": true,
+        "videoOnly": false
+      },
+      "silver": false,
+      "slug": "reanna",
+      "sub": 0,
+      "username": "ReAnna",
+      "xp": 153447
+    }
+  ],
+  "meta": {},
+  "status": "ok",
+  "time": 13.772010803222656
+}

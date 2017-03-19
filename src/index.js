@@ -1,5 +1,3 @@
-import login from 'plug-login'
-import socket from 'plug-socket'
 import { partial } from 'ap'
 import Promise from 'bluebird'
 import { EventEmitter } from 'events'
@@ -8,6 +6,7 @@ import createDebug from 'debug'
 import * as constants from './constants'
 import createBackoff from './createBackoff'
 import httpPlugin from './plugins/http'
+import connectPlugin from './plugins/connect'
 import usersPlugin from './plugins/users'
 import ignoresPlugin from './plugins/ignores'
 import mutesPlugin from './plugins/mutes'
@@ -27,6 +26,7 @@ import votePlugin from './plugins/vote'
 
 Object.assign(miniplug, {
   httpPlugin,
+  connectPlugin,
   usersPlugin,
   ignoresPlugin,
   mutesPlugin,
@@ -49,7 +49,8 @@ export default miniplug
 
 const debug = createDebug('miniplug:miniplug')
 const defaultOptions = {
-  host: 'https://plug.dj'
+  host: 'https://plug.dj',
+  connect: true
 }
 
 function miniplug (opts = {}) {
@@ -62,39 +63,8 @@ function miniplug (opts = {}) {
   // trim trailing slashes
   const plugHost = opts.host.replace(/\/+$/, '')
 
-  // log in
-  const loginOpts = { host: plugHost, authToken: true }
-  const loginPromise = Promise.resolve(
-    opts.email
-      ? login.user(opts.email, opts.password, loginOpts)
-      : login.guest(loginOpts)
-  )
-
-  const ws = socket()
-
   mp.on('login', () => debug('authenticated'))
   mp.on('connected', () => debug('connected'))
-
-  const connected = loginPromise
-    .then((res) => new Promise((resolve, reject) => {
-      ws.auth(res.token)
-      ws.once('error', reject)
-
-      mp.isConnected = true
-      mp.emit('login')
-
-      const me = mp.getMe()
-      ws.once('ack', () => {
-        resolve({ cookie: res.cookie })
-        ws.removeListener('error', reject)
-
-        me.then((user) => mp.emit('connected', user))
-      })
-    }))
-    .catch((err) => {
-      mp.emit('error', err)
-      throw err
-    })
 
   // Super-Duper Advanced Plugin API
   function use (plugin) {
@@ -103,11 +73,7 @@ function miniplug (opts = {}) {
   }
 
   // make miniplug!
-  Object.assign(mp, {
-    ws,
-    use,
-    connected
-  })
+  mp.use = use
 
   use(httpPlugin({
     host: plugHost,
@@ -115,6 +81,9 @@ function miniplug (opts = {}) {
     // https://github.com/SooYou/plugged/blob/856bd0ef47307491c0ad95cba7006cd4721828fd/query.js#L4
     // And that seems pretty robust.
     backoff: createBackoff({ increment: 200, max: 2200 })
+  }))
+  use(connectPlugin({
+    host: plugHost
   }))
   use(usersPlugin())
   use(ignoresPlugin())
@@ -138,6 +107,8 @@ function miniplug (opts = {}) {
     // REST: News APIs
     getNews: partial(mp.get, 'news'),
   })
+
+  if (opts.connect) mp.connect(opts)
 
   return mp
 }
