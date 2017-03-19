@@ -1820,7 +1820,6 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
  - [advance](#event-advance)
  - [chat](#event-chat)
  - [chatDelete](#event-chatdelete)
- - [djListCycle](#event-djlistcycle)
  - [friendAccept](#event-friendaccept)
  - [friendRequest](#event-friendrequest)
  - [grab](#event-grab)
@@ -1834,6 +1833,7 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
  - [userJoin](#event-userjoin)
  - [userLeave](#event-userleave)
  - [vote](#event-vote)
+ - [waitlistCycle](#event-waitlistcycle)
  - [waitlistUpdate](#event-waitlistupdate)
 
 <a id="event-advance"></a>
@@ -1890,23 +1890,6 @@ Fired when a chat message is deleted.
 ```js
 mp.on('chatDelete', (del) => {
   console.info(`${del.user.username} deleted message #${del.cid}.`)
-})
-```
-
-<a id="event-djlistcycle"></a>
-## 'djListCycle'
-
-Fired when the waitlist cycle status changes.
-
-**Parameters**
-
- - `update` - An object with two properties:
-   - `shouldCycle` - Whether the waitlist should cycle.
-   - `user` - The [User](#class-user) that changed this setting.
-
-```js
-mp.on('djListCycle', (update) => {
-  console.info(`Waitlist cycling is now ${update.shouldCycle ? 'enabled' : 'disabled'}!`)
 })
 ```
 
@@ -2121,6 +2104,23 @@ mp.on('vote', (data) => {
   } else if (data.vote === -1) {
     console.log(data.user.mention(), 'meh\'d this track…')
   }
+})
+```
+
+<a id="event-waitlistcycle"></a>
+## 'waitlistCycle'
+
+Fired when the waitlist cycle status changes.
+
+**Parameters**
+
+ - `update` - An object with two properties:
+   - `shouldCycle` - Whether the waitlist should cycle.
+   - `user` - The [User](#class-user) that changed this setting.
+
+```js
+mp.on('waitlistCycle', (update) => {
+  console.info(`Waitlist cycling is now ${update.shouldCycle ? 'enabled' : 'disabled'}!`)
 })
 ```
 

@@ -37,7 +37,7 @@ export default function waitlistPlugin () {
     }
 
     function onDjListCycle ({ f, mi }) {
-      mp.emit('djListCycle', {
+      mp.emit('waitlistCycle', {
         shouldCycle: f,
         user: mp.user(mi)
       })
