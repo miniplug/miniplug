@@ -1,6 +1,5 @@
 import { partial } from 'ap'
 import { unescape } from 'plug-message-split'
-import Promise from 'bluebird'
 import makeProto from '../wrap'
 
 export default function wrapMessage (mp, message) {

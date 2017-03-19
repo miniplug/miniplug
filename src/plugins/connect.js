@@ -1,4 +1,3 @@
-import Promise from 'bluebird'
 import login from 'plug-login'
 import socket from 'plug-socket'
 import createDebug from 'debug'

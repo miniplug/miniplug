@@ -1,5 +1,4 @@
 import { partial } from 'ap'
-import Promise from 'bluebird'
 import { EventEmitter } from 'events'
 import createDebug from 'debug'
 

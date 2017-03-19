@@ -1,4 +1,3 @@
-import Promise from 'bluebird'
 import createDebug from 'debug'
 
 const debug = createDebug('miniplug:backoff')

@@ -1,4 +1,5 @@
 import buble from 'rollup-plugin-buble'
+import inject from 'rollup-plugin-inject'
 import resolve from 'rollup-plugin-node-resolve'
 import builtins from 'builtin-modules'
 
@@ -19,6 +20,9 @@ export default {
         node: 4
       },
       objectAssign: 'Object.assign'
+    }),
+    inject({
+      Promise: 'bluebird'
     }),
     resolve({
       module: true,

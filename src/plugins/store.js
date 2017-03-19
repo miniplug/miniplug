@@ -1,5 +1,4 @@
 import { partial } from 'ap'
-import Promise from 'bluebird'
 import _wrapStoreProduct from '../data/storeProduct'
 import _wrapInventoryProduct from '../data/inventoryProduct'
 import { getId } from '../util'
