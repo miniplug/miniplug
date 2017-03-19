@@ -21,7 +21,7 @@ npm install --save miniplug
 ```js
 const miniplug = require('miniplug')
 
-const mp = miniplug({ user: 'admin@plug.dj', password: 'hunter2' })
+const mp = miniplug({ email: 'admin@plug.dj', password: 'hunter2' })
 // Join a room
 mp.join('tastycat').then((room) => {
   mp.chat(`Hello ${room.name}! :wave:`)
