@@ -36,11 +36,19 @@ export default function waitlistPlugin () {
       // TODO
     }
 
+    function onDjListCycle ({ f, mi }) {
+      mp.emit('djListCycle', {
+        shouldCycle: f,
+        user: mp.user(mi)
+      })
+    }
+
     mp.on('connected', () => {
       mp.ws.on('djListUpdate', onDjListUpdate)
       mp.ws.on('modAddDJ', onModAddDj)
       mp.ws.on('modMoveDJ', onModMoveDj)
       mp.ws.on('modRemoveDJ', onModRemoveDj)
+      mp.ws.on('djListCycle', onDjListCycle)
     })
 
     const setCycle = (val = true) =>

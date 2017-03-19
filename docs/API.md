@@ -1820,6 +1820,7 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
  - [advance](#event-advance)
  - [chat](#event-chat)
  - [chatDelete](#event-chatdelete)
+ - [djListCycle](#event-djlistcycle)
  - [friendAccept](#event-friendaccept)
  - [friendRequest](#event-friendrequest)
  - [grab](#event-grab)
@@ -1883,12 +1884,29 @@ Fired when a chat message is deleted.
 **Parameters**
 
  - `del` - An object with two properties:
-   - `cid` - The ID of the chat message that is being deleted;
+   - `cid` - The ID of the chat message that is being deleted.
    - `user` - The [User](#class-user) that deleted the message.
 
 ```js
 mp.on('chatDelete', (del) => {
   console.info(`${del.user.username} deleted message #${del.cid}.`)
+})
+```
+
+<a id="event-djlistcycle"></a>
+## 'djListCycle'
+
+Fired when the waitlist cycle status changes.
+
+**Parameters**
+
+ - `update` - An object with two properties:
+   - `shouldCycle` - Whether the waitlist should cycle.
+   - `user` - The [User](#class-user) that changed this setting.
+
+```js
+mp.on('djListCycle', (update) => {
+  console.info(`Waitlist cycling is now ${update.shouldCycle ? 'enabled' : 'disabled'}!`)
 })
 ```
 
