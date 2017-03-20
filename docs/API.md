@@ -1833,7 +1833,9 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
  - [userJoin](#event-userjoin)
  - [userLeave](#event-userleave)
  - [vote](#event-vote)
+ - [waitlistClear](#event-waitlistclear)
  - [waitlistCycle](#event-waitlistcycle)
+ - [waitlistLock](#event-waitlistlock)
  - [waitlistUpdate](#event-waitlistupdate)
 
 <a id="event-advance"></a>
@@ -2107,6 +2109,22 @@ mp.on('vote', (data) => {
 })
 ```
 
+<a id="event-waitlistclear"></a>
+## 'waitlistClear'
+
+Fired when the waitlist is cleared.
+
+**Parameters**
+
+ - `update` - An object with the following properties:
+   - `user` - The [User](#class-user) that cleared the waitlist.
+
+```js
+mp.on('waitlistClear', (update) => {
+  console.info(`${update.user.mention()} cleared the waitlist!`)
+})
+```
+
 <a id="event-waitlistcycle"></a>
 ## 'waitlistCycle'
 
@@ -2121,6 +2139,28 @@ Fired when the waitlist cycle status changes.
 ```js
 mp.on('waitlistCycle', (update) => {
   console.info(`Waitlist cycling is now ${update.shouldCycle ? 'enabled' : 'disabled'}!`)
+})
+```
+
+<a id="event-waitlistlock"></a>
+## 'waitlistLock'
+
+Fired when the waitlist lock status changes.
+
+**Parameters**
+
+ - `update` - An object with the following properties:
+   - `locked` - A boolean indicating the new waitlist locked status.
+   - `cleared` - True if the waitlist was also cleared.
+   - `user` - The [User](#class-user) that changed this setting.
+
+```js
+mp.on('waitlistLock', (update) => {
+  let verb = 'unlocked'
+  if (update.cleared) verb = 'cleared'
+  else if (update.locked) verb = 'locked'
+
+  console.info(`${update.user.mention()} ${verb} the waitlist.`)
 })
 ```
 

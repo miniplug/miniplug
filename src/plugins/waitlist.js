@@ -43,12 +43,26 @@ export default function waitlistPlugin () {
       })
     }
 
+    function onDjListLocked ({ f, c, mi }) {
+      const user = mp.user(mi)
+      mp.emit('waitlistLock', {
+        locked: f,
+        cleared: !!c,
+        user
+      })
+
+      if (c) {
+        mp.emit('waitlistClear', { user })
+      }
+    }
+
     mp.on('connected', () => {
       mp.ws.on('djListUpdate', onDjListUpdate)
       mp.ws.on('modAddDJ', onModAddDj)
       mp.ws.on('modMoveDJ', onModMoveDj)
       mp.ws.on('modRemoveDJ', onModRemoveDj)
       mp.ws.on('djListCycle', onDjListCycle)
+      mp.ws.on('djListLocked', onDjListLocked)
     })
 
     const setCycle = (val = true) =>
