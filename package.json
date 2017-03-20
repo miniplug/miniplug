@@ -18,7 +18,8 @@
   },
   "files": [
     "index.js",
-    "index.es.js"
+    "index.es.js",
+    "docs"
   ],
   "dependencies": {
     "bluebird": "^3.4.6",
