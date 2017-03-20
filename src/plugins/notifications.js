@@ -1,4 +1,4 @@
-import { partial } from 'ap'
+import { partial } from '../util'
 import _wrapNotification from '../data/notification'
 
 export default function notificationsPlugin () {

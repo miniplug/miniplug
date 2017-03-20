@@ -1,7 +1,6 @@
-import { partial } from 'ap'
 import _wrapStoreProduct from '../data/storeProduct'
 import _wrapInventoryProduct from '../data/inventoryProduct'
-import { getId } from '../util'
+import { getId, partial } from '../util'
 
 export default function storePlugin () {
   return (mp) => {

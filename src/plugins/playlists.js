@@ -1,7 +1,6 @@
-import { partial } from 'ap'
 import _wrapPlaylist from '../data/playlist'
 import _wrapMedia from '../data/media'
-import { getId, getIds } from '../util'
+import { getId, getIds, partial } from '../util'
 
 export default function playlistsPlugin () {
   return (mp) => {

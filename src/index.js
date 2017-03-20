@@ -1,7 +1,7 @@
-import { partial } from 'ap'
 import { EventEmitter } from 'events'
 import createDebug from 'debug'
 
+import { partial } from './util'
 import * as constants from './constants'
 import createBackoff from './createBackoff'
 import httpPlugin from './plugins/http'

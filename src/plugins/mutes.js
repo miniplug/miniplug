@@ -1,4 +1,4 @@
-import { partial } from 'ap'
+import { partial } from '../util'
 import { MUTE_DURATION, MUTE_REASON } from '../constants'
 
 export default function mutesPlugin () {

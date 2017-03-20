@@ -1,4 +1,4 @@
-import { partial } from 'ap'
+import { partial } from '../util'
 
 export default function votePlugin (opts = {}) {
   const currentVoteStats = Symbol('Votes')

@@ -1,4 +1,4 @@
-import { partial } from 'ap'
+import { partial } from '../util'
 import _wrapHistoryEntry from '../data/historyEntry'
 
 export default function historyPlugin () {

@@ -1,4 +1,4 @@
-import { partial } from 'ap'
+import { partial } from '../util'
 import { unescape } from 'plug-message-split'
 import _wrapUser from '../data/user'
 

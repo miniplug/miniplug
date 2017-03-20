@@ -1,4 +1,4 @@
-import { partial } from 'ap'
+import { partial } from '../util'
 import makeProto from '../wrap'
 
 export default function wrapMedia (mp, playlistId, media) {

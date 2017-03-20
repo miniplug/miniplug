@@ -1,6 +1,5 @@
-import { partial } from 'ap'
 import makeProto from '../wrap'
-import { parseDate } from '../util'
+import { partial, parseDate } from '../util'
 import wrapMedia from './media'
 import wrapRoom from './room'
 import wrapUser from './user'

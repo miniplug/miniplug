@@ -1,4 +1,4 @@
-import { partial } from 'ap'
+import { partial } from '../util'
 import createDebug from 'debug'
 import wrapMessage from '../data/chat'
 
@@ -20,7 +20,7 @@ export default function chatPlugin (opts) {
       debug('chat', msg.uid, msg.un, msg.message)
       mp.emit('chat', wrapMessage(mp, msg))
     }
-    function onChatDelete({ c, mi }) {
+    function onChatDelete ({ c, mi }) {
       debug('chatDelete', mi, c)
       mp.emit('chatDelete', {
         cid: c,

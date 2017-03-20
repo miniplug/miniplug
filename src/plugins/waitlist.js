@@ -1,4 +1,4 @@
-import { partial } from 'ap'
+import { partial } from '../util'
 import createDebug from 'debug'
 import _wrapWaitlist from '../data/waitlist'
 

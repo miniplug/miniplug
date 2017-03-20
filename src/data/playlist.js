@@ -1,4 +1,4 @@
-import { partial } from 'ap'
+import { partial } from '../util'
 import makeProto from '../wrap'
 import wrapMedia from './media'
 

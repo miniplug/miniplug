@@ -1,5 +1,4 @@
-import { partial } from 'ap'
-import { parseDate } from '../util'
+import { partial, parseDate } from '../util'
 
 export default function boothPlugin (opts = {}) {
   const currentHistoryEntry = Symbol('History entry')

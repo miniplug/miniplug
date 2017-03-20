@@ -1,4 +1,4 @@
-import { partial } from 'ap'
+import { partial } from '../util'
 
 export default function ignoresPlugin () {
   return (mp) => {
