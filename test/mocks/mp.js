@@ -1,7 +1,7 @@
 const Promise = require('bluebird')
 const miniplug = require('../../')
 
-module.exports = function () {
+module.exports = () => {
   const mp = miniplug({
     connect: false
   })

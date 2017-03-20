@@ -29,6 +29,7 @@
     "plug-socket": "^0.4.0"
   },
   "devDependencies": {
+    "async-to-gen": "^1.3.2",
     "buble": "^0.15.2",
     "builtin-modules": "^1.1.1",
     "glob": "^7.1.1",
@@ -48,7 +49,7 @@
     "build": "rollup -c",
     "rebuild": "node has-changed || rollup -c",
     "lint": "standard rollup.config.js src/**/*.js test/**/*.js",
-    "tap": "tape -r buble/register test/*.js",
+    "tap": "tape -r ./test/_init.js test/*.js",
     "test": "npm-run-all lint rebuild tap"
   },
   "standard": {
