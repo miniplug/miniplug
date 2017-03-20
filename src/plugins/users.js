@@ -47,11 +47,27 @@ export default function usersPlugin () {
       }
     }
 
+    function onUserUpdate (props) {
+      const user = mp.user(props.i)
+      if (!user) return
+
+      delete props.i
+      const oldProps = Object.keys(props).reduce((o, name) => {
+        o[name] = user[name]
+        return o
+      }, {})
+
+      Object.assign(user, props)
+
+      mp.emit('userUpdate', user, oldProps)
+    }
+
     mp.on('connected', (user) => {
       mp[currentUser] = wrapUser(user)
 
       mp.ws.on('userJoin', onUserJoin)
       mp.ws.on('userLeave', onUserLeave)
+      mp.ws.on('userUpdate', onUserUpdate)
     })
 
     // keeping things in sync

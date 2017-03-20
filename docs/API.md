@@ -1832,6 +1832,7 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
  - [roomMinChatLevelUpdate](#event-roomminchatlevelupdate)
  - [userJoin](#event-userjoin)
  - [userLeave](#event-userleave)
+ - [userUpdate](#event-userupdate)
  - [vote](#event-vote)
  - [waitlistClear](#event-waitlistclear)
  - [waitlistCycle](#event-waitlistcycle)
@@ -2085,6 +2086,29 @@ import { BAN_DURATION, BAN_REASON } from 'miniplug'
 mp.on('userLeave', (user) => {
   // Alright then. GOOD BYE AND NEVER COME BACK!! 😠💢
   user.ban(BAN_DURATION.PERMANENT, BAN_REASON.ATTITUDE)
+})
+```
+
+<a id="event-userupdate"></a>
+## 'userUpdate'
+
+Fired when a user object was updated.
+
+**Parameters**
+
+ - `user` - The [User](#class-user) object that is being updated.
+ - `prevProps` - An object containing the old values of the properties that have
+   changed.
+
+```js
+import { BAN_DURATION, BAN_REASON } from 'miniplug'
+import { pick, keys } from 'lodash'
+
+mp.on('userUpdate', (user, prevProps) => {
+  const updatedPropsOnly = pick(user, keys(prevProps))
+
+  console.log(`Updated ${user.mention()}:`)
+  console.log(prevProps, '→', updatedPropsOnly)
 })
 ```
 
