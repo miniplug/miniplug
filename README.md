@@ -4,6 +4,7 @@ Small but complete Promise-based [plug.dj][] API client for Node.js.
 
 [Installation](#installation) -
 [Usage](#usage) -
+[API][docs/API.md] -
 [Contributing](#contributing) -
 [License: MIT](#license)
 
