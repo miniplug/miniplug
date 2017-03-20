@@ -26,7 +26,7 @@
     "debug": "^2.3.3",
     "got": "^6.6.3",
     "plug-login": "^1.0.0",
-    "plug-socket": "^0.3.0"
+    "plug-socket": "^0.4.0"
   },
   "devDependencies": {
     "buble": "^0.15.2",
