@@ -14,6 +14,7 @@ Small but complete Promise-based [plug.dj][] API client for Node.js.
 
 ```sh
 npm install --save miniplug
+# or `yarn add miniplug` with Yarn.
 ```
 
 ## Usage
@@ -21,7 +22,11 @@ npm install --save miniplug
 ```js
 const miniplug = require('miniplug')
 
-const mp = miniplug({ email: 'admin@plug.dj', password: 'hunter2' })
+const mp = miniplug({
+  email: 'admin@plug.dj',
+  password: 'hunter2'
+})
+
 // Join a room
 mp.join('tastycat').then((room) => {
   mp.chat(`Hello ${room.name}! :wave:`)
@@ -43,13 +48,22 @@ Issues/PRs are appreciated!
 
 To build the library, run:
 
-```
+```bash
 npm run build
+# or `yarn build` with Yarn.
 ```
 
 The built version will be placed in `index.js`.
 
-There's not much in the way of tests yet, sorry! Should be coming soon.
+To run tests, do:
+
+```bash
+npm test
+# or `yarn test` with Yarn.
+```
+
+There's not many tests just yet, but it's good to check anyway! This command
+will also check your code style using [Standard][].
 
 ## License
 
@@ -57,3 +71,4 @@ There's not much in the way of tests yet, sorry! Should be coming soon.
 
 [plug.dj]: https://plug.dj
 [docs/API.md]: ./docs/API.md
+[Standard]: https://standardjs.com/
