@@ -31,6 +31,7 @@
   "devDependencies": {
     "buble": "^0.15.2",
     "builtin-modules": "^1.1.1",
+    "glob": "^7.1.1",
     "nock": "^9.0.9",
     "npm-run-all": "^4.0.2",
     "plug-message-split": "^1.0.0",
@@ -45,9 +46,10 @@
   "scripts": {
     "prepublish": "npm run build",
     "build": "rollup -c",
+    "rebuild": "node has-changed || rollup -c",
     "lint": "standard rollup.config.js src/**/*.js test/**/*.js",
     "tap": "tape -r buble/register test/*.js",
-    "test": "npm-run-all lint tap"
+    "test": "npm-run-all lint rebuild tap"
   },
   "standard": {
     "env": "mocha"
