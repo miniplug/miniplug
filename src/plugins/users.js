@@ -1,4 +1,3 @@
-import flatten from 'flatten'
 import { partial } from 'ap'
 import createDebug from 'debug'
 import _wrapUser from '../data/user'
@@ -6,6 +5,16 @@ import _wrapUser from '../data/user'
 const debug = createDebug('miniplug:users')
 
 const GUEST_ID = 0
+
+/**
+ * Flatten nested arrays.
+ *
+ *     flatten([ 4, 5, [ 8, 7 ] ])
+ *     // → [ 4, 5, 8, 7 ]
+ */
+function flatten (arrs) {
+  return [].concat(...arrs)
+}
 
 export default function usersPlugin () {
   const currentGuestsCount = Symbol('Guests count')
