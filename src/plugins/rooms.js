@@ -57,6 +57,8 @@ export default function roomsPlugin () {
         .map(wrapRoom)
     const createRoom = (name, isPrivate = false) =>
       mp.post('rooms', { name: name, private: isPrivate }).get(0)
+    const getMyRooms = () =>
+      mp.get('rooms/me').map(wrapRoom)
 
     const favoriteRoom = (rid) =>
       mp.post('rooms/favorites', { id: rid })
@@ -79,6 +81,7 @@ export default function roomsPlugin () {
       // remote
       getRooms,
       getFavorites,
+      getMyRooms,
       createRoom,
       validateRoomName,
       // favorites

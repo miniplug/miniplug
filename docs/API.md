@@ -10,6 +10,7 @@
  - [mp.room()](#mp-room)
  - [mp.getRooms(query, page, limit)](#mp-getrooms)
  - [mp.getFavorites(query, page, limit)](#mp-getfavorites)
+ - [mp.getMyRooms()](#mp-getmyrooms)
  - [mp.validateRoomName(name)](#mp-validateroomname)
  - [mp.createRoom(name, isPrivate)](#mp-createroom)
  - [mp.favoriteRoom(id)](#mp-favoriteroom)
@@ -280,6 +281,18 @@ mp.getRooms('reggae').then((rooms) => {
 List the current user's favorites.
 
 `query` is a search query. `page` and `limit` can be used for pagination.
+
+<a id="mp-getmyrooms"></a>
+## mp.getMyRooms(): Promise&lt;Array&lt;[Room](#class-room)>>
+
+List the rooms created by the current user.
+
+```js
+console.log('Your rooms:')
+mp.getMyRooms().each((room) => {
+  console.log(`https://plug.dj/${room.slug}: ${room.name}`)
+})
+```
 
 <a id="mp-validateroomname"></a>
 ## mp.validateRoomName(name): Promise&lt;{slug: string}>
