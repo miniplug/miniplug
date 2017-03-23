@@ -19,6 +19,7 @@ import friendsPlugin from './plugins/friends'
 import roomsPlugin from './plugins/rooms'
 import playlistsPlugin from './plugins/playlists'
 import storePlugin from './plugins/store'
+import systemPlugin from './plugins/system'
 import votePlugin from './plugins/vote'
 
 // Exports
@@ -39,6 +40,8 @@ Object.assign(miniplug, {
   roomsPlugin,
   playlistsPlugin,
   storePlugin,
+  systemPlugin,
+  votePlugin,
   ...constants
 })
 
@@ -99,6 +102,7 @@ function miniplug (opts = {}) {
   use(roomsPlugin())
   use(playlistsPlugin())
   use(storePlugin())
+  use(systemPlugin())
   use(votePlugin())
 
   // Misc
