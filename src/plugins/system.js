@@ -12,10 +12,15 @@ export default function systemPlugin () {
       mp.emit('maintenance')
     }
 
+    function onUpdate () {
+      mp.emit('systemUpdate')
+    }
+
     mp.on('connected', () => {
       mp.ws.on('plugMessage', onMessage)
       mp.ws.on('plugMaintenanceAlert', onMaintenanceAlert)
       mp.ws.on('plugMaintenance', onMaintenance)
+      mp.ws.on('plugUpdate', onUpdate)
     })
   }
 }
