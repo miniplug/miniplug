@@ -70,6 +70,20 @@ export default function roomsPlugin () {
       mp.get('rooms/state').get(0)
         .tap(mp.emit.bind(mp, 'roomState'))
 
+    const updateRoom = (patch) => {
+      if (!room()) {
+        return Promise.reject(new Error('You are not currently in a room.'))
+      }
+      // TODO check keys used in `patch`? Only 'name', 'description', 'welcome'
+      // and 'minChatLevel' can be updated.
+      return mp.post('rooms/update', patch)
+    }
+
+    const setRoomWelcome = (welcome) => updateRoom({ welcome })
+    const setRoomDescription = (description) => updateRoom({ description })
+    const setRoomName = (name) => updateRoom({ name })
+    const setRoomMinChatLevel = (minChatLevel) => updateRoom({ minChatLevel })
+
     const validateRoomName = (name) =>
       mp.get(`rooms/validate/${encodeURIComponent(name)}`)
         .get(0)
@@ -84,6 +98,10 @@ export default function roomsPlugin () {
       getMyRooms,
       createRoom,
       validateRoomName,
+      setRoomWelcome,
+      setRoomDescription,
+      setRoomName,
+      setRoomMinChatLevel,
       // favorites
       favoriteRoom,
       unfavoriteRoom,
