@@ -1,6 +1,4 @@
-import { partial } from '../util'
 import createDebug from 'debug'
-import _wrapRoom from '../data/room'
 
 const debug = createDebug('miniplug:rooms')
 
@@ -8,12 +6,10 @@ export default function roomsPlugin () {
   const currentRoom = Symbol('Current room')
 
   return (mp) => {
-    const wrapRoom = partial(_wrapRoom, mp)
-
     mp[currentRoom] = null
 
     mp.on('roomState', (state) => {
-      mp[currentRoom] = wrapRoom(state.meta)
+      mp[currentRoom] = mp.wrapRoom(state.meta)
     })
 
     // Add a handler to process a room property update.
@@ -51,14 +47,14 @@ export default function roomsPlugin () {
 
     const getRooms = (query = '', page = 0, limit = 50) =>
       mp.get('rooms', { q: query, page, limit })
-        .map(wrapRoom)
+        .map(mp.wrapRoom)
     const getFavorites = (query = '', page = 0, limit = 50) =>
       mp.get('rooms/favorites', { q: query, page, limit })
-        .map(wrapRoom)
+        .map(mp.wrapRoom)
     const createRoom = (name, isPrivate = false) =>
       mp.post('rooms', { name: name, private: isPrivate }).get(0)
     const getMyRooms = () =>
-      mp.get('rooms/me').map(wrapRoom)
+      mp.get('rooms/me').map(mp.wrapRoom)
 
     const favoriteRoom = (rid) =>
       mp.post('rooms/favorites', { id: rid })

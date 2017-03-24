@@ -1,6 +1,5 @@
 import { partial } from '../util'
 import createDebug from 'debug'
-import wrapMessage from '../data/chat'
 
 const debug = createDebug('miniplug:chat')
 
@@ -18,7 +17,7 @@ export default function chatPlugin (opts) {
     // translate raw socket events to wrapped miniplug events
     function onChat (msg) {
       debug('chat', msg.uid, msg.un, msg.message)
-      mp.emit('chat', wrapMessage(mp, msg))
+      mp.emit('chat', mp.wrapMessage(msg))
     }
     function onChatDelete ({ c, mi }) {
       debug('chatDelete', mi, c)

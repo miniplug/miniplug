@@ -1,6 +1,5 @@
 import { partial } from '../util'
 import createDebug from 'debug'
-import _wrapWaitlist from '../data/waitlist'
 
 const debug = createDebug('miniplug:waitlist')
 
@@ -8,12 +7,10 @@ export default function waitlistPlugin () {
   const currentWaitlist = Symbol('Waitlist')
 
   return (mp) => {
-    const wrapWaitlist = partial(_wrapWaitlist, mp)
-
-    mp[currentWaitlist] = wrapWaitlist([])
+    mp[currentWaitlist] = mp.wrapWaitlist([])
 
     mp.on('roomState', (state) => {
-      mp[currentWaitlist] = wrapWaitlist(state.booth.waitingDJs)
+      mp[currentWaitlist] = mp.wrapWaitlist(state.booth.waitingDJs)
       mp.emit('waitlistUpdate', mp.waitlist(), [])
     })
 
@@ -22,7 +19,7 @@ export default function waitlistPlugin () {
 
       const previous = mp.waitlist()
 
-      mp[currentWaitlist] = wrapWaitlist(ids)
+      mp[currentWaitlist] = mp.wrapWaitlist(ids)
       mp.emit('waitlistUpdate', mp.waitlist(), previous)
     }
 

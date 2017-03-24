@@ -4,6 +4,7 @@ import createDebug from 'debug'
 import { partial } from './util'
 import * as constants from './constants'
 import createBackoff from './createBackoff'
+import dataModelPlugin from './plugins/wrappers'
 import httpPlugin from './plugins/http'
 import connectPlugin from './plugins/connect'
 import usersPlugin from './plugins/users'
@@ -77,6 +78,7 @@ function miniplug (opts = {}) {
   // make miniplug!
   mp.use = use
 
+  use(dataModelPlugin())
   use(httpPlugin({
     host: plugHost,
     // This is the same backoff as used in Sooyou/plugged:

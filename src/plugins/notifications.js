@@ -1,17 +1,12 @@
-import { partial } from '../util'
-import _wrapNotification from '../data/notification'
-
 export default function notificationsPlugin () {
   const currentNotifications = Symbol('Notifications')
 
   return (mp) => {
-    const wrapNotification = partial(_wrapNotification, mp)
-
     mp[currentNotifications] = []
 
     function onNotify (notif) {
       mp[currentNotifications].push(notif)
-      mp.emit('notify', wrapNotification(notif))
+      mp.emit('notify', mp.wrapNotification(notif))
     }
 
     mp.on('connected', (user) => {
@@ -21,7 +16,7 @@ export default function notificationsPlugin () {
     })
 
     Object.assign(mp, {
-      notifications: () => mp[currentNotifications].map(wrapNotification),
+      notifications: () => mp[currentNotifications].map(mp.wrapNotification),
 
       getNotifications: () =>
         mp.getMe()
@@ -29,7 +24,7 @@ export default function notificationsPlugin () {
           .tap((notifs) => {
             mp[currentNotifications] = notifs
           })
-          .map(wrapNotification),
+          .map(mp.wrapNotification),
 
       acknowledgeNotification: (id) =>
         mp.del(`notifications/${id}`).tap(() => {

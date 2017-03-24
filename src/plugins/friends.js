@@ -1,11 +1,8 @@
 import { partial } from '../util'
 import { unescape } from 'plug-message-split'
-import _wrapUser from '../data/user'
 
 export default function friendsPlugin () {
   return (mp) => {
-    const wrapUser = partial(_wrapUser, mp)
-
     // Friendship events only include the requesting/accepting user's name.
     // Plug.dj refreshes its client-side friends or invites list when these
     // events come in. Miniplug requests the friends or invites list and emits
@@ -14,7 +11,7 @@ export default function friendsPlugin () {
     function onFriendRequest (name) {
       getFriendRequests().each((request) => {
         if (unescape(request.username) === unescape(name)) {
-          mp.emit('friendRequest', wrapUser(request))
+          mp.emit('friendRequest', mp.wrapUser(request))
         }
       })
     }
@@ -34,7 +31,7 @@ export default function friendsPlugin () {
 
     // REST Friend API
     const getFriends = () =>
-      mp.get('friends').map(wrapUser)
+      mp.get('friends').map(mp.wrapUser)
     const befriend = (uid) =>
       mp.post('friends', { id: uid })
     const unfriend = (uid) =>

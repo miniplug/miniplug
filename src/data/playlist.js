@@ -1,6 +1,5 @@
 import { partial } from '../util'
 import makeProto from '../wrap'
-import wrapMedia from './media'
 
 export default function wrapPlaylist (mp, playlist) {
   return makeProto(playlist, {
@@ -11,7 +10,7 @@ export default function wrapPlaylist (mp, playlist) {
 
     getMedia: () =>
       mp.getMedia(playlist.id)
-        .map(partial(wrapMedia, mp, playlist.id))
+        .map(partial(mp.wrapMedia, playlist.id))
         .tap(media => {
           // cachedMedia = media
         }),

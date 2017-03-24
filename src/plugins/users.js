@@ -1,6 +1,5 @@
 import createDebug from 'debug'
 import { flatten, partial } from '../util'
-import _wrapUser from '../data/user'
 
 const debug = createDebug('miniplug:users')
 
@@ -12,8 +11,6 @@ export default function usersPlugin () {
   const currentUser = Symbol('Me')
 
   return (mp) => {
-    const wrapUser = partial(_wrapUser, mp)
-
     // local user cache/collection API
     mp[currentGuestsCount] = 0
     mp[currentUsers] = []
@@ -24,7 +21,7 @@ export default function usersPlugin () {
         mp[currentGuestsCount] += 1
         mp.emit('guestJoin')
       } else {
-        user = wrapUser(user)
+        user = mp.wrapUser(user)
         mp[currentUsers].push(user)
         mp.emit('userJoin', user)
       }
@@ -63,7 +60,7 @@ export default function usersPlugin () {
     }
 
     mp.on('connected', (user) => {
-      mp[currentUser] = wrapUser(user)
+      mp[currentUser] = mp.wrapUser(user)
 
       mp.ws.on('userJoin', onUserJoin)
       mp.ws.on('userLeave', onUserLeave)
@@ -72,7 +69,7 @@ export default function usersPlugin () {
 
     // keeping things in sync
     mp.on('roomState', ({ users, meta: { guests } }) => {
-      mp[currentUsers] = users.map(wrapUser)
+      mp[currentUsers] = users.map(mp.wrapUser)
       mp[currentGuestsCount] = guests
     })
 
@@ -82,13 +79,13 @@ export default function usersPlugin () {
     const guests = () => mp[currentGuestsCount]
 
     // REST API
-    const getMe = () => mp.get('users/me').get(0).then(wrapUser)
-    const getUser = uid => mp.get(`users/${uid}`).get(0).then(wrapUser)
+    const getMe = () => mp.get('users/me').get(0).then(mp.wrapUser)
+    const getUser = uid => mp.get(`users/${uid}`).get(0).then(mp.wrapUser)
     // pass IDs or arrays of IDs
     const getUsers = (...uids) =>
       mp.post('users/bulk', {
         ids: flatten(uids)
-      }).map(wrapUser)
+      }).map(mp.wrapUser)
 
     // current user & profile
     const saveSettings = partial(mp.put, 'users/settings')

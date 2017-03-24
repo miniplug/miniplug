@@ -1,20 +1,15 @@
-import _wrapStoreProduct from '../data/storeProduct'
-import _wrapInventoryProduct from '../data/inventoryProduct'
 import { getId, partial } from '../util'
 
 export default function storePlugin () {
   return (mp) => {
-    const wrapStoreProduct = partial(_wrapStoreProduct, mp)
-    const wrapInventoryProduct = partial(_wrapInventoryProduct, mp)
-
     const getProducts = (type, category = 'all') =>
-      mp.get(`store/products/${type}/${category}`).map(wrapStoreProduct)
+      mp.get(`store/products/${type}/${category}`).map(mp.wrapStoreProduct)
     const getStoreAvatars = partial(getProducts, 'avatars')
     const getStoreBadges = partial(getProducts, 'badges')
     const getStoreMisc = partial(getProducts, 'misc')
 
     const getInventory = (type) =>
-      mp.get(`store/inventory/${type}`).map(wrapInventoryProduct)
+      mp.get(`store/inventory/${type}`).map(mp.wrapInventoryProduct)
     const getOwnedAvatars = partial(getInventory, 'avatars')
     const getOwnedBadges = partial(getInventory, 'badges')
 

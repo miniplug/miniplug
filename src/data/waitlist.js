@@ -1,5 +1,4 @@
 import { getId } from '../util'
-import wrapUser from './user'
 
 // Have to use a real class to get working inheritance from Array. Methods are
 // still added inside wrapWaitlist, as usual.
@@ -15,7 +14,7 @@ export default function wrapWaitlist (mp, waitlist) {
   })
 
   waitlist.forEach((id) => {
-    wrapped.push(mp.user(id) || wrapUser(mp, { id: id }))
+    wrapped.push(mp.user(id) || mp.wrapUser({ id: id }))
   })
 
   return wrapped
