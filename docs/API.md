@@ -196,6 +196,12 @@ using [Babel][] with the [babel-plugin-transform-async-to-generator][async-to-ge
 transform. If you do not want a build step, you can use the [Bluebird .coroutine][coroutine]
 method to write similar-looking code with generator functions.
 
+Some miniplug methods don't return Promises, but return their result
+immediately. By convention, miniplug method names that are nouns (such as
+`room()`, or `user()`) return immediately. Method names that are verbs (like
+`getRooms()`, or `getUser()`) return Promises, and usually fetch new data from
+the plug.dj API.
+
 [Bluebird]: http://bluebirdjs.com
 [Bluebird API]: http://bluebirdjs.com/docs/api-reference.html
 [async functions]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
