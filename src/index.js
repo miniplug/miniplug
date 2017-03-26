@@ -59,6 +59,7 @@ const defaultOptions = {
 function miniplug (opts = {}) {
   // Faux-inherit from EventEmitter.
   const emitter = new EventEmitter()
+  emitter.setMaxListeners(100)
   const mp = Object.create(emitter)
 
   opts = { ...defaultOptions, ...opts }
