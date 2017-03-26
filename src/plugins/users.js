@@ -59,12 +59,20 @@ export default function usersPlugin () {
       mp.emit('userUpdate', user, oldProps)
     }
 
+    // Emit `userUpdate` events for `role` updates.
+    function onStaffUpdate (props) {
+      props.u.forEach(({ i, p }) => {
+        onUserUpdate({ i, role: p })
+      })
+    }
+
     mp.on('connected', (user) => {
       mp[currentUser] = mp.wrapUser(user)
 
       mp.ws.on('userJoin', onUserJoin)
       mp.ws.on('userLeave', onUserLeave)
       mp.ws.on('userUpdate', onUserUpdate)
+      mp.ws.on('modStaff', onStaffUpdate)
     })
 
     // keeping things in sync
