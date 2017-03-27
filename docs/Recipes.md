@@ -4,6 +4,8 @@
 
   - [Self-deleting messages](#self-deleting-messages)
   - [Lockskip](#lockskip)
+  - [Async Functions](#async-functions)
+  - [Extending Objects](#extending-objects)
 
 ## Self-deleting messages
 
@@ -35,6 +37,33 @@ dj.skip(entry.id).then(() => {
   return dj.move(lockskipPosition)
 })
 ```
+
+## Async Functions
+
+Async functions are a new JavaScript feature that aims to make Promise-based
+code a lot easier to read. The code in the [Lockskip](#lockskip) recipe looks
+like this with async functions:
+
+```js
+async function lockskip () {
+  // Skip the DJ, then move them back to spot #2 on the waitlist.
+  const lockskipPosition = 2
+  await dj.skip(entry.id)
+  await dj.move(lockskipPosition)
+}
+```
+
+Async functions are available by default starting in Node.js v7.6. If you're
+using miniplug with an earlier Node.js version, you can use the [async-to-gen][]
+module like below:
+
+```js
+require('async-to-gen/register')
+require('./bot')
+```
+
+This will compile async functions in your code to more widely compatible
+JavaScript before running it.
 
 ## Extending Objects
 
@@ -87,4 +116,5 @@ The wrapper methods are:
  - `wrapWaitlist`, for the [Waitlist](./API.md#class-waitlist)
 
 [Bluebird]: http://bluebirdjs.com
+[async-to-gen]: https://github.com/leebyron/async-to-gen
 [compose-function]: https://npmjs.com/package/compose-function
