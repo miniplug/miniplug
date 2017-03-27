@@ -19,6 +19,7 @@ export default function connectPlugin (options = {}) {
       )
 
       const ws = socket()
+      ws.setMaxListeners(100)
 
       const connected = loginPromise
         .then((res) => new Promise((resolve, reject) => {
