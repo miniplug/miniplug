@@ -23,6 +23,10 @@ export default function waitlistPlugin () {
       mp.emit('waitlistUpdate', mp.waitlist(), previous)
     }
 
+    function onAdvance (event) {
+      onDjListUpdate(event.d)
+    }
+
     function onModAddDj () {
       // TODO
     }
@@ -55,6 +59,7 @@ export default function waitlistPlugin () {
 
     mp.on('connected', () => {
       mp.ws.on('djListUpdate', onDjListUpdate)
+      mp.ws.on('advance', onAdvance)
       mp.ws.on('modAddDJ', onModAddDj)
       mp.ws.on('modMoveDJ', onModMoveDj)
       mp.ws.on('modRemoveDJ', onModRemoveDj)
