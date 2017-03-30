@@ -3,6 +3,7 @@ import socket from 'plug-socket'
 import createDebug from 'debug'
 
 const debug = createDebug('miniplug:connect')
+const debugWs = createDebug('miniplug:ws')
 
 export default function connectPlugin (options = {}) {
   return (mp) => {
@@ -20,6 +21,9 @@ export default function connectPlugin (options = {}) {
 
       const ws = socket()
       ws.setMaxListeners(100)
+      ws.on('action', (type, payload) => {
+        debugWs(type, payload)
+      })
 
       const connected = loginPromise
         .then((res) => new Promise((resolve, reject) => {
