@@ -18,7 +18,7 @@ export default function votePlugin (opts = {}) {
         uid: i,
         vote: v
       })
-      const user = mp.user(i)
+      const user = mp.user(i) || mp.wrapUser({ id: i })
       mp.emit('vote', {
         user,
         vote: v
