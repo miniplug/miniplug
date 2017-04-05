@@ -2,6 +2,12 @@ import { getId, getIds, partial } from '../util'
 
 export default function playlistsPlugin () {
   return (mp) => {
+    mp.on('connected', () => {
+      mp.ws.on('playlistCycle', (id) => {
+        mp.emit('playlistCycle', id)
+      })
+    })
+
     Object.assign(mp, {
       getPlaylists: () =>
         mp.get('playlists').map(mp.wrapPlaylist),
