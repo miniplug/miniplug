@@ -24,7 +24,11 @@ export default function waitlistPlugin () {
     }
 
     function onAdvance (event) {
-      onDjListUpdate(event.d)
+      if (event && event.d) {
+        onDjListUpdate(event.d)
+      } else {
+        onDjListUpdate([])
+      }
     }
 
     function onModAddDj () {
