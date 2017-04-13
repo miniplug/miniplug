@@ -23,6 +23,7 @@ export default function boothPlugin (opts = {}) {
     function onAdvance (event) {
       const previous = historyEntry()
       if (!event || !event.m) {
+        mp[currentHistoryEntry] = null
         mp.emit('advance', null, previous)
         return
       }
