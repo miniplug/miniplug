@@ -82,7 +82,14 @@ export default function usersPlugin () {
     })
 
     const me = () => mp[currentUser]
-    const user = (id) => mp[currentUsers].find((user) => user.id === id)
+    const user = (id) => {
+      if (mp[currentUser] && id === mp[currentUser].id) {
+        return mp[currentUser]
+      }
+      return mp[currentUsers].find((user) => user.id === id)
+    }
+    // TODO May want to include `me()` in the `users()` list in v2.0.0. I'm not
+    // sure which is more expected.
     const users = () => mp[currentUsers]
     const guests = () => mp[currentGuestsCount]
 
