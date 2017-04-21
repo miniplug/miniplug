@@ -220,7 +220,7 @@ Create a miniplug instance. Available options:
    login is supported at the moment.
 
 ```js
-import miniplug from 'miniplug'
+const miniplug = require('miniplug')
 
 const mp = miniplug({ guest: true })
 ```
@@ -239,7 +239,7 @@ Add a plugin to enhance miniplug's functionality. Returns the miniplug instance
 for chaining.
 
 ```js
-import lotteryPlugin from 'miniplug-lottery'
+const lotteryPlugin = require('miniplug-lottery')
 
 mp.use(lotteryPlugin())
   .use((instance) => { /* Add other custom methods to `instance` */ })
@@ -793,7 +793,7 @@ store. See [Product Categories](#productcategories) for an overview of available
 categories for each product type.
 
 ```js
-import randomItem from 'random-item'
+const randomItem = require('random-item')
 mp.getProducts('avatars', 'island').then((products) => {
   return randomItem(products).purchase()
 })
@@ -1014,7 +1014,7 @@ global role is equal to or higher than the given role.
  - `role` - The permission to check for.
 
 ```js
-import { ROLE } from 'miniplug'
+const { ROLE } = require('miniplug')
 mp.me().hasPermission(ROLE.NONE) // → true
 mp.me().hasPermission(ROLE.BOUNCER) // depends on your role in the current room
 ```
@@ -1030,7 +1030,7 @@ role is equal to or higher than the given role.
  - `role` - The role to check for.
 
 ```js
-import { ROLE } from 'miniplug'
+const { ROLE } = require('miniplug')
 mp.me().hasGlobalPermission(ROLE.NONE) // → true
 mp.me().hasGlobalPermission(ROLE.AMBASSADOR)
 ```
@@ -1620,7 +1620,7 @@ Acknowledge and remove the notification.
 ## User Roles
 
 ```js
-import { ROLE } from 'miniplug'
+const { ROLE } = require('miniplug')
 ```
 
 ### ROLE.NONE
@@ -1659,7 +1659,7 @@ A plug.dj site admin.
 ## Mute Durations
 
 ```js
-import { MUTE_DURATION } from 'miniplug'
+const { MUTE_DURATION } = require('miniplug')
 ```
 
 ### MUTE_DURATION.SHORT
@@ -1678,7 +1678,7 @@ import { MUTE_DURATION } from 'miniplug'
 ## Mute Reasons
 
 ```js
-import { MUTE_REASON } from 'miniplug'
+const { MUTE_REASON } = require('miniplug')
 ```
 
 ### MUTE_REASON.VIOLATING_RULES
@@ -1705,7 +1705,7 @@ Negative attitude
 ## Ban Durations
 
 ```js
-import { BAN_DURATION } from 'miniplug'
+const { BAN_DURATION } = require('miniplug')
 ```
 
 ### BAN_DURATION.HOUR
@@ -1724,7 +1724,7 @@ A permanent ban.
 ## Ban Reasons
 
 ```js
-import { BAN_REASON } from 'miniplug'
+const { BAN_REASON } = require('miniplug')
 ```
 
 ### BAN_REASON.SPAMMING
@@ -1751,7 +1751,7 @@ Negative attitude.
 ## Media Sources
 
 ```js
-import { MEDIA_SOURCE } from 'miniplug'
+const { MEDIA_SOURCE } = require('miniplug')
 ```
 
 ### MEDIA_SOURCE.YOUTUBE
@@ -2101,7 +2101,7 @@ Fired when a user leaves the room.
  - `user` - The [User](#class-user) object of the leaving user.
 
 ```js
-import { BAN_DURATION, BAN_REASON } from 'miniplug'
+const { BAN_DURATION, BAN_REASON } = require('miniplug')
 mp.on('userLeave', (user) => {
   // Alright then. GOOD BYE AND NEVER COME BACK!! 😠💢
   user.ban(BAN_DURATION.PERMANENT, BAN_REASON.ATTITUDE)
@@ -2120,8 +2120,8 @@ Fired when a user object was updated.
    changed.
 
 ```js
-import { BAN_DURATION, BAN_REASON } from 'miniplug'
-import { pick, keys } from 'lodash'
+const { BAN_DURATION, BAN_REASON } = require('miniplug')
+const { pick, keys } = require('lodash')
 
 mp.on('userUpdate', (user, prevProps) => {
   const updatedPropsOnly = pick(user, keys(prevProps))
