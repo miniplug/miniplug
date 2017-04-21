@@ -12,6 +12,7 @@ export default {
     { format: 'cjs', dest: 'index.js' },
     { format: 'es', dest: 'index.es.js' }
   ],
+  sourceMap: true,
   exports: 'default',
   external: builtins.concat(Object.keys(pkg.dependencies)),
   plugins: [
