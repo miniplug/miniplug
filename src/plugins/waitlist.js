@@ -31,14 +31,33 @@ export default function waitlistPlugin () {
       }
     }
 
-    function onModAddDj () {
-      // TODO
+    function onModAddDj (ref) {
+      mp.emit('modAddDj', {
+        mod: mp.user(ref.mi) || mp.wrapUser({ id: ref.mi }),
+        user: ref.t,
+        cycle: ref.m
+      });
     }
-    function onModMoveDj () {
-      // TODO
+
+    function onModMoveDj (ref) {
+      mp.emit('modMoveDj', {
+        mod: mp.user(ref.mi) || mp.wrapUser({ id: ref.mi }),
+        user: {
+          username: ref.u,
+          movedFrom: ref.o,
+          movedTo: ref.n
+        }
+      });
     }
-    function onModRemoveDj () {
-      // TODO
+
+    function onModRemoveDj (ref) {
+      mp.emit('modRemoveDj', {
+        mod: mp.user(ref.mi) || mp.wrapUser({ id: ref.mi }),
+        user: {
+          username: ref.t,
+          inBooth: ref.d
+        }
+      });
     }
 
     function onDjListCycle ({ f, mi }) {
