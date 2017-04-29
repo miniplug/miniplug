@@ -33,31 +33,27 @@ export default function waitlistPlugin () {
 
     function onModAddDj (ref) {
       mp.emit('modAddDj', {
-        mod: mp.user(ref.mi) || mp.wrapUser({ id: ref.mi }),
-        user: mp.wrapUser({ username: ref.t }),
+        moderator: mp.user(ref.mi) || mp.wrapUser({ id: ref.mi }),
+        username: ref.t,
         cycle: ref.m
-      });
+      })
     }
 
     function onModMoveDj (ref) {
       mp.emit('modMoveDj', {
-        mod: mp.user(ref.mi) || mp.wrapUser({ id: ref.mi }),
-        user: {
-          username: ref.u,
-          movedFrom: ref.o,
-          movedTo: ref.n
-        }
-      });
+        moderator: mp.user(ref.mi) || mp.wrapUser({ id: ref.mi }),
+        username: ref.u,
+        movedFrom: ref.o,
+        movedTo: ref.n
+      })
     }
 
     function onModRemoveDj (ref) {
       mp.emit('modRemoveDj', {
-        mod: mp.user(ref.mi) || mp.wrapUser({ id: ref.mi }),
-        user: {
-          username: ref.t,
-          inBooth: ref.d
-        }
-      });
+        moderator: mp.user(ref.mi) || mp.wrapUser({ id: ref.mi }),
+        username: ref.t,
+        inBooth: ref.d
+      })
     }
 
     function onDjListCycle ({ f, mi }) {

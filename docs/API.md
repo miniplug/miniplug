@@ -1844,6 +1844,9 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
  - [grab](#event-grab)
  - [guestJoin](#event-guestjoin)
  - [guestLeave](#event-guestleave)
+ - [modAddDj](#event-modadddj)
+ - [modMoveDj](#event-modmovedj)
+ - [modRemoveDj](#event-modremovedj)
  - [roomUpdate](#event-roomupdate)
  - [roomNameUpdate](#event-roomnameupdate)
  - [roomDescriptionUpdate](#event-roomdescriptionupdate)
@@ -1987,6 +1990,59 @@ Fired when a guest leaves the room. Does not receive any parameters.
 ```js
 mp.on('guestLeave', () => {
   console.log('A guest left the room.')
+})
+```
+
+<a id="#event-modadddj"></a>
+## 'modAddDj'
+
+Fired when a moderator adds a user to the waitlist.
+
+**Parameters**
+
+ - `moderator` - The staff [User](#class-user) who added the user to the waitlist.
+ - `username` - The name of the user that was added.
+ - `cycle` - Weather the waitlist should cycle (true/false)
+
+```js
+mp.on('modAddDj', (data) => {
+  console.log(`Moderator ${data.moderator.username} has added ${data.username} to the waitlist.`)
+})
+```
+
+<a id="#event-modmovedj"></a>
+## 'modMoveDj'
+
+Fired when a moderator moves the position of a user in the waitlist.
+
+**Parameters**
+
+ - `moderator` - The staff [User](#class-user) who moved the user in the waitlist.
+ - `username` - The name of the user that was moved.
+ - `movedFrom` - The position the user was at.
+ - `movedTo` - The position the user was moved to.
+
+ ```js
+mp.on('modMoveDj', (data) => {
+  // movedFrom and movedTo are both 0 indexed
+  console.log(`${data.moderator.username} has moved ${data.username} from position ${data.user.movedFrom + 1} to position ${data.user.movedTo + 1}`)
+})
+```
+
+<a id="#event-modremovedj"></a>
+## 'modRemoveDj'
+
+Fired when a moderator removes a user from the waitlist.
+
+**Parameters**
+
+ - `moderator` - The staff [User](#class-user) who removed the user from the waitlist.
+ - `username` - The name of the user that was removed.
+ - `inBooth` - Weather the user was in the booth/djing (true/false)
+
+ ```js
+mp.on('modRemoveDj', (data) => {
+  console.log(`${data.moderator.username} has removed ${data.username} from the ${data.inBooth ? 'booth' : 'waitlist'}`)
 })
 ```
 
