@@ -2025,7 +2025,7 @@ Fired when a moderator moves the position of a user in the waitlist.
  ```js
 mp.on('modMoveDj', (data) => {
   // movedFrom and movedTo are both 0 indexed
-  console.log(`${data.moderator.username} has moved ${data.username} from position ${data.user.movedFrom + 1} to position ${data.user.movedTo + 1}`)
+  console.log(`${data.moderator.username} has moved ${data.username} from position ${data.movedFrom + 1} to position ${data.movedTo + 1}`)
 })
 ```
 
