@@ -18,5 +18,17 @@ export default function bansPlugin () {
       ban,
       unban
     })
+
+    function onModBan (ref) {
+      mp.emit('modBan', {
+        mod: mp.user(ref.mi) || mp.wrapUser({ id: ref.mi }),
+        username: ref.t,
+        duration: ref.d
+      })
+    }
+
+    mp.on('connected', (user) => {
+      mp.ws.on('modBan', onModBan);
+    })
   }
 }
