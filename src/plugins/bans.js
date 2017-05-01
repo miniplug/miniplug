@@ -21,7 +21,7 @@ export default function bansPlugin () {
 
     function onModBan (ref) {
       mp.emit('modBan', {
-        mod: mp.user(ref.mi) || mp.wrapUser({ id: ref.mi }),
+        moderator: mp.user(ref.mi) || mp.wrapUser({ id: ref.mi }),
         username: ref.t,
         duration: ref.d
       })
