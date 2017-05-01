@@ -1845,6 +1845,7 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
  - [guestJoin](#event-guestjoin)
  - [guestLeave](#event-guestleave)
  - [modAddDj](#event-modadddj)
+ - [modBan](#event-modban)
  - [modMoveDj](#event-modmovedj)
  - [modRemoveDj](#event-modremovedj)
  - [roomUpdate](#event-roomupdate)
@@ -2007,6 +2008,31 @@ Fired when a moderator adds a user to the waitlist.
 ```js
 mp.on('modAddDj', (data) => {
   console.log(`Moderator ${data.moderator.username} has added ${data.username} to the waitlist.`)
+})
+```
+
+<a id="#event-modban"></a>
+## 'modBan'
+
+Fired when a moderator bans a user.
+
+**Parameters**
+
+ - `moderator` - The staff [User](#class-user) who banned the user.
+ - `username` - The name of the user that was banned.
+ - `duration` - The duration of time the ban lasts for
+
+```js
+mp.on('modBan', (data) => {
+  var duration = '';
+
+  switch (data.duration) {
+    case 'h': duration = 'for an hour'; break;
+    case 'd': duration = 'for a day'; break;
+    case 'f': duration = 'forever'; break;
+  }
+
+  console.log(`Moderator ${data.moderator.username} has banned ${data.username} ${duration}.`)
 })
 ```
 
