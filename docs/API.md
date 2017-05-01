@@ -2023,7 +2023,7 @@ Fired when a moderator bans a user.
  - `duration` - The duration of time the ban lasts for
 
 ```js
-mp.on('modAddDj', (data) => {
+mp.on('modBan', (data) => {
   var duration = '';
 
   switch (data.duration) {

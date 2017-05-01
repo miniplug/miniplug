@@ -28,7 +28,7 @@ export default function bansPlugin () {
     }
 
     mp.on('connected', (user) => {
-      mp.ws.on('modBan', onModBan);
+      mp.ws.on('modBan', onModBan)
     })
   }
 }
