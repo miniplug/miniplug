@@ -1847,6 +1847,7 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
  - [modAddDj](#event-modadddj)
  - [modBan](#event-modban)
  - [modMoveDj](#event-modmovedj)
+ - [modMute](#event-modmute)
  - [modRemoveDj](#event-modremovedj)
  - [roomUpdate](#event-roomupdate)
  - [roomNameUpdate](#event-roomnameupdate)
@@ -2052,6 +2053,46 @@ Fired when a moderator moves the position of a user in the waitlist.
 mp.on('modMoveDj', (data) => {
   // movedFrom and movedTo are both 0 indexed
   console.log(`${data.moderator.username} has moved ${data.username} from position ${data.movedFrom + 1} to position ${data.movedTo + 1}`)
+})
+```
+
+<a id="#event-modmute"></a>
+## 'modMute'
+
+Fired when a moderator mutes a user.
+
+**Parameters**
+
+ - `moderator` - The name of the staff member who muted the user.
+ - `username` - The [User](#class-user) object of the user who was muted.
+ - `reason` - The reason for the mute.
+ - `duration` - The length of time the mute lasts for.
+
+ ```js
+mp.on('modMute', (data) => {
+  var length = '', reason = '', msg = `${data.moderator} `;
+
+  switch (data.duration) {
+    case 'o': length = 'unmuted'; break;
+    case 's': length = '15'; break;
+    case 'm': length = '30'; break;
+    case 'l': length = '45'; break;
+  }
+
+  switch (data.reason) {
+    case 1: reason = 'violating community rules'; break;
+    case 2: reason = 'verbal abuse or harassment'; break;
+    case 3: reason = 'spamming or trolling'; break;
+    case 4: reason = 'offensive language'; break;
+    case 5: reason = 'negative attitude'; break;
+  }
+
+  if (data.duration == 'o')
+    msg += `unmuted ${data.user.username}`
+  else
+    msg += `muted ${data.user.username} (${length} mins) for ${reason}`
+
+  console.log(msg)
 })
 ```
 

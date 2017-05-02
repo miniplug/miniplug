@@ -18,5 +18,18 @@ export default function mutesPlugin () {
       mute,
       unmute
     })
+
+    function onModMute (ref) {
+      mp.emit('modMute', {
+        moderator: ref.m,
+        user: mp.user(ref.i),
+        reason: ref.r,
+        duration: ref.d
+      })
+    }
+
+    mp.on('connected', (user) => {
+      mp.ws.on('modMute', onModMute)
+    })
   }
 }
