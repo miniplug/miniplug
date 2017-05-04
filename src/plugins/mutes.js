@@ -21,8 +21,8 @@ export default function mutesPlugin () {
 
     function onModMute (ref) {
       mp.emit('modMute', {
-        moderator: mp.user(ref.mi) || mp.wrapUser({ id: ref.mi, username: m }),
-        user: mp.user(ref.i) || mp.wrapUser({ id: ref.i, username: t }),
+        moderator: mp.user(ref.mi) || mp.wrapUser({ id: ref.mi, username: ref.m }),
+        user: mp.user(ref.i) || mp.wrapUser({ id: ref.i, username: ref.t }),
         reason: ref.r,
         duration: ref.d
       })
