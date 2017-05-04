@@ -2063,14 +2063,14 @@ Fired when a moderator mutes a user.
 
 **Parameters**
 
- - `moderator` - The name of the staff member who muted the user.
+ - `moderator` - The staff [User](#class-user) who muted the user.
  - `username` - The [User](#class-user) object of the user who was muted.
  - `reason` - The reason for the mute.
  - `duration` - The length of time the mute lasts for.
 
  ```js
 mp.on('modMute', (data) => {
-  var length = '', reason = '', msg = `${data.moderator} `;
+  var length = '', reason = '', msg = `${data.moderator.username} `;
 
   switch (data.duration) {
     case 'o': length = 'unmuted'; break;
