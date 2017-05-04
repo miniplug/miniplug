@@ -9,10 +9,19 @@ export default function notificationsPlugin () {
       mp.emit('notify', mp.wrapNotification(notif))
     }
 
+    function onEarn (ref) {
+      mp.emit('earn', {
+        xp: ref.xp,
+        pp: ref.pp,
+        level: ref.level
+      })
+    }
+
     mp.on('connected', (user) => {
       mp[currentNotifications] = (user && user.notifications) || []
 
       mp.ws.on('notify', onNotify)
+      mp.ws.on('earn', onEarn)
     })
 
     Object.assign(mp, {
