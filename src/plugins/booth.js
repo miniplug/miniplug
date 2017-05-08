@@ -40,7 +40,7 @@ export default function boothPlugin (opts = {}) {
 
       mp[currentHistoryEntry] = {
         id: historyId,
-        dj: mp.user(djId),
+        dj: mp.user(djId) || mp.wrapUser({ id: djId }),
         media: media,
         playlistId: playlistId,
         time: time
