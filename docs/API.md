@@ -2308,6 +2308,7 @@ All error objects have the following properties:
 
  - `message` - A human-readable string describing the reason for the error.
  - `status` - A status code from plug.dj.
+ - `response` - The HTTP response object from [got](https://github.com/sindresorhus/got#goturl-options).
  - `cause` - The error that was wrapped, usually one from [got](https://github.com/sindresorhus/got#errors).
 
 <a id="error-requesterror"></a>
