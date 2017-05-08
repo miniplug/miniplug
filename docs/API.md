@@ -1839,6 +1839,7 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
  - [advance](#event-advance)
  - [chat](#event-chat)
  - [chatDelete](#event-chatdelete)
+ - [earn](#event-earn)
  - [friendAccept](#event-friendaccept)
  - [friendRequest](#event-friendrequest)
  - [grab](#event-grab)
@@ -1917,6 +1918,23 @@ Fired when a chat message is deleted.
 ```js
 mp.on('chatDelete', (del) => {
   console.info(`${del.user.username} deleted message #${del.cid}.`)
+})
+```
+
+<a id="event-earn"></a>
+## 'earn'
+
+Fired when xp/pp is added to your account.
+
+**Parameters**
+
+ - `xp` - The new xp amount.
+ - `pp` - The new pp amount.
+ - `level` - The current level, or new level on level up.
+
+```js
+mp.on('earn', (data) => {
+  console.info(`I now have ${data.xp} xp, ${data.pp} pp, and am level ${data.level}.`)
 })
 ```
 
