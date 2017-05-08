@@ -14,12 +14,12 @@ function setupFundsPP (response, cause) {
   this.message = 'You don\'t have enough Plug Points to unlock this.'
 }
 
-export const RequestError = createErrorClass('RequestError', setup)
-export const BadLoginError = createErrorClass('BadLoginError', setup)
-export const NotAuthorizedError = createErrorClass('NotAuthorizedError', setup)
-export const NotFoundError = createErrorClass('NotFoundError', setup)
-export const NoValidPlaylistError = createErrorClass('NoValidPlaylistError', setup)
-export const NotEnoughPPError = createErrorClass('NotEnoughPPError', setupFundsPP)
+const RequestError = createErrorClass('RequestError', setup)
+const BadLoginError = createErrorClass('BadLoginError', setup)
+const NotAuthorizedError = createErrorClass('NotAuthorizedError', setup)
+const NotFoundError = createErrorClass('NotFoundError', setup)
+const NoValidPlaylistError = createErrorClass('NoValidPlaylistError', setup)
+const NotEnoughPPError = createErrorClass('NotEnoughPPError', setupFundsPP)
 
 const statusToError = {
   requestError: RequestError,
@@ -27,6 +27,15 @@ const statusToError = {
   notAuthorized: NotAuthorizedError,
   notFound: NotFoundError,
   noValidPlaylist: NoValidPlaylistError,
+}
+
+export const errorClasses = {
+  RequestError,
+  BadLoginError,
+  NotAuthorizedError,
+  NotFoundError,
+  NoValidPlaylistError,
+  NotEnoughPPError
 }
 
 export function wrapResponseError(response, cause) {

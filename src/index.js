@@ -3,6 +3,7 @@ import createDebug from 'debug'
 
 import { partial } from './util'
 import * as constants from './constants'
+import { errorClasses } from './errors'
 import createBackoff from './createBackoff'
 import dataModelPlugin from './plugins/wrappers'
 import httpPlugin from './plugins/http'
@@ -43,7 +44,8 @@ Object.assign(miniplug, {
   storePlugin,
   systemPlugin,
   votePlugin,
-  ...constants
+  ...constants,
+  ...errorClasses
 })
 
 export default miniplug
