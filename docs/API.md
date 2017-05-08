@@ -180,6 +180,7 @@
  - [Product Categories](#productcategories)
  - [REST methods](#mp-rest)
  - [Events](#events)
+ - [Errors](#errors)
 
 ## Introduction
 
@@ -2371,3 +2372,57 @@ mp.on('waitlistUpdate', (next, previous) => {
   console.log('I moved from', previous.positionOf(me), 'to', next.positionOf(me))
 })
 ```
+
+<a id="errors"></a>
+# Errors
+
+Miniplug wraps errors from the plug.dj API in custom error classes.
+Specific types of errors can be caught using Bluebird's `catch` function:
+
+```js
+const miniplug = require('miniplug')
+
+const mp = miniplug({ /* credentials */ })
+mp.purchaseNameChange('Test Name')
+  .catch(miniplug.NotEnoughPPError, (err) => {
+    console.error('You do not have enough Plug Points to change your name.')
+  })
+```
+
+All error objects have the following properties:
+
+ - `message` - A human-readable string describing the reason for the error.
+ - `status` - A status code from plug.dj.
+ - `response` - The HTTP response object from [got](https://github.com/sindresorhus/got#goturl-options).
+ - `cause` - The error that was wrapped, usually one from [got](https://github.com/sindresorhus/got#errors).
+
+<a id="error-requesterror"></a>
+## RequestError
+
+A generic error that indicates that you have tried to do something impossible.
+
+<a id="error-badloginerror"></a>
+## BadLoginError
+
+The username/password combination was incorrect.
+
+<a id="error-notauthorizederror"></a>
+## NotAuthorizedError
+
+The bot account does not have permission to do this thing. Perhaps because the
+thing requires you to be logged in, or to be a certain rank in the room.
+
+<a id="error-notfounderror"></a>
+## NotFoundError
+
+The thing you are looking for does not exist.
+
+<a id="error-novalidplaylisterror"></a>
+## NoValidPlaylistError
+
+The user to be added to the waitlist does not have a valid playlist.
+
+<a id="error-notenoughpperror"></a>
+## NotEnoughPPError
+
+The bot account does not have enough Plug Points to purchase this thing.

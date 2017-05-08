@@ -1,5 +1,6 @@
 import got from 'got'
 import createDebug from 'debug'
+import { wrapResponseError } from '../errors'
 
 const debug = createDebug('miniplug:http')
 
@@ -30,6 +31,12 @@ export default function httpPlugin (httpOpts) {
             throw new Error(resp.body.data.length ? resp.body.data[0] : resp.body.status)
           }
           return resp.body.data
+        })
+        .catch((err) => {
+          if (err && err.response) {
+            throw wrapResponseError(err.response, err)
+          }
+          throw err
         })
     )
 
