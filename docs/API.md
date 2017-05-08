@@ -144,7 +144,7 @@
    - [entry.media](#historyentry-media)
    - [entry.room](#historyentry-room)
    - [entry.user](#historyentry-user)
-   - [entry.time](#historyentry-time)
+   - [entry.timestamp](#historyentry-timestamp)
    - [entry.score](#historyentry-score)
    - [entry.getUser()](#historyentry-getuser)
  - [StoreProduct](#class-storeproduct)
@@ -1430,7 +1430,8 @@ If you need anything else, use the [entry.getUser()](#historyentry-getuser)
 method to load a full User object.
 
 <a id="historyentry-time"></a>
-### entry.time: Date
+<a id="historyentry-timestamp"></a>
+### entry.timestamp: Date
 
 Timestamp at which the history entry was played.
 

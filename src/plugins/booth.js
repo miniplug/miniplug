@@ -10,12 +10,14 @@ export default function boothPlugin (opts = {}) {
     const media = () => mp[currentHistoryEntry] ? mp[currentHistoryEntry].media : null
 
     mp.on('roomState', (state) => {
+      const timestamp = parseDate(state.playback.startTime)
       mp[currentHistoryEntry] = {
         id: state.playback.historyID,
         dj: mp.user(state.booth.currentDJ),
         media: state.playback.media,
         playlistId: state.playback.playlistID,
-        time: parseDate(state.playback.startTime)
+        time: timestamp, // TODO(v2.x) remove this alias
+        timestamp: timestamp
       }
     })
 
@@ -43,7 +45,8 @@ export default function boothPlugin (opts = {}) {
         dj: mp.user(djId) || mp.wrapUser({ id: djId }),
         media: media,
         playlistId: playlistId,
-        time: time
+        time: time, // TODO(v2.x) remove this alias
+        timestamp: timestamp
       }
 
       mp.emit('advance', historyEntry(), previous)
