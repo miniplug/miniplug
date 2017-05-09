@@ -57,7 +57,7 @@ export default function waitlistPlugin () {
     }
 
     function onModSkip(ref) {
-      mp.emit('modSkip', mp.user(ref.mi) || mp.wrapUser({ id: ref.mi, username: ref.m }));
+      mp.emit('modSkip', mp.user(ref.mi) || mp.wrapUser({ id: ref.mi, username: ref.m }))
     }
 
     function onDjListCycle ({ f, mi }) {
