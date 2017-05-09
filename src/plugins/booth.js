@@ -46,7 +46,7 @@ export default function boothPlugin (opts = {}) {
         media: media,
         playlistId: playlistId,
         time: time, // TODO(v2.x) remove this alias
-        timestamp: timestamp
+        timestamp: time
       }
 
       mp.emit('advance', historyEntry(), previous)
