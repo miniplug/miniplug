@@ -56,6 +56,10 @@ export default function waitlistPlugin () {
       })
     }
 
+    function onModSkip (ref) {
+      mp.emit('modSkip', mp.user(ref.mi) || mp.wrapUser({ id: ref.mi, username: ref.m }))
+    }
+
     function onDjListCycle ({ f, mi }) {
       mp.emit('waitlistCycle', {
         shouldCycle: f,
@@ -82,6 +86,7 @@ export default function waitlistPlugin () {
       mp.ws.on('modAddDJ', onModAddDj)
       mp.ws.on('modMoveDJ', onModMoveDj)
       mp.ws.on('modRemoveDJ', onModRemoveDj)
+      mp.ws.on('modSkip', onModSkip)
       mp.ws.on('djListCycle', onDjListCycle)
       mp.ws.on('djListLocked', onDjListLocked)
     })

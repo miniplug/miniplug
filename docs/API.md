@@ -1852,6 +1852,7 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
  - [modMoveDj](#event-modmovedj)
  - [modMute](#event-modmute)
  - [modRemoveDj](#event-modremovedj)
+ - [modSkip](#event-modskip)
  - [roomUpdate](#event-roomupdate)
  - [roomNameUpdate](#event-roomnameupdate)
  - [roomDescriptionUpdate](#event-roomdescriptionupdate)
@@ -2130,6 +2131,21 @@ Fired when a moderator removes a user from the waitlist.
  ```js
 mp.on('modRemoveDj', (data) => {
   console.log(`${data.moderator.username} has removed ${data.username} from the ${data.inBooth ? 'booth' : 'waitlist'}`)
+})
+```
+
+<a id="#event-modskip"></a>
+## 'modSkip'
+
+Fired when a moderator skips the current song playing.
+
+**Parameters**
+
+ - `moderator` - The staff [User](#class-user) who skipped the song.
+
+ ```js
+mp.on('modSkip', (moderator) => {
+  console.log(`${moderator.username} has skipped the current DJ`)
 })
 ```
 
