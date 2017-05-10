@@ -80,6 +80,10 @@ export default function waitlistPlugin () {
       }
     }
 
+    function onSkip (ref) {
+      mp.emit('skip', mp.user(ref) || mp.wrapUser({ id: ref }))
+    }
+
     mp.on('connected', () => {
       mp.ws.on('djListUpdate', onDjListUpdate)
       mp.ws.on('advance', onAdvance)
@@ -89,6 +93,7 @@ export default function waitlistPlugin () {
       mp.ws.on('modSkip', onModSkip)
       mp.ws.on('djListCycle', onDjListCycle)
       mp.ws.on('djListLocked', onDjListLocked)
+      mp.ws.on('skip', onSkip)
     })
 
     const setCycle = (val = true) =>
