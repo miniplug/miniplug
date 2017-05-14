@@ -1858,6 +1858,7 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
  - [roomDescriptionUpdate](#event-roomdescriptionupdate)
  - [roomWelcomeUpdate](#event-roomwelcomeupdate)
  - [roomMinChatLevelUpdate](#event-roomminchatlevelupdate)
+ - [skip](#event-skip)
  - [userJoin](#event-userjoin)
  - [userLeave](#event-userleave)
  - [userUpdate](#event-userupdate)
@@ -2232,6 +2233,21 @@ Fired when the room's minimum chat level changes.
 ```js
 mp.on('roomMinChatLevelUpdate', (level, user) => {
   console.log(user.mention(), 'changed the minimum chat level to', level)
+})
+```
+
+<a id="event-skip"></a>
+## 'skip'
+
+Fired when a user skips their own play.
+
+**Parameters**
+
+ - `user` - The [User](#class-user) object of the user who skipped.
+
+```js
+mp.on('skip', (user) => {
+  console.log(`${user.username} has decided to skip.`)
 })
 ```
 
