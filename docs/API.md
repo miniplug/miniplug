@@ -2176,10 +2176,6 @@ mp.on('modStaff', (data) => {
     role = 'Co-Host'
   else if (data.role === 5)
     role = 'Host'
-  if (data.gRole > 1 && data.gRole < 5)
-    role = 'Brand Ambassador'
-  if (data.gRole == 5)
-    role = 'Administrator'
 
   if (data.role == 0)
     console.log(`${data.moderator.username} removed ${data.user.username} from the staff.`)
