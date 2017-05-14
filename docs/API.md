@@ -1853,6 +1853,7 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
  - [modMute](#event-modmute)
  - [modRemoveDj](#event-modremovedj)
  - [modSkip](#event-modskip)
+ - [modStaff](#event-modstaff)
  - [roomUpdate](#event-roomupdate)
  - [roomNameUpdate](#event-roomnameupdate)
  - [roomDescriptionUpdate](#event-roomdescriptionupdate)
@@ -2147,6 +2148,43 @@ Fired when a moderator skips the current song playing.
  ```js
 mp.on('modSkip', (moderator) => {
   console.log(`${moderator.username} has skipped the current DJ`)
+})
+```
+
+<a id="#event-modstaff"></a>
+## 'modStaff'
+
+Fired when a user is promoted or demoted.
+
+**Parameters**
+
+ - `moderator` - The staff [User](#class-user) who promoted/demoted the user.
+ - `user` - The [User](#class-user) who was promoted/demoted.
+ - `role` - The role of the user who was promoted/demoted.
+
+ ```js
+mp.on('modStaff', (data) => {
+  var role = ''
+
+  if (data.role === 1)
+    role = 'Resident DJ'
+  else if (data.role === 2)
+    role = 'Bouncer'
+  else if (data.role === 3)
+    role = 'Manager'
+  else if (data.role === 4)
+    role = 'Co-Host'
+  else if (data.role === 5)
+    role = 'Host'
+  if (data.gRole > 1 && data.gRole < 5)
+    role = 'Brand Ambassador'
+  if (data.gRole == 5)
+    role = 'Administrator'
+
+  if (data.role == 0)
+    console.log(`${data.moderator.username} removed ${data.user.username} from the staff.`)
+  else
+    console.log(`${data.moderator.username} set ${data.user.username} as a ${role}.`)
 })
 ```
 
