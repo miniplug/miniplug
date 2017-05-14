@@ -40,11 +40,14 @@ export default function boothPlugin (opts = {}) {
 
       mp[currentHistoryEntry] = {
         id: historyId,
-        dj: mp.user(djId),
+        user: mp.user(djId) || mp.wrapUser({ id: djId }),
         media: media,
         playlistId: playlistId,
         time: time
       }
+      // Compat with v1.7.0 and below.
+      // TODO remove in 2.x
+      mp[currentHistoryEntry].dj = mp[currentHistoryEntry].user
 
       mp.emit('advance', historyEntry(), previous)
     }
