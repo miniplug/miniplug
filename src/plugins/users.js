@@ -62,7 +62,7 @@ export default function usersPlugin () {
     // Emit `userUpdate` events for `role` updates.
     function onStaffUpdate (props) {
       props.u.forEach((ref) => {
-        onUserUpdate({ ref.i, role: ref.p })
+        onUserUpdate({ i: ref.i, role: ref.p })
 
         mp.emit('modStaff', {
           moderator: mp.user(props.mi) || mp.wrapUser({ id: props.mi, username: props.m }),
