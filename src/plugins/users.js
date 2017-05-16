@@ -67,7 +67,7 @@ export default function usersPlugin () {
         mp.emit('modStaff', {
           moderator: mp.user(props.mi) || mp.wrapUser({ id: props.mi, username: props.m }),
           user: mp.user(ref.i) || mp.wrapUser({ id: ref.i, username: ref.n }),
-          role: ref.p 
+          role: ref.p
         })
       })
     }
