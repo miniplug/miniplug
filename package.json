@@ -30,7 +30,7 @@
     "debug": "^2.6.7",
     "got": "^6.6.3",
     "plug-login": "^1.0.0",
-    "plug-socket": "^0.4.0",
+    "plug-socket": "^0.5.0",
     "proxyquire": "^1.8.0"
   },
   "devDependencies": {
