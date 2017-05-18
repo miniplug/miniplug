@@ -38,6 +38,7 @@
     "buble": "^0.15.2",
     "builtin-modules": "^1.1.1",
     "glob": "^7.1.1",
+    "lint-staged": "^3.4.2",
     "nock": "^9.0.9",
     "npm-run-all": "^4.0.2",
     "plug-message-split": "^1.0.0",
@@ -57,16 +58,23 @@
     "build": "rollup -c",
     "rebuild": "node has-changed || rollup -c",
     "lint": "standard rollup.config.js src/**/*.js test/**/*.js",
+    "lint-staged": "lint-staged",
     "tap": "tape -r ./test/_init.js test/*.js",
     "tap:min": "npm run tap | tap-min",
     "test": "npm-run-all lint rebuild tap:min",
     "test:ci": "npm-run-all lint rebuild tap"
   },
+  "lint-staged": {
+    "*.js": [
+      "standard --fix",
+      "git add"
+    ]
+  },
   "pre-commit": {
     "run": [
       "rebuild",
       "tap:min",
-      "lint"
+      "lint-staged"
     ]
   },
   "standard": {
