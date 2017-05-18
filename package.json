@@ -24,12 +24,14 @@
     "docs"
   ],
   "dependencies": {
+    "async-to-gen": "^1.3.3",
     "bluebird": "^3.4.6",
     "create-error-class": "^3.0.2",
-    "debug": "^2.3.3",
+    "debug": "^2.6.7",
     "got": "^6.6.3",
     "plug-login": "^1.0.0",
-    "plug-socket": "^0.4.0"
+    "plug-socket": "^0.4.0",
+    "proxyquire": "^1.8.0"
   },
   "devDependencies": {
     "async-to-gen": "^1.3.2",
@@ -46,6 +48,7 @@
     "rollup-plugin-inject": "^2.0.0",
     "rollup-plugin-node-resolve": "^3.0.0",
     "standard": "^10.0.0-beta.0",
+    "tap-min": "^1.2.1",
     "tape": "^4.6.3"
   },
   "scripts": {
@@ -54,7 +57,9 @@
     "rebuild": "node has-changed || rollup -c",
     "lint": "standard rollup.config.js src/**/*.js test/**/*.js",
     "tap": "tape -r ./test/_init.js test/*.js",
-    "test": "npm-run-all lint rebuild tap"
+    "tap:min": "npm run tap | tap-min",
+    "test": "npm-run-all lint rebuild tap:min",
+    "test:ci": "npm-run-all lint rebuild tap"
   },
   "standard": {
     "env": "mocha"
