@@ -36,7 +36,7 @@ test('Emits `roomState` after receiving new room state', async (t) => {
   mp.on('roomState', () => {
     t.pass()
   })
-  const state = await mp.getRoomState()
+  await mp.getRoomState()
 })
 
 test('Updates `room()` properties when updates come in', async (t) => {
@@ -55,10 +55,12 @@ test('Updates `room()` properties when updates come in', async (t) => {
 
   mp.ws.onmessage({
     data: JSON.stringify([
-      { a: 'roomDescriptionUpdate', p: {
-        u: 4393540,
-        d: 'New description'
-      }, s: 'tastycat' }
+      { a: 'roomDescriptionUpdate',
+        p: {
+          u: 4393540,
+          d: 'New description'
+        },
+        s: 'tastycat' }
     ])
   })
   t.true(/New description/.test(mp.room().description))

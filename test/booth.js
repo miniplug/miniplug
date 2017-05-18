@@ -1,6 +1,5 @@
 const test = require('tape')
 const miniplug = require('./mocks/mp')
-const nock = require('nock')('https://plug.dj')
 
 test('Sets booth and waitlist information on `advance`', async (t) => {
   t.plan(10)

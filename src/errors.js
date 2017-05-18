@@ -1,9 +1,7 @@
 import createErrorClass from 'create-error-class'
 
 function setup (response, cause) {
-  this.message = response.body.data
-    && response.body.data[0]
-    || cause.message
+  this.message = (response.body.data && response.body.data[0]) || cause.message
   this.status = response.body.status
   this.response = response
   this.cause = cause
@@ -26,7 +24,7 @@ const statusToError = {
   badLogin: BadLoginError,
   notAuthorized: NotAuthorizedError,
   notFound: NotFoundError,
-  noValidPlaylist: NoValidPlaylistError,
+  noValidPlaylist: NoValidPlaylistError
 }
 
 export const errorClasses = {
@@ -38,7 +36,7 @@ export const errorClasses = {
   NotEnoughPPError
 }
 
-export function wrapResponseError(response, cause) {
+export function wrapResponseError (response, cause) {
   const { status, data } = response.body
   // Special cases
   if (status === 'requestError' && data && data[0] === 'fundsPP') {

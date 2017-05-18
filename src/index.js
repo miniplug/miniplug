@@ -113,7 +113,7 @@ function miniplug (opts = {}) {
   // Misc
   Object.assign(mp, {
     // REST: News APIs
-    getNews: partial(mp.get, 'news'),
+    getNews: partial(mp.get, 'news')
   })
 
   if (opts.connect) mp.connect(opts)
