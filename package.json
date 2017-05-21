@@ -30,6 +30,7 @@
     "debug": "^2.6.7",
     "got": "^6.6.3",
     "plug-login": "^1.0.0",
+    "plug-message-split": "^1.0.0",
     "plug-socket": "^0.5.0",
     "proxyquire": "^1.8.0"
   },
@@ -41,7 +42,6 @@
     "lint-staged": "^3.4.2",
     "nock": "^9.0.9",
     "npm-run-all": "^4.0.2",
-    "plug-message-split": "^1.0.0",
     "pre-commit": "^1.2.2",
     "proxyquire": "^1.7.11",
     "rollup": "^0.41.0",
