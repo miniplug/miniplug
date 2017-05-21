@@ -112,6 +112,7 @@
    - [message.message](#chatmessage-message)
    - [message.uid](#chatmessage-uid)
    - [message.un](#chatmessage-un)
+   - [message.user](#chatmessage-user)
    - [message.getUser()](#chatmessage-getuser)
    - [message.own()](#chatmessage-own)
    - [message.reply(text)](#chatmessage-reply)
@@ -1213,10 +1214,21 @@ User ID of the sender of the message.
 
 Username of the sender of the message.
 
+<a id="chatmessage-user"></a>
+### message.user: [User](#class-user)
+
+The user that sent the message.
+
+In some cases, plug.dj might send chat messages from users who aren't reported as being in the room.
+In those cases, the `user` property will only have the user's username and ID, which is good enough to use for most purposes.
+If you require the full user object, use [`message.getUser()`](#chatmessage-getuser).
+Notably, if you need to use the user's `role` for a chat command permissions check, it's best to call `getUser()`.
+
 <a id="chatmessage-getuser"></a>
 ### message.getUser(): Promise&lt;[User](#class-user)>
 
 Get the sender of the message.
+This uses the local user object (from [`mp.user()`](#mp-user)) if available, and falls back to a network request (through [`mp.getUser()`](#mp-getuser)) if not.
 
 <a id="chatmessage-own"></a>
 ### message.own(): bool

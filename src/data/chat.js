@@ -9,6 +9,8 @@ export default function wrapMessage (mp, message) {
 
   message.id = message.cid
   message.message = unescape(message.message)
+  message.user = mp.user(message.uid) ||
+    mp.wrapUser({ id: message.uid, username: message.un })
 
   return makeProto(message, {
     own: () => mp.me().id === message.uid,
