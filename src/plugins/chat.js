@@ -19,6 +19,7 @@ export default function chatPlugin (opts) {
       debug('chat', msg.uid, msg.un, msg.message)
       mp.emit('chat', mp.wrapMessage(msg))
     }
+
     function onChatDelete ({ c, mi }) {
       debug('chatDelete', mi, c)
       mp.emit('chatDelete', {
@@ -27,9 +28,17 @@ export default function chatPlugin (opts) {
       })
     }
 
+    function onGifted (ref) {
+      mp.emit('gifted', {
+        sender: ref.s,
+        recipient: ref.r
+      })
+    }
+
     mp.on('connected', () => {
       mp.ws.on('chat', onChat)
       mp.ws.on('chatDelete', onChatDelete)
+      mp.ws.on('gifted', onGifted)
     })
 
     // REST API

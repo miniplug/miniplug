@@ -1844,6 +1844,7 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
  - [earn](#event-earn)
  - [friendAccept](#event-friendaccept)
  - [friendRequest](#event-friendrequest)
+ - [gifted](#event-gifted)
  - [grab](#event-grab)
  - [guestJoin](#event-guestjoin)
  - [guestLeave](#event-guestleave)
@@ -1977,6 +1978,22 @@ mp.on('friendRequest', (user) => {
     user.chat('I only befriend users whose level is below 5, sorry.')
     user.rejectRequest()
   }
+})
+```
+
+<a id="event-gifted"></a>
+## 'gifted'
+
+Fired when a user sends another user a gift.
+
+**Parameters**
+
+ - `sender` - The name of the user who sent the gift.
+ - `recipient` - The name of the user who received the gift.
+
+```js
+mp.on('gifted', (data) => {
+  console.log(`${data.sender} sent ${data.recipient} a gift!`)
 })
 ```
 
