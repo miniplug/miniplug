@@ -88,12 +88,14 @@ export default function usersPlugin () {
     })
 
     const me = () => mp[currentUser]
-    const user = (id) => {
-      if (mp[currentUser] && id === mp[currentUser].id) {
+    const userByProp = (prop) => (value) => {
+      if (mp[currentUser] && value === mp[currentUser][prop]) {
         return mp[currentUser]
       }
-      return mp[currentUsers].find((user) => user.id === id)
+      return mp[currentUsers].find((user) => user[prop] === value)
     }
+    const user = userByProp('id')
+    const userByName = userByProp('username')
     // TODO May want to include `me()` in the `users()` list in v2.0.0. I'm not
     // sure which is more expected.
     const users = () => mp[currentUsers]
@@ -130,6 +132,7 @@ export default function usersPlugin () {
       // local
       me,
       user,
+      userByName,
       users,
       guests,
       // remote

@@ -18,6 +18,7 @@
  - [mp.getRoomState()](#mp-getroomstate)
  - [mp.me()](#mp-me)
  - [mp.user(id)](#mp-user)
+ - [mp.userByName(name)](#mp-userbyname)
  - [mp.users()](#mp-users)
  - [mp.guests()](#mp-guests)
  - [mp.getMe()](#mp-getme)
@@ -375,6 +376,30 @@ requested user is not in the room.
 
 ```js
 console.log('Some other user:', mp.user(123456).username)
+```
+
+<a id="mp-userbyname"></a>
+## mp.userByName(name): [User](#class-user)
+
+Synchronously get a user object from the current room, identified by the username.
+Returns `null` if the requested user is not in the room.
+
+Usernames are case sensitive.
+
+```js
+// An `!id` command that shows a user's ID
+// Usage: `!id @Username`, eg `!id @Tastybot`
+mp.on('chat', (message) => {
+  if (message.startsWith('!id @')) {
+    const name = message.slice(5)
+    const user = mp.userByName(name)
+    if (user) {
+      message.reply(`${user.mention()}'s ID is ${user.id}`)
+    } else {
+      message.reply(`I don't know the user "${name}"`)
+    }
+  }
+})
 ```
 
 <a id="mp-users"></a>

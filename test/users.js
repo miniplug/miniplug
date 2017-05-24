@@ -21,7 +21,7 @@ test('Get the current user', async (t) => {
 })
 
 test('Get a user who is currently in the room', async (t) => {
-  t.plan(3)
+  t.plan(5)
 
   nock.post('/_/rooms/join').reply(200, require('./mocks/rooms/join.json'))
   nock.get('/_/rooms/state').reply(200, require('./mocks/rooms/state.json'))
@@ -36,4 +36,7 @@ test('Get a user who is currently in the room', async (t) => {
   t.ok(mp.user(4103894), 'should return user who is in the room')
   t.notok(mp.user(123456), 'should not return user who is not in the room')
   t.ok(mp.user(555555), 'should get the current user, issue #35')
+
+  t.ok(mp.userByName('Tastybot'), 'should find users by their name')
+  t.notok(mp.userByName('tastybot'), 'should treat usernames case sensitively')
 })
