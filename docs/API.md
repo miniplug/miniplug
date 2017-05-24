@@ -1851,6 +1851,7 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
 # Events
 
  - [advance](#event-advance)
+ - [ban](#event-ban)
  - [chat](#event-chat)
  - [chatDelete](#event-chatdelete)
  - [earn](#event-earn)
@@ -1902,6 +1903,38 @@ mp.on('advance', (next, previous) => {
   if (next) {
     console.log('Next song:', next.media.author, '-', next.media.title)
   }
+})
+```
+
+<a id="event-ban"></a>
+## 'ban'
+
+Fired when a moderator bans you.
+
+**Parameters**
+
+ - `duration` - The duration of how long the ban lasts.
+ - `reason` - The reason why the ban was issued.
+
+```js
+mp.on('ban', (data) => {
+  var duration = '', reason = ''
+
+  switch (data.duration) {
+    case 'h': duration = 'for one hour'; break;
+    case 'd': duration = 'for a day'; break;
+    case 'f': duration = 'forever'; break;
+  }
+
+  switch (data.reason) {
+    case 1: reason = 'spamming or trolling'; break;
+    case 2: reason = 'verbal abuse or harassment'; break;
+    case 3: reason = 'playing offensive videos/songs'; break;
+    case 4: reason = 'repeatedly playing inappropriate genre(s)'; break;
+    case 5: reason = 'negative attitude'; break;
+  }
+
+  console.log(`I have been banned ${duration} (reason: ${reason})`)
 })
 ```
 
