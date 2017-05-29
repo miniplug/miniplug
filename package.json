@@ -28,7 +28,7 @@
     "bluebird": "^3.4.6",
     "create-error-class": "^3.0.2",
     "debug": "^2.6.8",
-    "got": "^6.6.3",
+    "got": "^7.0.0",
     "plug-login": "^1.0.0",
     "plug-message-split": "^1.0.0",
     "plug-socket": "^0.5.0",
