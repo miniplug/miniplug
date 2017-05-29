@@ -23,7 +23,7 @@ export default function httpPlugin (httpOpts) {
             },
             json: true,
             ...opts,
-            body: opts.body ? JSON.stringify(opts.body) : undefined
+            body: opts.body ? opts.body : undefined
           })
         )
         .then((resp) => {
