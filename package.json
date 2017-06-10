@@ -39,7 +39,7 @@
     "buble": "^0.15.2",
     "builtin-modules": "^1.1.1",
     "glob": "^7.1.2",
-    "lint-staged": "^3.5.0",
+    "lint-staged": "^3.6.1",
     "nock": "^9.0.9",
     "npm-run-all": "^4.0.2",
     "pre-commit": "^1.2.2",
