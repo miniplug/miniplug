@@ -29,6 +29,7 @@
     "create-error-class": "^3.0.2",
     "debug": "^2.6.8",
     "got": "^7.0.0",
+    "linear-promise-backoff-queue": "^1.0.0",
     "plug-login": "^1.0.0",
     "plug-message-split": "^1.0.0",
     "plug-socket": "^0.5.0",

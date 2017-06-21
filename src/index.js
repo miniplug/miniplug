@@ -1,10 +1,9 @@
 import { EventEmitter } from 'events'
 import createDebug from 'debug'
-
+import createBackoff from 'linear-promise-backoff-queue'
 import { partial } from './util'
 import * as constants from './constants'
 import { errorClasses } from './errors'
-import createBackoff from './createBackoff'
 import dataModelPlugin from './plugins/wrappers'
 import httpPlugin from './plugins/http'
 import connectPlugin from './plugins/connect'
@@ -87,7 +86,7 @@ function miniplug (opts = {}) {
     // This is the same backoff as used in Sooyou/plugged:
     // https://github.com/SooYou/plugged/blob/856bd0ef47307491c0ad95cba7006cd4721828fd/query.js#L4
     // And that seems pretty robust.
-    backoff: createBackoff({ increment: 200, max: 2200 })
+    backoff: createBackoff({ increment: 200, max: 2200, Promise })
   }))
   use(connectPlugin({
     host: plugHost
@@ -101,7 +100,7 @@ function miniplug (opts = {}) {
   use(waitlistPlugin())
   use(historyPlugin())
   use(chatPlugin({
-    backoff: createBackoff({ increment: 70, max: 700 })
+    backoff: createBackoff({ increment: 70, max: 700, Promise })
   }))
   use(friendsPlugin())
   use(roomsPlugin())
