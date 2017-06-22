@@ -181,6 +181,7 @@
  - [Media Sources](#mediasource)
  - [Product Categories](#productcategories)
  - [REST methods](#mp-rest)
+ - [WebSocket](#mp-ws)
  - [Events](#events)
  - [Errors](#errors)
 
@@ -1871,6 +1872,19 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
 // sends `POST https://plug.dj/_/booth/skip` with a request body like:
 // { "userID": 123456, "historyID": "ab0c47eb-6c92-45f8-8711-75e27977db06" }
 ```
+
+<a id="mp-ws"></a>
+# WebSocket
+
+## mp.ws: WebSocket
+
+The [plug-socket](https://github.com/goto-bus-stop/plug-socket) WebSocket
+instance. This is also an instance of the [ws](https://github.com/websockets/ws)
+module.
+
+It has a few methods, but miniplug has better wrappers around all of them.
+The [mp.ws](#mp-ws) property is useful if you need to attach native WebSocket
+events (eg. `'close'`), but otherwise there are better options.
 
 <a id="events"></a>
 # Events
