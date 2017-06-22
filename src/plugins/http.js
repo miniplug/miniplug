@@ -1,7 +1,9 @@
 import got from 'got'
 import createDebug from 'debug'
+import { Agent } from 'https'
 import { wrapResponseError } from '../errors'
 
+const agent = new Agent({ keepAlive: true })
 const debug = createDebug('miniplug:http')
 
 export default function httpPlugin (httpOpts) {
@@ -17,6 +19,7 @@ export default function httpPlugin (httpOpts) {
         .tap(() => debug(opts.method, url, opts.body || opts.query))
         .then((session) =>
           got(`${httpOpts.host}/_/${url}`, {
+            agent,
             headers: {
               cookie: session.cookie,
               'content-type': 'application/json'
