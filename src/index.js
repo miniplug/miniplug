@@ -1,4 +1,5 @@
 import { EventEmitter } from 'events'
+import { Agent } from 'https'
 import createDebug from 'debug'
 import createBackoff from 'linear-promise-backoff-queue'
 import { partial } from './util'
@@ -65,6 +66,10 @@ function miniplug (opts = {}) {
 
   opts = { ...defaultOptions, ...opts }
 
+  if (typeof opts.agent === 'undefined') {
+    opts.agent = new Agent({ keepAlive: true })
+  }
+
   // trim trailing slashes
   const plugHost = opts.host.replace(/\/+$/, '')
 
@@ -83,13 +88,15 @@ function miniplug (opts = {}) {
   use(dataModelPlugin())
   use(httpPlugin({
     host: plugHost,
+    agent: opts.agent,
     // This is the same backoff as used in Sooyou/plugged:
     // https://github.com/SooYou/plugged/blob/856bd0ef47307491c0ad95cba7006cd4721828fd/query.js#L4
     // And that seems pretty robust.
     backoff: createBackoff({ increment: 200, max: 2200, Promise })
   }))
   use(connectPlugin({
-    host: plugHost
+    host: plugHost,
+    agent: opts.agent
   }))
   use(usersPlugin())
   use(ignoresPlugin())
