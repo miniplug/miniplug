@@ -7,8 +7,11 @@ const debugWs = createDebug('miniplug:ws')
 
 export default function connectPlugin (options = {}) {
   return (mp) => {
-      // log in
-    const loginOpts = { host: options.host, authToken: true }
+    const loginOpts = {
+      agent: options.agent,
+      host: options.host,
+      authToken: true
+    }
 
     function connect (opts) {
       debug('connecting', opts.email)
