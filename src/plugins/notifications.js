@@ -10,6 +10,8 @@ export default function notificationsPlugin () {
     }
 
     function onEarn (ref) {
+      const me = mp.me()
+      if (me) Object.assign(me, ref)
       mp.emit('earn', {
         xp: ref.xp,
         pp: ref.pp,
