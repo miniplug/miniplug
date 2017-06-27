@@ -17,11 +17,18 @@ export default function notificationsPlugin () {
       })
     }
 
+    function onSub (sub) {
+      const me = mp.me()
+      if (me) me.sub = sub
+      mp.emit('sub', sub)
+    }
+
     mp.on('connected', (user) => {
       mp[currentNotifications] = (user && user.notifications) || []
 
       mp.ws.on('notify', onNotify)
       mp.ws.on('earn', onEarn)
+      mp.ws.on('sub', onSub)
     })
 
     Object.assign(mp, {

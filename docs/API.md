@@ -1913,6 +1913,7 @@ events (eg. `'close'`), but otherwise there are better options.
  - [roomWelcomeUpdate](#event-roomwelcomeupdate)
  - [roomMinChatLevelUpdate](#event-roomminchatlevelupdate)
  - [skip](#event-skip)
+ - [sub](#event-sub)
  - [userJoin](#event-userjoin)
  - [userLeave](#event-userleave)
  - [userUpdate](#event-userupdate)
@@ -2383,6 +2384,21 @@ Fired when a user skips their own play.
 ```js
 mp.on('skip', (user) => {
   console.log(`${user.username} has decided to skip.`)
+})
+```
+
+<a id="event-sub"></a>
+## 'sub'
+
+Fired when the current user gets a gold subscription membership.
+
+**Parameters**
+
+ - `value` - The subscription value. 0 for no subscription, 1 for a gold subscription.
+
+```js
+mp.on('sub', (value) => {
+  if (value) mp.emote('is now a gold subscriber :tada:')
 })
 ```
 
