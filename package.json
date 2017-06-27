@@ -21,7 +21,8 @@
     "index.js.map",
     "index.es.js",
     "index.es.js.map",
-    "docs"
+    "docs",
+    "src"
   ],
   "dependencies": {
     "async-to-gen": "^1.3.3",
