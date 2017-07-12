@@ -7,9 +7,13 @@ test('Getting rooms by the current user', async (t) => {
 
   nock.get('/_/rooms/me').reply(200, require('./mocks/rooms/me.json'))
 
-  const rooms = await miniplug().getMyRooms()
+  const mp = miniplug()
+
+  const rooms = await mp.getMyRooms()
   t.equal(rooms.length, 5)
   t.equal(rooms[0].name, '`plug-socket` testing room')
+
+  mp.ws.close()
 })
 
 test('Sets the current room after joining', async (t) => {
@@ -18,13 +22,15 @@ test('Sets the current room after joining', async (t) => {
   nock.post('/_/rooms/join').reply(200, require('./mocks/rooms/join.json'))
   nock.get('/_/rooms/state').reply(200, require('./mocks/rooms/state.json'))
 
-  const mp = await miniplug()
+  const mp = miniplug()
 
   await mp.join('tastycat')
   t.ok(mp.room())
   t.equal(mp.room().slug, 'tastycat')
 
   t.equal(mp.users().length, 153)
+
+  mp.ws.close()
 })
 
 test('Emits `roomState` after receiving new room state', async (t) => {
@@ -37,6 +43,8 @@ test('Emits `roomState` after receiving new room state', async (t) => {
     t.pass()
   })
   await mp.getRoomState()
+
+  mp.ws.close()
 })
 
 test('Updates `room()` properties when updates come in', async (t) => {
@@ -79,4 +87,6 @@ test('Updates `room()` properties when updates come in', async (t) => {
   t.equal(mp.room().welcome, 'New welcome')
   t.equal(mp.room().name, 'room name')
   t.equal(mp.room().minChatLevel, 2)
+
+  mp.ws.close()
 })
