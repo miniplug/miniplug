@@ -1,10 +1,10 @@
 const test = require('tape')
 const miniplug = require('./mocks/mp')
 
-test('Sets booth and waitlist information on `advance`', async (t) => {
+test('Sets booth and waitlist information on `advance`', (t) => {
   t.plan(10)
 
-  const mp = await miniplug()
+  const mp = miniplug()
 
   mp.ws.emit('userJoin', { id: 4393540 })
 
@@ -50,4 +50,6 @@ test('Sets booth and waitlist information on `advance`', async (t) => {
   t.equal(mp.dj(), null)
   t.equal(mp.waitlist().length, 0)
   t.equal(mp.media(), null)
+
+  mp.ws.close()
 })

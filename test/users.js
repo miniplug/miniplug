@@ -7,8 +7,12 @@ test('Retrieving a user', async (t) => {
 
   nock.get('/_/users/123456').reply(200, require('./mocks/users/123456.json'))
 
-  const user = await miniplug().getUser(123456)
+  const mp = miniplug()
+
+  const user = await mp.getUser(123456)
   t.equal(user.username, 'Username')
+
+  mp.ws.close()
 })
 
 test('Get the current user', async (t) => {
@@ -16,8 +20,12 @@ test('Get the current user', async (t) => {
 
   nock.get('/_/users/me').reply(200, require('./mocks/users/me.json'))
 
-  const user = await miniplug().getMe()
+  const mp = miniplug()
+
+  const user = await mp.getMe()
   t.equal(user.username, 'ReAnna')
+
+  mp.ws.close()
 })
 
 test('Get a user who is currently in the room', async (t) => {
@@ -26,7 +34,7 @@ test('Get a user who is currently in the room', async (t) => {
   nock.post('/_/rooms/join').reply(200, require('./mocks/rooms/join.json'))
   nock.get('/_/rooms/state').reply(200, require('./mocks/rooms/state.json'))
 
-  const mp = await miniplug()
+  const mp = miniplug()
   await mp.join('tastycat')
 
   mp.emit('connected', {
@@ -39,4 +47,6 @@ test('Get a user who is currently in the room', async (t) => {
 
   t.ok(mp.userByName('Tastybot'), 'should find users by their name')
   t.notok(mp.userByName('tastybot'), 'should treat usernames case sensitively')
+
+  mp.ws.close()
 })

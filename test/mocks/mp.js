@@ -16,6 +16,13 @@ const socket = require('proxyquire')('plug-socket', {
       })
     }
 
+    fakeSocket.close = () => {
+      setImmediate(() => {
+        fakeSocket.onclose && fakeSocket.onclose()
+        fakeSocket.emit('close')
+      })
+    }
+
     return fakeSocket
   }
 })
