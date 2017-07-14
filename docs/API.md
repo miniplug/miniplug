@@ -47,6 +47,9 @@
  - [mp.addDJ(uid)](#mp-adddj)
  - [mp.moveDJ(uid, position)](#mp-movedj)
  - [mp.removeDJ(uid)](#mp-removedj)
+ - [mp.getWaitlistBans()](#mp-getwaitlistbans)
+ - [mp.waitlistBan(uid, duration, reason)](#mp-waitlistban)
+ - [mp.waitlistUnban(uid)](#mp-waitlistunban)
  - [mp.chat(message)](#mp-chat)
  - [mp.emote(message)](#mp-emote)
  - [mp.deleteChat(id)](#mp-deletechat)
@@ -105,9 +108,20 @@
    - [user.unmute()](#user-unmute)
    - [user.ban(duration, reason)](#user-ban)
    - [user.unban()](#user-unban)
+   - [user.waitlistBan(duration, reason)](#user-waitlistban)
+   - [user.waitlistUnban()](#user-waitlistunban)
  - [Waitlist](#class-waitlist)
    - [waitlist.contains(user)](#waitlist-contains)
    - [waitlist.positionOf(user)](#waitlist-positionof)
+ - [WaitlistBan](#class-waitlistban)
+   - [wlban.user](#waitlistban-user)
+   - [wlban.moderator](#waitlistban-moderator)
+   - [wlban.moderatorName](#waitlistban-moderatorname)
+   - [wlban.duration](#waitlistban-duration)
+   - [wlban.reason](#waitlistban-reason)
+   - [wlban.timestamp](#waitlistban-timestamp)
+   - [wlban.getUser()](#waitlistban-getuser)
+   - [wlban.remove()](#waitlistban-remove)
  - [ChatMessage](#class-chatmessage)
    - [message.id](#chatmessage-id)
    - [message.message](#chatmessage-message)
@@ -651,6 +665,48 @@ mp.removeDJ(user.id).then(() => {
 })
 ```
 
+<a id="mp-getwaitlistbans"></a>
+## mp.getWaitlistBans(): Promise&lt;Array&lt;[WaitlistBan](#class-waitlistban)>>
+
+Get a list of current Waitlist Bans.
+
+```js
+mp.getWaitlistBans().then((list) => {
+  list.forEach((ban) => {
+    console.log(`${ban.user.mention()} was banned from the waitlist by ${ban.moderatorName}`)
+  })
+})
+```
+
+<a id="mp-waitlistban"></a>
+## mp.waitlistBan(uid, duration, reason): Promise
+
+Ban a user from the waitlist.
+`uid` is the ID of the user to ban from the waitlist.
+`duration` is a [WAITLIST_BAN_DURATION](#waitlistbanduration).
+`reason` is a [WAITLIST_BAN_REASON](#waitlistbanreason).
+
+```js
+const user = mp.userByName('AnnoyingUser')
+mp.waitlistBan(user.id, WAITLIST_BAN_DURATION.PERMA, WAITLIST_BAN_REASON.GENRE).then(() => {
+  console.log('Banned', user.mention())
+})
+```
+
+<a id="mp-waitlistunban"></a>
+## mp.waitlistUnban(uid): Promise
+
+Unban a previously waitlist-banned user.
+`uid` is the ID of the user to unban.
+
+```js
+mp.getWaitlistBans().each((ban) => {
+  return mp.waitlistUnban(ban.user.id)
+}).then(() => {
+  console.log('Unbanned _everyone_! har har')
+})
+```
+
 <hr>
 
 <a id="mp-chat"></a>
@@ -1165,6 +1221,18 @@ Ban the user from the room. `duration` is a [BAN_DURATION](#banduration).
 
 Unban the user from the room.
 
+<a id="user-waitlistban"></a>
+### user.waitlistBan(duration, reason): Promise
+
+Ban the user from the waitlist.
+`duration` is a [WAITLIST_BAN_DURATION](#waitlistbanduration).
+`reason` is a [WAITLIST_BAN_REASON](#waitlistbanreason).
+
+<a id="user-waitlistunban"></a>
+### user.waitlistUnban(): Promise
+
+Unban the user from the waitlist.
+
 <a id="class-waitlist"></a>
 ## Waitlist
 
@@ -1216,6 +1284,53 @@ object or a user ID. Returns -1 if the given user is not in the waitlist.
 
 This is similar to the `Array#indexOf` method of JavaScript arrays. The same
 differences apply as with <code>[waitlist.contains](#waitlist-contains)</code>.
+
+<a id="class-waitlistban"></a>
+## WaitlistBan
+
+<a id="waitlistban-user"></a>
+### wlban.user: [User](#class-user)
+
+The user who was banned from the waitlist.
+This object is only guaranteed to have the `id` and `username` properties.
+Most user methods will work, but if more properties are required, the [`wlban.getUser()`](#waitlistban-getuser) method should be used.
+
+<a id="waitlistban-moderator"></a>
+### wlban.moderator: [User](#class-user)
+
+The moderator who installed the waitlist ban.
+**This property is only guaranteed to exist on WaitlistBan objects from the ['waitlistBan'](#event-waitlistban) event.**
+
+<a id="waitlistban-moderatorname"></a>
+### wlban.moderatorName: string
+
+The username of the moderator who installed the waitlist ban.
+
+<a id="waitlistban-duration"></a>
+### wlban.duration: [WAITLIST_BAN_DURATION](#waitlistbanduration)
+
+The duration of the waitlist ban.
+
+<a id="waitlistban-reason"></a>
+### wlban.reason: [WAITLIST_BAN_REASON](#waitlistbanreason)
+
+The reason for the waitlist ban.
+This property is always `null` on WaitlistBan objects from the ['waitlistBan'](#event-waitlistban) event.
+
+<a id="waitlistban-timestamp"></a>
+### wlban.timestamp: Date
+
+When the waitlist ban was installed.
+
+<a id="waitlistban-getuser"></a>
+### wlban.getUser(): Promise&lt;[User](#class-user)>
+
+Get the banned user object.
+
+<a id="waitlistban-remove"></a>
+### wlban.remove(): Promise
+
+Remove the waitlist ban.
 
 <a id="class-chatmessage"></a>
 ## ChatMessage
@@ -1787,6 +1902,56 @@ Repeatedly playing inappropriate genre(s).
 
 Negative attitude.
 
+<a id="waitlistbanduration"></a>
+## Waitlist Ban Durations
+
+```js
+const { WAITLIST_BAN_DURATION } = require('miniplug')
+```
+
+### WAITLIST_BAN_DURATION.SHORT
+
+A 15 minute waitlist ban.
+
+### WAITLIST_BAN_DURATION.MEDIUM
+
+A 1 hour waitlist ban.
+
+### WAITLIST_BAN_DURATION.LONG
+
+A 1 day waitlist ban.
+
+### WAITLIST_BAN_DURATION.PERMA
+
+A permanent waitlist ban.
+
+<a id="waitlistbanreason"></a>
+## Waitlist Ban Reasons
+
+```js
+const { WAITLIST_BAN_REASON } = require('miniplug')
+```
+
+### WAITLIST_BAN_REASON.SPAMMING
+
+Spamming or trolling.
+
+### WAITLIST_BAN_REASON.VERBAL_ABUSE
+
+Verbal abuse or offensive language.
+
+### WAITLIST_BAN_REASON.OFFENSIVE_PLAYS
+
+Playing offensive videos/songs.
+
+### WAITLIST_BAN_REASON.GENRE
+
+Repeatedly playing inappropriate genre(s).
+
+### WAITLIST_BAN_REASON.ATTITUDE
+
+Negative attitude.
+
 <a id="mediasource"></a>
 ## Media Sources
 
@@ -1918,6 +2083,7 @@ events (eg. `'close'`), but otherwise there are better options.
  - [userLeave](#event-userleave)
  - [userUpdate](#event-userupdate)
  - [vote](#event-vote)
+ - [waitlistBan](#event-waitlistban)
  - [waitlistClear](#event-waitlistclear)
  - [waitlistCycle](#event-waitlistcycle)
  - [waitlistLock](#event-waitlistlock)
@@ -2475,6 +2641,21 @@ mp.on('vote', (data) => {
   } else if (data.vote === -1) {
     console.log(data.user.mention(), 'meh\'d this track…')
   }
+})
+```
+
+<a id="event-waitlistban"></a>
+## 'waitlistBan'
+
+Fired when a user is banned from the waitlist.
+
+**Parameters**
+
+ - `ban` - A [WaitlistBan](#class-waitlistban) object representing the new ban.
+
+```js
+mp.on('waitlistBan', (ban) => {
+  ban.user.chat('Ha! Sucker!')
 })
 ```
 

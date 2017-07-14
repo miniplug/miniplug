@@ -42,3 +42,12 @@ export const MUTE_REASON = {
   LANGUAGE: 4,
   ATTITUDE: 5
 }
+
+export const WAITLIST_BAN_DURATION = {
+  SHORT: 's',
+  MEDIUM: 'm',
+  LONG: 'l',
+  PERMA: 'f'
+}
+
+export const WAITLIST_BAN_REASON = BAN_REASON

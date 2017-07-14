@@ -34,6 +34,9 @@ export default function wrapUser (mp, user) {
     ban: partial(mp.ban, user.id),
     unban: partial(mp.unban, user.id),
 
+    waitlistBan: partial(mp.waitlistBan, user.id),
+    waitlistUnban: partial(mp.waitlistUnban, user.id),
+
     getHistory: partial(mp.getUserHistory, user.id),
 
     mention: () => mention,

@@ -114,6 +114,7 @@ The wrapper methods are:
  - `wrapStoreProduct`, for [StoreProduct](./API.md#class-storeproduct)s
  - `wrapUser`, for [User](./API.md#class-user)s
  - `wrapWaitlist`, for the [Waitlist](./API.md#class-waitlist)
+ - `wrapWaitlistBan`, for [WaitlistBan](./API.md#class-waitlistban)s
 
 [Bluebird]: http://bluebirdjs.com
 [async-to-gen]: https://github.com/leebyron/async-to-gen

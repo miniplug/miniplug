@@ -9,6 +9,7 @@ import wrapRoom from '../data/room'
 import wrapStoreProduct from '../data/storeProduct'
 import wrapUser from '../data/user'
 import wrapWaitlist from '../data/waitlist'
+import wrapWaitlistBan from '../data/waitlistBan'
 
 export default function dataModelPlugin () {
   return (mp) => {
@@ -22,7 +23,8 @@ export default function dataModelPlugin () {
       wrapRoom: partial(wrapRoom, mp),
       wrapStoreProduct: partial(wrapStoreProduct, mp),
       wrapUser: partial(wrapUser, mp),
-      wrapWaitlist: partial(wrapWaitlist, mp)
+      wrapWaitlist: partial(wrapWaitlist, mp),
+      wrapWaitlistBan: partial(wrapWaitlistBan, mp)
     })
   }
 }
