@@ -2083,6 +2083,7 @@ events (eg. `'close'`), but otherwise there are better options.
  - [userLeave](#event-userleave)
  - [userUpdate](#event-userupdate)
  - [vote](#event-vote)
+ - [waitlistBan](#event-waitlistban)
  - [waitlistClear](#event-waitlistclear)
  - [waitlistCycle](#event-waitlistcycle)
  - [waitlistLock](#event-waitlistlock)
@@ -2640,6 +2641,21 @@ mp.on('vote', (data) => {
   } else if (data.vote === -1) {
     console.log(data.user.mention(), 'meh\'d this track…')
   }
+})
+```
+
+<a id="event-waitlistban"></a>
+## 'waitlistBan'
+
+Fired when a user is banned from the waitlist.
+
+**Parameters**
+
+ - `ban` - A [WaitlistBan](#class-waitlistban) object representing the new ban.
+
+```js
+mp.on('waitlistBan', (ban) => {
+  ban.user.chat('Ha! Sucker!')
 })
 ```
 
