@@ -1,3 +1,21 @@
+# HEAD
+
+Features:
+
+ * Include source files in published package. (fdb3255cf964b6898725b7730b0512bfa1033411)
+ * Add `sub` event. (23994650853c0ebc8bfbd91d7db45a40526c4807)
+ * Update user object on `earn` events. (ad65c808e49bab78bce493610059054d62608846)
+ * Auto-disconnect when socket is idle for too long. (#64)
+ * Implement waitlist bans endpoints. (#66)
+
+Bugfixes:
+
+ * Only set Error#response property if it is not yet set. (14ef2506036d9971747bb89c431ce279868fdff9)
+
+Internal:
+
+ * ci: Add Node 8. (533893eb990a03b6636daa75a88a375b0471083c)
+
 # 1.9.0 / 22 Jun 2017
 
 This release adds a few new features, increasing plug.dj API coverage.
