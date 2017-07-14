@@ -3,7 +3,7 @@ import createErrorClass from 'create-error-class'
 function setup (response, cause) {
   this.message = (response.body.data && response.body.data[0]) || cause.message
   this.status = response.body.status
-  this.response = response
+  if (!this.response) this.response = response
   this.cause = cause
 }
 
