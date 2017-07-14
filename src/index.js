@@ -15,6 +15,7 @@ import bansPlugin from './plugins/bans'
 import notificationsPlugin from './plugins/notifications'
 import boothPlugin from './plugins/booth'
 import waitlistPlugin from './plugins/waitlist'
+import waitlistBansPlugin from './plugins/waitlistBans'
 import historyPlugin from './plugins/history'
 import chatPlugin from './plugins/chat'
 import friendsPlugin from './plugins/friends'
@@ -36,6 +37,7 @@ Object.assign(miniplug, {
   notificationsPlugin,
   boothPlugin,
   waitlistPlugin,
+  waitlistBansPlugin,
   historyPlugin,
   chatPlugin,
   friendsPlugin,
@@ -105,6 +107,7 @@ function miniplug (opts = {}) {
   use(notificationsPlugin())
   use(boothPlugin())
   use(waitlistPlugin())
+  use(waitlistBansPlugin())
   use(historyPlugin())
   use(chatPlugin({
     backoff: createBackoff({ increment: 70, max: 700, Promise })
