@@ -15,7 +15,7 @@ export default function waitlistBansPlugin () {
 
     mp.on('connected', () => {
       mp.ws.on('modWaitlistBan', (ban) => {
-        mp.emit('waitlistBan', mp.wrapWaitlistBan({
+        const wrappedBan = mp.wrapWaitlistBan({
           moderator: ban.m,
           moderatorID: ban.mi,
           username: ban.t,
@@ -23,7 +23,11 @@ export default function waitlistBansPlugin () {
           duration: ban.d,
           reason: null,
           timestamp: new Date()
-        }))
+        })
+        mp.emit('modWaitlistBan', wrappedBan)
+        // back compat with v1.10.0:
+        // (TODO remove in v2)
+        mp.emit('waitlistBan', wrappedBan)
       })
     })
 

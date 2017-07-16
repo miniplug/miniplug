@@ -1299,7 +1299,7 @@ Most user methods will work, but if more properties are required, the [`wlban.ge
 ### wlban.moderator: [User](#class-user)
 
 The moderator who installed the waitlist ban.
-**This property is only guaranteed to exist on WaitlistBan objects from the ['waitlistBan'](#event-waitlistban) event.**
+**This property is only guaranteed to exist on WaitlistBan objects from the ['modWaitlistBan'](#event-modwaitlistban) event.**
 
 <a id="waitlistban-moderatorname"></a>
 ### wlban.moderatorName: string
@@ -1315,7 +1315,7 @@ The duration of the waitlist ban.
 ### wlban.reason: [WAITLIST_BAN_REASON](#waitlistbanreason)
 
 The reason for the waitlist ban.
-This property is always `null` on WaitlistBan objects from the ['waitlistBan'](#event-waitlistban) event.
+This property is always `null` on WaitlistBan objects from the ['modWaitlistBan'](#event-modwaitlistban) event.
 
 <a id="waitlistban-timestamp"></a>
 ### wlban.timestamp: Date
@@ -2083,7 +2083,7 @@ events (eg. `'close'`), but otherwise there are better options.
  - [userLeave](#event-userleave)
  - [userUpdate](#event-userupdate)
  - [vote](#event-vote)
- - [waitlistBan](#event-waitlistban)
+ - [waitlistBan](#event-modwaitlistban)
  - [waitlistClear](#event-waitlistclear)
  - [waitlistCycle](#event-waitlistcycle)
  - [waitlistLock](#event-waitlistlock)
@@ -2452,6 +2452,22 @@ mp.on('modStaff', (data) => {
 })
 ```
 
+<a id="event-waitlistban"></a>
+<a id="event-modwaitlistban"></a>
+## 'modWaitlistBan'
+
+Fired when a user is banned from the waitlist.
+
+**Parameters**
+
+ - `ban` - A [WaitlistBan](#class-waitlistban) object representing the new ban.
+
+```js
+mp.on('modWaitlistBan', (ban) => {
+  ban.user.chat('Ha! Sucker!')
+})
+```
+
 <a id="event-roomupdate"></a>
 ## 'roomUpdate'
 
@@ -2641,21 +2657,6 @@ mp.on('vote', (data) => {
   } else if (data.vote === -1) {
     console.log(data.user.mention(), 'meh\'d this track…')
   }
-})
-```
-
-<a id="event-waitlistban"></a>
-## 'waitlistBan'
-
-Fired when a user is banned from the waitlist.
-
-**Parameters**
-
- - `ban` - A [WaitlistBan](#class-waitlistban) object representing the new ban.
-
-```js
-mp.on('waitlistBan', (ban) => {
-  ban.user.chat('Ha! Sucker!')
 })
 ```
 
