@@ -7,12 +7,12 @@ import builtins from 'builtin-modules'
 const pkg = require('./package.json')
 
 export default {
-  entry: 'src/index.js',
-  targets: [
-    { format: 'cjs', dest: 'index.js' },
-    { format: 'es', dest: 'index.es.js' }
+  input: 'src/index.js',
+  output: [
+    { format: 'cjs', file: 'index.js' },
+    { format: 'es', file: 'index.es.js' }
   ],
-  sourceMap: true,
+  sourcemap: true,
   exports: 'default',
   external: builtins.concat(Object.keys(pkg.dependencies)),
   plugins: [
