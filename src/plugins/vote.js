@@ -27,7 +27,7 @@ export default function votePlugin (opts = {}) {
 
     function onGrab (uid) {
       mp[currentGrabs].push(uid)
-      const user = mp.user(uid)
+      const user = mp.user(uid) || mp.wrapUser({ id: uid })
       mp.emit('grab', user)
     }
 

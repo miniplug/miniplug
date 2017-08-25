@@ -24,7 +24,7 @@ export default function chatPlugin (opts) {
       debug('chatDelete', mi, c)
       mp.emit('chatDelete', {
         cid: c,
-        user: mp.user(mi)
+        user: mp.user(mi) || mp.wrapUser({ id: mi })
       })
     }
 

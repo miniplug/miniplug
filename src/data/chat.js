@@ -22,7 +22,8 @@ export default function wrapMessage (mp, message) {
     delete: partial(mp.deleteChat, message.cid),
 
     getUser () {
-      const user = mp.user && mp.user(message.uid)
+      const user = mp.user && (mp.user(message.uid) ||
+        mp.wrapUser({ id: message.uid, username: message.un }))
       return user ? Promise.resolve(user) : mp.getUser(message.uid)
     }
   })
