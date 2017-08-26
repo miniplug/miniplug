@@ -33,9 +33,8 @@ export default function waitlistPlugin () {
 
     function onModAddDj (ref) {
       mp.emit('modAddDj', {
-        moderator: mp.user(ref.mi) || mp.wrapUser({ id: ref.mi }),
-        username: ref.t,
-        cycle: ref.m
+        moderator: mp.user(ref.mi) || mp.wrapUser({ id: ref.mi, username: ref.m }),
+        username: ref.t
       })
     }
 
