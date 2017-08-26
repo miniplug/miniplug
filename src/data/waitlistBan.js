@@ -8,7 +8,7 @@ export default function wrapWaitlistBan (mp, data) {
 
   const ban = {
     user: mp.user(data.id) || mp.wrapUser({ id: data.id, username: data.username }),
-    moderator: mp.user(data.moderatorID) || mp.userByName(data.moderator) || 
+    moderator: mp.user(data.moderatorID) || mp.userByName(data.moderator) ||
       mp.wrapUser({ id: data.moderatorID, username: data.moderator }),
     moderatorName: data.moderator,
     reason: data.reason,
