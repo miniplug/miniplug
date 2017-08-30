@@ -20,7 +20,7 @@ export default function roomsPlugin () {
     //  * `roomProp` - Property name for the value on the miniplug room object.
     function addUpdateHandler (eventName, sockProp, roomProp) {
       mp.ws.on(eventName, (data, targetSlug) => {
-        const user = mp.user(data.u)
+        const user = mp.user(data.u) || mp.wrapUser({ id: data.u })
         const value = data[sockProp]
 
         debug(eventName, user && user.id, value)

@@ -33,9 +33,8 @@ export default function waitlistPlugin () {
 
     function onModAddDj (ref) {
       mp.emit('modAddDj', {
-        moderator: mp.user(ref.mi) || mp.wrapUser({ id: ref.mi }),
-        username: ref.t,
-        cycle: ref.m
+        moderator: mp.user(ref.mi) || mp.wrapUser({ id: ref.mi, username: ref.m }),
+        username: ref.t
       })
     }
 
@@ -63,12 +62,12 @@ export default function waitlistPlugin () {
     function onDjListCycle ({ f, mi }) {
       mp.emit('waitlistCycle', {
         shouldCycle: f,
-        user: mp.user(mi)
+        user: mp.user(mi) || mp.wrapUser({ id: mi })
       })
     }
 
     function onDjListLocked ({ f, c, mi }) {
-      const user = mp.user(mi)
+      const user = mp.user(mi) || mp.wrapUser({ id: mi })
       mp.emit('waitlistLock', {
         locked: f,
         cleared: !!c,
