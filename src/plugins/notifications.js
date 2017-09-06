@@ -25,12 +25,19 @@ export default function notificationsPlugin () {
       mp.emit('sub', sub)
     }
 
+    function onGift (pp) {
+      const me = mp.me()
+      if (me) Object.assign(me, { pp })
+      mp.emit('gift', { pp })
+    }
+
     mp.on('connected', (user) => {
       mp[currentNotifications] = (user && user.notifications) || []
 
       mp.ws.on('notify', onNotify)
       mp.ws.on('earn', onEarn)
       mp.ws.on('sub', onSub)
+      mp.ws.on('gift', onGift)
     })
 
     Object.assign(mp, {
