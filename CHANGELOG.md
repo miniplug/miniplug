@@ -11,8 +11,8 @@ Features:
 
 Bugfixes:
 
- * Remove `cycle` property from `modAddDj` event. (#74)
- * Handle ghost users everywhere. (#74)
+ * Remove `cycle` property from `modAddDj` event. (#74 by @Burkes)
+ * Handle ghost users everywhere. (#74 by @Burkes)
 
 # 1.10.0 / 14 Jul 2017
 
