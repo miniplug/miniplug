@@ -1,13 +1,13 @@
 export const ROLE = {
   NONE: 0,
-  DJ: 1,
-  BOUNCER: 2,
-  MANAGER: 3,
-  COHOST: 4,
-  HOST: 5,
+  DJ: 1000,
+  BOUNCER: 2000,
+  MANAGER: 3000,
+  COHOST: 4000,
+  HOST: 5000,
 
-  AMBASSADOR: 3,
-  ADMIN: 5
+  AMBASSADOR: 3000,
+  ADMIN: 5000
 }
 
 export const MEDIA_SOURCE = {
