@@ -18,13 +18,15 @@ const NotAuthorizedError = createErrorClass('NotAuthorizedError', setup)
 const NotFoundError = createErrorClass('NotFoundError', setup)
 const NoValidPlaylistError = createErrorClass('NoValidPlaylistError', setup)
 const NotEnoughPPError = createErrorClass('NotEnoughPPError', setupFundsPP)
+const MaintenanceError = createErrorClass('MaintenanceError', setup)
 
 const statusToError = {
   requestError: RequestError,
   badLogin: BadLoginError,
   notAuthorized: NotAuthorizedError,
   notFound: NotFoundError,
-  noValidPlaylist: NoValidPlaylistError
+  noValidPlaylist: NoValidPlaylistError,
+  maintenanceMode: MaintenanceError
 }
 
 export const errorClasses = {
@@ -33,7 +35,8 @@ export const errorClasses = {
   NotAuthorizedError,
   NotFoundError,
   NoValidPlaylistError,
-  NotEnoughPPError
+  NotEnoughPPError,
+  MaintenanceError
 }
 
 export function wrapResponseError (response, cause) {

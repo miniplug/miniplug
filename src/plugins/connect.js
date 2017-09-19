@@ -1,9 +1,11 @@
 import login from 'plug-login'
 import socket from 'plug-socket'
 import createDebug from 'debug'
+import { errorClasses } from '../errors'
 
 const debug = createDebug('miniplug:connect')
 const debugWs = createDebug('miniplug:ws')
+const { MaintenanceError } = errorClasses
 
 export default function connectPlugin (options = {}) {
   return (mp) => {
@@ -20,7 +22,12 @@ export default function connectPlugin (options = {}) {
         opts.email
           ? login.user(opts.email, opts.password, loginOpts)
           : login.guest(loginOpts)
-      )
+      ).catch((err) => {
+        if (err && err.status === 'maintenanceMode') {
+          throw new MaintenanceError(err.response, err)
+        }
+        throw err
+      })
 
       const ws = socket()
       ws.setMaxListeners(100)
