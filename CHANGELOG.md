@@ -1,3 +1,19 @@
+# 1.11.0 / 19 Sep 2017
+
+This update addresses plug.dj's role ID change, please upgrade ASAP!
+
+Features:
+
+ * Implement `gift` event. (ffbdbcc3e300c26c91ba86ec38df713853bb369a)
+ * Update role IDs. (#78)
+   See https://blog.plug.dj/2017/09/roles-revamp/.
+ * Implement `MaintenanceError`. (#59)
+
+Bugfixes:
+
+ * Remove `cycle` property from `modAddDj` event. (#74)
+ * Handle ghost users everywhere. (#74)
+
 # 1.10.0 / 14 Jul 2017
 
 Features:
