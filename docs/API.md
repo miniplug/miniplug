@@ -1082,6 +1082,9 @@ The user's role in the current room. One of
 The user's global role. One of
 
  - `ROLE.NONE`,
+ - `ROLE.PROMOTER`,
+ - `ROLE.PLOT`,
+ - `ROLE.SITEMOD`,
  - `ROLE.AMBASSADOR`,
  - `ROLE.ADMIN`.
 
@@ -1801,6 +1804,18 @@ A Cohost in the current room.
 ### ROLE.HOST
 
 The current room's host.
+
+### ROLE.PROMOTER
+
+A plug.dj Promoter.
+
+### ROLE.PLOT
+
+A PLoT (Plug.dj League of Translators) member, who works on plug.dj localization.
+
+### ROLE.SITEMOD
+
+A site-wide moderator.
 
 ### ROLE.AMBASSADOR
 
