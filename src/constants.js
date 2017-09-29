@@ -6,6 +6,9 @@ export const ROLE = {
   COHOST: 4000,
   HOST: 5000,
 
+  PROMOTER: 500,
+  PLOT: 750,
+  SITEMOD: 2500,
   AMBASSADOR: 3000,
   ADMIN: 5000
 }
