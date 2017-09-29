@@ -1,3 +1,9 @@
+# 1.12.0 / 29 Sep 2017
+
+Features:
+
+ * Add constants for the new global user roles. (#82)
+
 # 1.11.0 / 19 Sep 2017
 
 This update addresses plug.dj's role ID change, please upgrade ASAP!
