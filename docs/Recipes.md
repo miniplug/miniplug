@@ -12,14 +12,16 @@
 Moderation bots often delete their own messages after a while to avoid
 cluttering everybody's chat.
 
-[`mp.chat`](./API.md#mp-chat) returns a [Bluebird][] promise for the chat
-message. Bluebird provides the `delay` and `call` methods, which can be used to
-call the `delete` method on the message after some time:
+[`mp.chat`](./API.md#mp-chat) returns a Promise for the chat message. Using the
+[`delay`](https://npmjs.com/package/delay) module from npm, we can call the
+[`delete`](./API.md#message-delete) method on the message after some time:
 
 ```js
+const delay = require('delay')
+
 mp.chat('Meh limit: 5')
-  .delay(5000) // Wait 5 seconds
-  .call('delete')
+  .then(delay(5000)) // Wait 5 seconds
+  .then((message) => message.delete())
 ```
 
 ## Lockskip
@@ -116,6 +118,5 @@ The wrapper methods are:
  - `wrapWaitlist`, for the [Waitlist](./API.md#class-waitlist)
  - `wrapWaitlistBan`, for [WaitlistBan](./API.md#class-waitlistban)s
 
-[Bluebird]: http://bluebirdjs.com
 [async-to-gen]: https://github.com/leebyron/async-to-gen
 [compose-function]: https://npmjs.com/package/compose-function

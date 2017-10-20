@@ -716,12 +716,13 @@ Send a chat message. Returns a Promise that will resolve with the message once
 it is sent.
 
 ```js
+const delay = require('delay')
+
 // Send a temporary greeting that is deleted after 5 seconds.
 // Note that the bot user needs to have the appropriate staff permissions to be
 // able to delete its own messages.
-
 mp.chat('Hello!')
-  .delay(5000) // Using Bluebird's .delay() method
+  .then(delay(5000)) // Using the `delay` module from npm
   .then((message) => message.delete())
 ```
 
@@ -755,8 +756,9 @@ mp.on('chat', (message) => {
 Get all the user's playlists.
 
 ```js
-// Using Bluebird's `.each()` method
-mp.getPlaylists().each((playlist) => {
+const each = require('p-each-series')
+
+each(mp.getPlaylists(), (playlist) => {
   console.log(`${playlist.name} (${playlist.count})`)
 })
 ```
