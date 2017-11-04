@@ -1,7 +1,7 @@
 {
   "name": "miniplug",
   "description": "Teeny-tiny plug.dj library/API",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "license": "MIT",
   "main": "index.js",
   "module": "index.es.js",
