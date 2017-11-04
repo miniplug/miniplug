@@ -15,6 +15,7 @@ export default function wrapHistoryEntry (mp, raw) {
   }
 
   return makeProto(entry, {
-    getUser: partial(mp.getUser, raw.user.id)
+    getUser: partial(mp.getUser, raw.user.id),
+    skip: partial(mp.skipDJ, raw.user.id, raw.id)
   })
 }
