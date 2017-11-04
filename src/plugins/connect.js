@@ -34,6 +34,9 @@ export default function connectPlugin (options = {}) {
       ws.on('action', (type, payload) => {
         debugWs(type, payload)
       })
+      ws.on('close', () => {
+        mp.emit('disconnected')
+      })
 
       const connected = loginPromise
         .then((res) => new Promise((resolve, reject) => {
