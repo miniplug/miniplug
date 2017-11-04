@@ -1,3 +1,10 @@
+# 1.13.0 / 04 Nov 2017
+
+Features:
+
+ * Add `HistoryEntry#skip`. (#83)
+ * Add `disconnected` event. This can be used to implement auto-reconnect. (#77)
+
 # 1.12.0 / 29 Sep 2017
 
 Features:
