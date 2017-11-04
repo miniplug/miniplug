@@ -2058,6 +2058,7 @@ events (eg. `'close'`), but otherwise there are better options.
  - [ban](#event-ban)
  - [chat](#event-chat)
  - [chatDelete](#event-chatdelete)
+ - [disconnected](#event-disconnected)
  - [earn](#event-earn)
  - [friendAccept](#event-friendaccept)
  - [friendRequest](#event-friendrequest)
@@ -2175,6 +2176,33 @@ Fired when a chat message is deleted.
 ```js
 mp.on('chatDelete', (del) => {
   console.info(`${del.user.username} deleted message #${del.cid}.`)
+})
+```
+
+<a id="event-disconnected"></a>
+## 'disconnected'
+
+Fired when the connection to the plug.dj WebSocket server has ended.
+With this event you can implement an auto-reconnect system.
+
+```js
+let timeout = 0
+function reconnect () {
+  console.info('Trying to reconnect...')
+  mp.connect({ email: 'xyz@hoi.com', password: 'whatever' })
+    .then(() => {
+      console.info('Reconnected!')
+    })
+    .catch(() => {
+      console.warn('Failed to reconnect, trying again in', timeout, 'ms')
+      setTimeout(reconnect, timeout)
+    })
+  timeout += 1000 // 1 second
+}
+
+mp.on('disconnected', () => {
+  console.warn('!! Connection lost.')
+  reconnect()
 })
 ```
 
