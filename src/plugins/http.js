@@ -6,11 +6,10 @@ import { wrapResponseError } from '../errors'
 const debug = createDebug('miniplug:http')
 
 export default function httpPlugin (httpOpts) {
-  httpOpts = {
+  httpOpts = Object.assign({
     backoff: (fn) => fn,
-    agent: httpOpts.agent || new Agent({ keepAlive: true }),
-    ...httpOpts
-  }
+    agent: httpOpts.agent || new Agent({ keepAlive: true })
+  }, httpOpts)
 
   return (mp) => {
     const request = httpOpts.backoff(
@@ -18,16 +17,16 @@ export default function httpPlugin (httpOpts) {
       (url, opts) => mp.connected
         .tap(() => debug(opts.method, url, opts.body || opts.query))
         .then((session) =>
-          got(`${httpOpts.host}/_/${url}`, {
+          got(`${httpOpts.host}/_/${url}`, Object.assign({
             agent: httpOpts.agent,
             headers: {
               cookie: session.cookie,
               'content-type': 'application/json'
             },
-            json: true,
-            ...opts,
+            json: true
+          }, opts, {
             body: opts.body ? opts.body : undefined
-          })
+          }))
         )
         .then((resp) => {
           if (resp.body.status !== 'ok') {

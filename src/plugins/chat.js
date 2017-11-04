@@ -4,14 +4,13 @@ import createDebug from 'debug'
 const debug = createDebug('miniplug:chat')
 
 export default function chatPlugin (opts) {
-  opts = {
+  opts = Object.assign({
     // how long to wait for chat messages to come back
     timeout: 7000,
     // allow users to pass their own rate limiting function,
     // this will get a sensible default at some point
-    backoff: (fn) => fn,
-    ...opts
-  }
+    backoff: (fn) => fn
+  }, opts)
 
   return (mp) => {
     // translate raw socket events to wrapped miniplug events

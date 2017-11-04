@@ -45,10 +45,8 @@ Object.assign(miniplug, {
   playlistsPlugin,
   storePlugin,
   systemPlugin,
-  votePlugin,
-  ...constants,
-  ...errorClasses
-})
+  votePlugin
+}, constants, errorClasses)
 
 export default miniplug
 
@@ -66,7 +64,7 @@ function miniplug (opts = {}) {
   emitter.setMaxListeners(100)
   const mp = Object.create(emitter)
 
-  opts = { ...defaultOptions, ...opts }
+  opts = Object.assign({}, defaultOptions, opts)
 
   if (typeof opts.agent === 'undefined') {
     opts.agent = new Agent({ keepAlive: true })

@@ -20,8 +20,7 @@ export default {
       include: 'src/**',
       target: {
         node: 4
-      },
-      objectAssign: 'Object.assign'
+      }
     }),
     inject({
       Promise: 'bluebird'
