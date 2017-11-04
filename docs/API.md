@@ -1181,6 +1181,8 @@ Remove the user from the waitlist or the DJ Booth.
 <a id="user-skip"></a>
 ### user.skip(historyId): Promise
 
+> Please use the [historyEntry.skip](#historyentry-skip) method instead.
+
 Skip the user. `historyId` is the ID of the currently playing track, i.e.
 `mp.historyEntry().id`.
 
@@ -1609,6 +1611,15 @@ all numbers:
 ### entry.getUser(): Promise&lt;[User](#class-user)>
 
 Get the full user object of the user who played this song.
+
+<a id="historyentry-skip"></a>
+### entry.skip(): Promise
+
+Skip this play.
+
+```js
+mp.historyEntry().skip()
+```
 
 <a id="class-storeproduct"></a>
 ## StoreProduct
