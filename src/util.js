@@ -26,7 +26,7 @@ export function getId (item, idProp = 'id') {
  * @param {Array.<object>} items
  */
 export function getIds (items, idProp = 'id') {
-  const arr = Array.isArray(medias) ? medias : [ medias ]
+  const arr = Array.isArray(items) ? items : [ items ]
   return arr.map((item) => getId(item, idProp))
 }
 
@@ -47,5 +47,5 @@ export function parseDate (timestamp) {
  * @param {...*} args
  */
 export function partial (fn, ...args) {
-  return function (...rest) { return fn(...args, ...rest) }
+  return (...rest) => fn(...args, ...rest)
 }

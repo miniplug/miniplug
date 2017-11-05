@@ -45,7 +45,7 @@ export default function chatPlugin (opts) {
       mp.del(`chat/${cid}`)
 
     // Socket API
-    const chat = opts.backoff(function (...args) {
+    const chat = opts.backoff((...args) => {
       const ws = mp.ws
       const message = args.join(' ')
       debug('send', message)
