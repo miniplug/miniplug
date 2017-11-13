@@ -1,11 +1,11 @@
-export default function notificationsPlugin () {
-  const currentNotifications = Symbol('Notifications')
+const kNotifications = Symbol('Notifications')
 
+export default function notificationsPlugin () {
   return (mp) => {
-    mp[currentNotifications] = []
+    mp[kNotifications] = []
 
     function onNotify (notif) {
-      mp[currentNotifications].push(notif)
+      mp[kNotifications].push(notif)
       mp.emit('notify', mp.wrapNotification(notif))
     }
 
@@ -32,7 +32,7 @@ export default function notificationsPlugin () {
     }
 
     mp.on('connected', (user) => {
-      mp[currentNotifications] = (user && user.notifications) || []
+      mp[kNotifications] = (user && user.notifications) || []
 
       mp.ws.on('notify', onNotify)
       mp.ws.on('earn', onEarn)
@@ -41,20 +41,20 @@ export default function notificationsPlugin () {
     })
 
     Object.assign(mp, {
-      notifications: () => mp[currentNotifications].map(mp.wrapNotification),
+      notifications: () => mp[kNotifications].map(mp.wrapNotification),
 
       getNotifications: () =>
         mp.getMe()
           .then((me) => me.notifications || [])
           .tap((notifs) => {
-            mp[currentNotifications] = notifs
+            mp[kNotifications] = notifs
           })
           .map(mp.wrapNotification),
 
       acknowledgeNotification: (id) =>
         mp.del(`notifications/${id}`).tap(() => {
           // Remove the notification from the local notifications list.
-          mp[currentNotifications] = mp[currentNotifications]
+          mp[kNotifications] = mp[kNotifications]
             .filter((notif) => notif.id !== Number(id))
         })
     })

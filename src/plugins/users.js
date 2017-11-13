@@ -5,24 +5,24 @@ const debug = createDebug('miniplug:users')
 
 const GUEST_ID = 0
 
-export default function usersPlugin () {
-  const currentGuestsCount = Symbol('Guests count')
-  const currentUsers = Symbol('Users')
-  const currentUser = Symbol('Me')
+const kGuestsCount = Symbol('Guests count')
+const kUsers = Symbol('Users')
+const kCurrentUser = Symbol('Me')
 
+export default function usersPlugin () {
   return (mp) => {
     // local user cache/collection API
-    mp[currentGuestsCount] = 0
-    mp[currentUsers] = []
+    mp[kGuestsCount] = 0
+    mp[kUsers] = []
 
     function onUserJoin (user) {
       debug('join', user.id)
       if (user.guest) {
-        mp[currentGuestsCount] += 1
+        mp[kGuestsCount] += 1
         mp.emit('guestJoin')
       } else {
         user = mp.wrapUser(user)
-        mp[currentUsers].push(user)
+        mp[kUsers].push(user)
         mp.emit('userJoin', user)
       }
     }
@@ -30,15 +30,15 @@ export default function usersPlugin () {
     function onUserLeave (id) {
       debug('leave', id)
       if (id === GUEST_ID) {
-        if (mp[currentGuestsCount] > 0) {
-          mp[currentGuestsCount] -= 1
+        if (mp[kGuestsCount] > 0) {
+          mp[kGuestsCount] -= 1
         }
         mp.emit('guestLeave')
       } else {
-        const i = mp[currentUsers].findIndex((user) => user.id === id)
+        const i = mp[kUsers].findIndex((user) => user.id === id)
         if (i !== -1) {
-          const user = mp[currentUsers][i]
-          mp[currentUsers].splice(i, 1)
+          const user = mp[kUsers][i]
+          mp[kUsers].splice(i, 1)
           mp.emit('userLeave', user)
         }
       }
@@ -73,7 +73,7 @@ export default function usersPlugin () {
     }
 
     mp.on('connected', (user) => {
-      mp[currentUser] = mp.wrapUser(user)
+      mp[kCurrentUser] = mp.wrapUser(user)
 
       mp.ws.on('userJoin', onUserJoin)
       mp.ws.on('userLeave', onUserLeave)
@@ -83,23 +83,23 @@ export default function usersPlugin () {
 
     // keeping things in sync
     mp.on('roomState', ({ users, meta: { guests } }) => {
-      mp[currentUsers] = users.map(mp.wrapUser)
-      mp[currentGuestsCount] = guests
+      mp[kUsers] = users.map(mp.wrapUser)
+      mp[kGuestsCount] = guests
     })
 
-    const me = () => mp[currentUser]
+    const me = () => mp[kCurrentUser]
     const userByProp = (prop) => (value) => {
-      if (mp[currentUser] && value === mp[currentUser][prop]) {
-        return mp[currentUser]
+      if (mp[kCurrentUser] && value === mp[kCurrentUser][prop]) {
+        return mp[kCurrentUser]
       }
-      return mp[currentUsers].find((user) => user[prop] === value)
+      return mp[kUsers].find((user) => user[prop] === value)
     }
     const user = userByProp('id')
     const userByName = userByProp('username')
     // TODO May want to include `me()` in the `users()` list in v2.0.0. I'm not
     // sure which is more expected.
-    const users = () => mp[currentUsers]
-    const guests = () => mp[currentGuestsCount]
+    const users = () => mp[kUsers]
+    const guests = () => mp[kGuestsCount]
 
     // REST API
     const getMe = () => mp.get('users/me').get(0).then(mp.wrapUser)

@@ -1,17 +1,17 @@
 import { partial, parseDate } from '../util'
 
-export default function boothPlugin (opts = {}) {
-  const currentHistoryEntry = Symbol('History entry')
+const kCurrentHistoryEntry = Symbol('History entry')
 
+export default function boothPlugin (opts = {}) {
   return (mp) => {
     // Local state API
-    const historyEntry = () => mp[currentHistoryEntry]
-    const dj = () => mp[currentHistoryEntry] ? mp[currentHistoryEntry].dj : null
-    const media = () => mp[currentHistoryEntry] ? mp[currentHistoryEntry].media : null
+    const historyEntry = () => mp[kCurrentHistoryEntry]
+    const dj = () => mp[kCurrentHistoryEntry] ? mp[kCurrentHistoryEntry].dj : null
+    const media = () => mp[kCurrentHistoryEntry] ? mp[kCurrentHistoryEntry].media : null
 
     mp.on('roomState', (state) => {
       const timestamp = parseDate(state.playback.startTime)
-      mp[currentHistoryEntry] = {
+      mp[kCurrentHistoryEntry] = {
         id: state.playback.historyID,
         dj: mp.user(state.booth.currentDJ),
         media: state.playback.media,
@@ -25,7 +25,7 @@ export default function boothPlugin (opts = {}) {
     function onAdvance (event) {
       const previous = historyEntry()
       if (!event || !event.m) {
-        mp[currentHistoryEntry] = null
+        mp[kCurrentHistoryEntry] = null
         mp.emit('advance', null, previous)
         return
       }
@@ -40,7 +40,7 @@ export default function boothPlugin (opts = {}) {
 
       time = parseDate(time)
 
-      mp[currentHistoryEntry] = {
+      mp[kCurrentHistoryEntry] = {
         id: historyId,
         user: mp.user(djId) || mp.wrapUser({ id: djId }),
         media: media,
@@ -51,7 +51,7 @@ export default function boothPlugin (opts = {}) {
 
       // Compat with v1.7.0 and below.
       // TODO remove in 2.x
-      mp[currentHistoryEntry].dj = mp[currentHistoryEntry].user
+      mp[kCurrentHistoryEntry].dj = mp[kCurrentHistoryEntry].user
 
       mp.emit('advance', historyEntry(), previous)
     }

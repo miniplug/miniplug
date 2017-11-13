@@ -1,20 +1,20 @@
 import { partial } from '../util'
 
-export default function votePlugin (opts = {}) {
-  const currentVoteStats = Symbol('Votes')
-  const currentGrabs = Symbol('Grabs')
+const kVoteStats = Symbol('Votes')
+const kGrabs = Symbol('Grabs')
 
+export default function votePlugin (opts = {}) {
   return function (mp) {
-    mp[currentVoteStats] = []
-    mp[currentGrabs] = []
+    mp[kVoteStats] = []
+    mp[kGrabs] = []
 
     mp.on('advance', () => {
-      mp[currentVoteStats] = []
-      mp[currentGrabs] = []
+      mp[kVoteStats] = []
+      mp[kGrabs] = []
     })
 
     function onVote ({ i, v }) {
-      mp[currentVoteStats].push({
+      mp[kVoteStats].push({
         uid: i,
         vote: v
       })
@@ -26,7 +26,7 @@ export default function votePlugin (opts = {}) {
     }
 
     function onGrab (uid) {
-      mp[currentGrabs].push(uid)
+      mp[kGrabs].push(uid)
       const user = mp.user(uid) || mp.wrapUser({ id: uid })
       mp.emit('grab', user)
     }
@@ -37,15 +37,15 @@ export default function votePlugin (opts = {}) {
     })
 
     mp.on('roomState', (state) => {
-      mp[currentGrabs] = Object.keys(state.grabs)
-      mp[currentVoteStats] = Object.keys(state.votes).map((uid) => ({
+      mp[kGrabs] = Object.keys(state.grabs)
+      mp[kVoteStats] = Object.keys(state.votes).map((uid) => ({
         uid,
         vote: state.votes[uid]
       }))
     })
 
     mp.score = () => {
-      const map = mp[currentVoteStats].reduce(
+      const map = mp[kVoteStats].reduce(
         (map, v) => Object.assign(map, { [v.uid]: v.vote }),
         {}
       )
@@ -61,7 +61,7 @@ export default function votePlugin (opts = {}) {
       return {
         positive,
         negative,
-        grabs: mp[currentGrabs].length,
+        grabs: mp[kGrabs].length,
         listeners: mp.users().length + mp.guests()
       }
     }

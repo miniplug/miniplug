@@ -2,15 +2,14 @@ import { partial } from '../util'
 import createDebug from 'debug'
 
 const debug = createDebug('miniplug:waitlist')
+const kWaitlist = Symbol('Waitlist')
 
 export default function waitlistPlugin () {
-  const currentWaitlist = Symbol('Waitlist')
-
   return (mp) => {
-    mp[currentWaitlist] = mp.wrapWaitlist([])
+    mp[kWaitlist] = mp.wrapWaitlist([])
 
     mp.on('roomState', (state) => {
-      mp[currentWaitlist] = mp.wrapWaitlist(state.booth.waitingDJs)
+      mp[kWaitlist] = mp.wrapWaitlist(state.booth.waitingDJs)
       mp.emit('waitlistUpdate', mp.waitlist(), [])
     })
 
@@ -19,7 +18,7 @@ export default function waitlistPlugin () {
 
       const previous = mp.waitlist()
 
-      mp[currentWaitlist] = mp.wrapWaitlist(ids)
+      mp[kWaitlist] = mp.wrapWaitlist(ids)
       mp.emit('waitlistUpdate', mp.waitlist(), previous)
     }
 
@@ -99,7 +98,7 @@ export default function waitlistPlugin () {
       mp.put('booth/cycle', { shouldCycle: val })
 
     Object.assign(mp, {
-      waitlist: () => mp[currentWaitlist],
+      waitlist: () => mp[kWaitlist],
 
       joinWaitlist: partial(mp.post, 'booth'),
       leaveWaitlist: partial(mp.del, 'booth'),

@@ -1,15 +1,14 @@
 import createDebug from 'debug'
 
 const debug = createDebug('miniplug:rooms')
+const kCurrentRoom = Symbol('Current room')
 
 export default function roomsPlugin () {
-  const currentRoom = Symbol('Current room')
-
   return (mp) => {
-    mp[currentRoom] = null
+    mp[kCurrentRoom] = null
 
     mp.on('roomState', (state) => {
-      mp[currentRoom] = mp.wrapRoom(state.meta)
+      mp[kCurrentRoom] = mp.wrapRoom(state.meta)
     })
 
     // Add a handler to process a room property update.
@@ -25,8 +24,8 @@ export default function roomsPlugin () {
 
         debug(eventName, user && user.id, value)
 
-        if (mp[currentRoom] && mp[currentRoom].slug === targetSlug) {
-          mp[currentRoom][roomProp] = value
+        if (mp[kCurrentRoom] && mp[kCurrentRoom].slug === targetSlug) {
+          mp[kCurrentRoom][roomProp] = value
         }
 
         mp.emit(eventName, value, user)
@@ -43,7 +42,7 @@ export default function roomsPlugin () {
       addUpdateHandler('roomMinChatLevelUpdate', 'm', 'minChatLevel')
     })
 
-    const room = () => mp[currentRoom]
+    const room = () => mp[kCurrentRoom]
 
     const getRooms = (query = '', page = 0, limit = 50) =>
       mp.get('rooms', { q: query, page, limit })
