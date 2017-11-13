@@ -50,6 +50,9 @@
  - [mp.getWaitlistBans()](#mp-getwaitlistbans)
  - [mp.waitlistBan(uid, duration, reason)](#mp-waitlistban)
  - [mp.waitlistUnban(uid)](#mp-waitlistunban)
+ - [mp.historyEntry()](#mp-historyentry)
+ - [mp.getRoomHistory()](#mp-getroomhistory)
+ - [mp.getUserHistory(uid)](#mp-getuserhistory)
  - [mp.chat(message)](#mp-chat)
  - [mp.emote(message)](#mp-emote)
  - [mp.deleteChat(id)](#mp-deletechat)
@@ -110,6 +113,7 @@
    - [user.unban()](#user-unban)
    - [user.waitlistBan(duration, reason)](#user-waitlistban)
    - [user.waitlistUnban()](#user-waitlistunban)
+   - [user.getHistory()](#user-gethistory)
  - [Waitlist](#class-waitlist)
    - [waitlist.contains(user)](#waitlist-contains)
    - [waitlist.positionOf(user)](#waitlist-positionof)
@@ -709,6 +713,54 @@ mp.getWaitlistBans().each((ban) => {
 
 <hr>
 
+<a id="mp-historyentry"></a>
+## mp.historyEntry(): [HistoryEntry](#class-historyentry)
+
+Get the current history entry. When no song is being played, returns `null`.
+
+```js
+const entry = mp.historyEntry()
+if (/nightcore/i.test(entry.title)) {
+  entry.skip()
+}
+```
+
+<a id="mp-getroomhistory"></a>
+## mp.getRoomHistory(): Promise&lt;Array&lt;[HistoryEntry](#class-historyentry)>>
+
+Get the 25 most recent plays in the current room.
+
+```js
+mp.on('advance', (next) => {
+  // Check the room history for recent plays.
+  mp.getRoomHistory().then((history) => {
+    // If one of the entries is the same as the currently playing song, skip it!
+    const isSameEntry = (entry) => entry.media.cid === next.media.cid
+    if (history.some(isSameEntry)) {
+      next.user.chat('This track was played recently.')
+      next.skip()
+    }
+  })
+})
+```
+
+<a id="mp-getuserhistory"></a>
+## mp.getUserHistory(uid): Promise&lt;Array&lt;[HistoryEntry](#class-historyentry)>>
+
+Get the 25 most recent plays by a user. `uid` is the user's ID.
+
+```js
+mp.on('userJoin', (user) => {
+  mp.getUserHistory(user).then((history) => {
+    if (history.some((entry) => /The Koxx/i.test(entry.media.artist))) {
+      user.chat('Welcome! You played excellent music recently!')
+    }
+  })
+})
+```
+
+<hr>
+
 <a id="mp-chat"></a>
 ## mp.chat(message): Promise&lt;[ChatMessage](#class-chatmessage)>
 
@@ -1239,6 +1291,11 @@ Ban the user from the waitlist.
 ### user.waitlistUnban(): Promise
 
 Unban the user from the waitlist.
+
+<a id="user-gethistory"></a>
+### user.getHistory(): Promise&lt;Array&lt;[HistoryEntry](#class-historyentry)>>
+
+Get the 25 most recent plays by this user. See also [mp.getUserHistory(uid)](#mp-getuserhistory).
 
 <a id="class-waitlist"></a>
 ## Waitlist
