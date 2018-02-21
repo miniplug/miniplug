@@ -35,19 +35,18 @@ export default function boothPlugin (opts = {}) {
         m: media,
         c: djId,
         p: playlistId,
-        t: time
+        t: timestamp
       } = event
 
-      time = parseDate(time)
-
-      mp[kCurrentHistoryEntry] = {
+      mp[kCurrentHistoryEntry] = mp.wrapHistoryEntry({
         id: historyId,
         user: mp.user(djId) || mp.wrapUser({ id: djId }),
         media: media,
-        playlistId: playlistId,
-        time: time, // TODO(v2.x) remove this alias
-        timestamp: time
-      }
+        timestamp: timestamp
+      })
+
+      // single occurrence
+      mp[kCurrentHistoryEntry].playlistId = playlistId
 
       // Compat with v1.7.0 and below.
       // TODO remove in 2.x
