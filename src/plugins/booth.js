@@ -11,14 +11,20 @@ export default function boothPlugin (opts = {}) {
 
     mp.on('roomState', (state) => {
       const timestamp = parseDate(state.playback.startTime)
-      mp[kCurrentHistoryEntry] = {
+
+      mp[kCurrentHistoryEntry] = mp.wrapHistoryEntry({
         id: state.playback.historyID,
-        dj: mp.user(state.booth.currentDJ),
-        media: state.playback.media,
-        playlistId: state.playback.playlistID,
-        time: timestamp, // TODO(v2.x) remove this alias
+        user: mp.user(state.booth.currentDJ),
+        media: media,
         timestamp: timestamp
-      }
+      })
+
+      // only for the current historyEntry
+      mp[kCurrentHistoryEntry].playlistId = state.playback.playlistID
+
+      // Compat with v1.7.0 and below.
+      // TODO remove in 2.x
+      mp[kCurrentHistoryEntry].dj = mp[kCurrentHistoryEntry].user
     })
 
     // Socket API
@@ -35,19 +41,18 @@ export default function boothPlugin (opts = {}) {
         m: media,
         c: djId,
         p: playlistId,
-        t: time
+        t: timestamp
       } = event
 
-      time = parseDate(time)
-
-      mp[kCurrentHistoryEntry] = {
+      mp[kCurrentHistoryEntry] = mp.wrapHistoryEntry({
         id: historyId,
         user: mp.user(djId) || mp.wrapUser({ id: djId }),
         media: media,
-        playlistId: playlistId,
-        time: time, // TODO(v2.x) remove this alias
-        timestamp: time
-      }
+        timestamp: timestamp
+      })
+
+      // only for the current historyEntry
+      mp[kCurrentHistoryEntry].playlistId = playlistId
 
       // Compat with v1.7.0 and below.
       // TODO remove in 2.x

@@ -167,6 +167,7 @@
    - [entry.timestamp](#historyentry-timestamp)
    - [entry.score](#historyentry-score)
    - [entry.getUser()](#historyentry-getuser)
+   - [entry.skip()](#historyentry-skip)
  - [StoreProduct](#class-storeproduct)
    - [product.type](#storeproduct-type)
    - [product.category](#storeproduct-category)

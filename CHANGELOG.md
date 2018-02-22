@@ -1,3 +1,9 @@
+# 1.13.1 / 22 Feb 2018
+
+Bugfixes:
+
+ * Some historyEntries would not have the #skip() method (#96)
+
 # 1.13.0 / 04 Nov 2017
 
 Features:
