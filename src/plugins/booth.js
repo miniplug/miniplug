@@ -10,12 +10,17 @@ export default function boothPlugin (opts = {}) {
     const media = () => mp[kCurrentHistoryEntry] ? mp[kCurrentHistoryEntry].media : null
 
     mp.on('roomState', (state) => {
+      if (!state.playback.media) {
+        mp[kCurrentHistoryEntry] = null
+        return
+      }
+
       const timestamp = parseDate(state.playback.startTime)
 
       mp[kCurrentHistoryEntry] = mp.wrapHistoryEntry({
         id: state.playback.historyID,
         user: mp.user(state.booth.currentDJ),
-        media: media,
+        media: state.playback.media,
         timestamp: timestamp
       })
 

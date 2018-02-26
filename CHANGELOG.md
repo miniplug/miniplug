@@ -1,4 +1,10 @@
-# 1.13.1 / 22 Feb 2018
+# 1.13.3 / 26 Feb 2018
+
+Bugfixes:
+
+ * roomState event would throw an error when trying to mp.wrapUser with an "undefined" user param.
+
+# 1.13.2 / 22 Feb 2018
 
 Bugfixes:
 
