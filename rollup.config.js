@@ -9,11 +9,9 @@ const pkg = require('./package.json')
 export default {
   input: 'src/index.js',
   output: [
-    { format: 'cjs', file: 'index.js' },
-    { format: 'es', file: 'index.es.js' }
+    { format: 'cjs', file: 'index.js', sourcemap: true, exports: 'default' },
+    { format: 'es', file: 'index.es.js', sourcemap: true }
   ],
-  sourcemap: true,
-  exports: 'default',
   external: builtins.concat(Object.keys(pkg.dependencies)),
   plugins: [
     buble({
