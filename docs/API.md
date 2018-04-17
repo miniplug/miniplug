@@ -213,10 +213,11 @@ miniplug have all the useful methods from Bluebird, too. See its
 [API reference][Bluebird API] for a list.
 
 Promises work really well with JavaScript [async functions][]. Async functions
-are not available in most engines yet. You can compile async functions to
-generator functions, which are widely supported, using [async-to-gen][], or
-using [Babel][] with the [babel-plugin-transform-async-to-generator][async-to-generator]
-transform. If you do not want a build step, you can use the [Bluebird .coroutine][coroutine]
+are available in Node.js in versions 8 and up. If you are using an older
+version, you can compile async functions to generator functions, which are
+widely supported, using [async-to-gen][], or using [Babel][] with the
+[babel-plugin-transform-async-to-generator][async-to-generator] transform. If
+you do not want a build step, you can use the [Bluebird .coroutine][coroutine]
 method to write similar-looking code with generator functions.
 
 Some miniplug methods don't return Promises, but return their result
