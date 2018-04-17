@@ -1,3 +1,8 @@
+# 1.13.4 / 17 Apr 2018
+
+Bugfixes:
+ * Remove unnecessary dependencies (async-to-gen, proxyquire). (ffb9d3f)
+
 # 1.13.3 / 26 Feb 2018
 
 Bugfixes:
