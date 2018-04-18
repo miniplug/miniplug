@@ -1,4 +1,4 @@
-import got from 'got'
+import fetch from 'node-fetch'
 import createDebug from 'debug'
 import { Agent } from 'https'
 import { wrapResponseError } from '../errors'
@@ -17,22 +17,27 @@ export default function httpPlugin (httpOpts) {
       (url, opts) => mp.connected
         .tap(() => debug(opts.method, url, opts.body || opts.query))
         .then((session) =>
-          got(`${httpOpts.host}/_/${url}`, Object.assign({
+          fetch(`${httpOpts.host}/_/${url}`, Object.assign({
             agent: httpOpts.agent,
             headers: {
               cookie: session.cookie,
               'content-type': 'application/json'
-            },
-            json: true
+            }
           }, opts, {
-            body: opts.body ? opts.body : undefined
+            body: opts.body ? JSON.stringify(opts.body) : undefined
           }))
         )
-        .then((resp) => {
-          if (resp.body.status !== 'ok') {
-            throw new Error(resp.body.data.length ? resp.body.data[0] : resp.body.status)
-          }
-          return resp.body.data
+        .then((response) => {
+          return response.json().then((body) => {
+            if (!response.ok || body.status !== 'ok') {
+              throw Object.assign(new Error(
+                body.data && body.data.length
+                  ? body.data[0]
+                  : body.status
+              ), { response })
+            }
+            return body.data
+          })
         })
         .catch((err) => {
           if (err && err.response) {
