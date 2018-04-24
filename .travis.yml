@@ -1,6 +1,8 @@
 language: node_js
 sudo: false
 script: npm run test:ci
+before_script:
+  - nvm install-latest-npm
 node_js:
   - "stable"
   - "8"

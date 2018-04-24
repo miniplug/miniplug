@@ -76,7 +76,7 @@
     "build": "rollup -c",
     "lint": "standard rollup.config.js src/**/*.js test/**/*.js",
     "lint-staged": "lint-staged",
-    "prepublish": "npm run build",
+    "prepare": "npm run build",
     "rebuild": "node has-changed || rollup -c",
     "tap": "tape -r ./test/_init.js test/*.js",
     "tap:min": "npm run tap | tap-min",
