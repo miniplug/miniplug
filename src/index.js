@@ -54,8 +54,7 @@ export default miniplug
 
 const debug = createDebug('miniplug:miniplug')
 const defaultOptions = {
-  host: 'https://plug.dj',
-  connect: true
+  host: 'https://plug.dj'
 }
 
 function miniplug (opts = {}) {
@@ -122,8 +121,6 @@ function miniplug (opts = {}) {
     // REST: News APIs
     getNews: partial(mp.get, 'news')
   })
-
-  if (opts.connect) mp.connect(opts)
 
   return mp
 }

@@ -28,9 +28,7 @@ const socket = require('proxyquire')('plug-socket', {
 })
 
 module.exports = () => {
-  const mp = miniplug({
-    connect: false
-  })
+  const mp = miniplug()
 
   mp.ws = socket()
 

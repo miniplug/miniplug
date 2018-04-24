@@ -5,6 +5,7 @@
 ---
 
  - [miniplug(opts)](#mp-constructor)
+ - [mp.connect({ email, password })](#mp-connect)
  - [mp.use(plugin)](#mp-use)
  - [mp.join(room)](#mp-join)
  - [mp.room()](#mp-room)
@@ -237,23 +238,52 @@ the plug.dj API.
 <a id="mp-constructor"></a>
 ## mp = miniplug(opts={})
 
-Create a miniplug instance. Available options:
+Create a miniplug instance.
 
- - `opts.guest` - If true, will log in as a guest user. Defaults to false.
- - `opts.email` and `opts.password` - Login credentials. Only email/password
-   login is supported at the moment.
+ - `opts.host` - The plug.dj host to use, defaults to `https://plug.dj/`.
+   This can be changed for mocking or to run on a plug.dj subdomain like `stg.`.
+
+Note that a miniplug instance is not very useful until you open a
+[connection](#mp-connect) to plug.dj.
 
 ```js
 const miniplug = require('miniplug')
 
-const mp = miniplug({ guest: true })
+const mp = miniplug()
+```
+
+<a id="mp-connect"></a>
+## mp.connect(opts): Promise&lt;this>
+
+Connect to plug.dj. Available options:
+
+ - `opts.guest` - If true, will log in as a guest user. Defaults to false.
+ - `opts.email` and `opts.password` - Login credentials. Only email/password
+   login is supported and support for Facebook login is not currently planned.
+
+```js
+const mp = miniplug()
+mp.connect({ guest: true }).then(() => {
+  // ready
+})
 ```
 
 ```js
-const mp = miniplug({
+const mp = miniplug()
+mp.connect({
   email: 'example@test.com',
   password: 'hunter2'
+}).then(() => {
+  // ready
 })
+```
+
+This method returns `this` so you can use async/await syntax to do:
+
+```js
+async function main () {
+  const mp = await miniplug().connect({ /* ... */ })
+}
 ```
 
 <a id="mp-use"></a>

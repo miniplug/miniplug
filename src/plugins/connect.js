@@ -62,7 +62,9 @@ export default function connectPlugin (options = {}) {
       mp.ws = ws
       mp.connected = connected
 
-      return connected
+      // Return `mp` so you can do
+      // mp = await miniplug().connect()
+      return connected.then(() => mp)
     }
 
     mp.connect = connect
