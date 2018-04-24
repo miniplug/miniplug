@@ -3,13 +3,19 @@ import createDebug from 'debug'
 
 const debug = createDebug('miniplug:waitlist')
 const kWaitlist = Symbol('Waitlist')
+const kLocked = Symbol('Waitlist locked')
+const kCycles = Symbol('Waitlist cycles')
 
 export default function waitlistPlugin () {
   return (mp) => {
+    mp[kLocked] = false
+    mp[kCycles] = true
     mp[kWaitlist] = mp.wrapWaitlist([])
 
     mp.on('roomState', (state) => {
       mp[kWaitlist] = mp.wrapWaitlist(state.booth.waitingDJs)
+      mp[kLocked] = state.booth.isLocked
+      mp[kCycles] = state.booth.shouldCycle
       mp.emit('waitlistUpdate', mp.waitlist(), [])
     })
 
@@ -59,6 +65,8 @@ export default function waitlistPlugin () {
     }
 
     function onDjListCycle ({ f, mi }) {
+      mp[kCycles] = f
+
       mp.emit('waitlistCycle', {
         shouldCycle: f,
         user: mp.user(mi) || mp.wrapUser({ id: mi })
@@ -66,6 +74,8 @@ export default function waitlistPlugin () {
     }
 
     function onDjListLocked ({ f, c, mi }) {
+      mp[kLocked] = f
+
       const user = mp.user(mi) || mp.wrapUser({ id: mi })
       mp.emit('waitlistLock', {
         locked: f,
@@ -103,10 +113,12 @@ export default function waitlistPlugin () {
       joinWaitlist: partial(mp.post, 'booth'),
       leaveWaitlist: partial(mp.del, 'booth'),
 
+      isCycling: () => mp[kCycles],
       setCycle,
       enableCycle: partial(setCycle, true),
       disableCycle: partial(setCycle, false),
 
+      isLocked: () => mp[kLocked],
       setLock: (locked = true, clear = false) =>
         mp.put('booth/lock', { isLocked: locked, removeAllDJs: clear }),
       lockWaitlist: (clear = false) =>
