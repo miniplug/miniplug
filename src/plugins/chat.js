@@ -43,6 +43,12 @@ export default function chatPlugin (opts) {
     // REST API
     const deleteChat = (cid) =>
       mp.del(`chat/${cid}`)
+    const getChatHistory = () =>
+      mp.get(`chat/history`)
+        .then((d) => d[0].history.map((msg) => Object.assign(
+          mp.wrapMessage(msg),
+          { user: mp.wrapUser(d[0].users.find((u) => u.id === msg.uid)) }
+        )))
 
     // Socket API
     const chat = opts.backoff((...args) => {
@@ -76,6 +82,7 @@ export default function chatPlugin (opts) {
     // Public API
     Object.assign(mp, {
       deleteChat,
+      getChatHistory,
       chat,
       emote
     })
