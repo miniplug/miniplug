@@ -2,28 +2,8 @@
   "name": "miniplug",
   "description": "Teeny-tiny plug.dj library/API",
   "version": "1.13.4",
-  "license": "MIT",
-  "main": "index.js",
-  "module": "index.es.js",
-  "jsnext:main": "index.es.js",
-  "keywords": [
-    "plug",
-    "plug.dj"
-  ],
-  "repository": "goto-bus-stop/miniplug",
-  "bugs": "https://github.com/goto-bus-stop/miniplug/issues",
   "author": "Renée Kooi <renee@kooi.me>",
-  "engines": {
-    "node": ">= 4"
-  },
-  "files": [
-    "index.js",
-    "index.js.map",
-    "index.es.js",
-    "index.es.js.map",
-    "docs",
-    "src"
-  ],
+  "bugs": "https://github.com/goto-bus-stop/miniplug/issues",
   "dependencies": {
     "bluebird": "^3.5.1",
     "create-error-class": "^3.0.2",
@@ -53,34 +33,55 @@
     "tap-min": "^1.2.1",
     "tape": "^4.6.3"
   },
-  "scripts": {
-    "prepublish": "npm run build",
-    "build": "rollup -c",
-    "rebuild": "node has-changed || rollup -c",
-    "lint": "standard rollup.config.js src/**/*.js test/**/*.js",
-    "lint-staged": "lint-staged",
-    "tap": "tape -r ./test/_init.js test/*.js",
-    "tap:min": "npm run tap | tap-min",
-    "test": "npm-run-all lint rebuild tap:min",
-    "test:ci": "npm-run-all lint rebuild tap"
+  "engines": {
+    "node": ">= 4"
   },
+  "files": [
+    "index.js",
+    "index.js.map",
+    "index.es.js",
+    "index.es.js.map",
+    "docs",
+    "src"
+  ],
   "greenkeeper": {
     "ignore": [
       "lint-staged"
     ]
   },
+  "homepage": "https://github.com/goto-bus-stop/miniplug",
+  "jsnext:main": "index.es.js",
+  "keywords": [
+    "plug",
+    "plug.dj"
+  ],
+  "license": "MIT",
   "lint-staged": {
     "*.js": [
       "standard --fix",
       "git add"
     ]
   },
+  "main": "index.js",
+  "module": "index.es.js",
   "pre-commit": {
     "run": [
       "rebuild",
       "tap:min",
       "lint-staged"
     ]
+  },
+  "repository": "goto-bus-stop/miniplug",
+  "scripts": {
+    "build": "rollup -c",
+    "lint": "standard rollup.config.js src/**/*.js test/**/*.js",
+    "lint-staged": "lint-staged",
+    "prepublish": "npm run build",
+    "rebuild": "node has-changed || rollup -c",
+    "tap": "tape -r ./test/_init.js test/*.js",
+    "tap:min": "npm run tap | tap-min",
+    "test": "npm-run-all lint rebuild tap:min",
+    "test:ci": "npm-run-all lint rebuild tap"
   },
   "standard": {
     "env": "mocha"
