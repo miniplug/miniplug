@@ -55,6 +55,7 @@
  - [mp.getUserHistory(uid)](#mp-getuserhistory)
  - [mp.chat(message)](#mp-chat)
  - [mp.emote(message)](#mp-emote)
+ - [mp.getChatHistory()](#mp-getchathistory)
  - [mp.deleteChat(id)](#mp-deletechat)
  - [mp.getPlaylists()](#mp-getplaylists)
  - [mp.getActivePlaylist()](#mp-getactiveplaylist)
@@ -788,6 +789,20 @@ Send an emote chat message, like `/me` or `/em` on the plug.dj web client.
 ```js
 mp.emote('does a little dance')
   .then((message) => { /* Resolves to the message, just like mp.chat(). */ })
+```
+
+<a id="mp-getchathistory"></a>
+## mp.getChatHistory(): Promise&lt;Array&lt;[ChatMessage](#class-ChatMessage)>>
+
+Get the 30 most recent chat messages, including messages that were sent before
+the bot user joined the room.
+
+```js
+mp.getChatHistory().then((messages) => {
+  messages.forEach((message) => {
+    console.log(`<${message.un}> ${message.message}`)
+  })
+})
 ```
 
 <a id="mp-deletechat"></a>
