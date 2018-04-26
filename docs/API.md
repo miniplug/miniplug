@@ -38,9 +38,11 @@
  - [mp.waitlist()](#mp-waitlist)
  - [mp.joinWaitlist()](#mp-joinwaitlist)
  - [mp.leaveWaitlist()](#mp-leavewaitlist)
+ - [mp.isCycling()](#mp-iscycling)
  - [mp.setCycle(cycle)](#mp-setcycle)
  - [mp.enableCycle()](#mp-enablecycle)
  - [mp.disableCycle()](#mp-disablecycle)
+ - [mp.isLocked()](#mp-islocked)
  - [mp.setLock(lock)](#mp-setlock)
  - [mp.lockWaitlist()](#mp-lockwaitlist)
  - [mp.unlockWaitlist()](#mp-unlockwaitlist)
@@ -592,6 +594,12 @@ Join the waitlist.
 
 Leave the waitlist.
 
+<a id="mp-iscycling"></a>
+## mp.isCycling(): bool
+
+Check if waitlist cycling is enabled. If enabled, users automatically rejoin the
+waitlist after their play.
+
 <a id="mp-setcycle"></a>
 ## mp.setCycle(cycle): Promise
 
@@ -617,6 +625,12 @@ Enable waitlist cycle. Shorthand to <code>[setCycle](#mp-setcycle)(true)</code>.
 ## mp.disableCycle(): Promise
 
 Disable waitlist cycle. Shorthand to <code>[setCycle](#mp-setcycle)(false)</code>.
+
+<a id="mp-islocked"></a>
+## mp.isLocked(): bool
+
+Check if the waitlist is locked. If the waitlist is locked, only Resident DJs
+and up can join.
 
 <a id="mp-setlock"></a>
 ## mp.setLock(lock): Promise
