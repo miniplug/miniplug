@@ -794,7 +794,8 @@ mp.emote('does a little dance')
 <a id="mp-getchathistory"></a>
 ## mp.getChatHistory(): Promise&lt;Array&lt;[ChatMessage](#class-ChatMessage)>>
 
-Get the 30 most recent chat messages.
+Get the 30 most recent chat messages, including messages that were sent before
+the bot user joined the room.
 
 ```js
 mp.getChatHistory().then((messages) => {
