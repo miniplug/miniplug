@@ -1,3 +1,9 @@
+# 1.14.0 / 26 Apr 2018
+
+Features:
+ * Add `getChatHistory()`. (#113)
+ * Add `isLocked()` and `isCycling()` functions. (#114)
+
 # 1.13.4 / 17 Apr 2018
 
 Bugfixes:

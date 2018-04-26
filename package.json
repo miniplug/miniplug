@@ -1,9 +1,13 @@
 {
   "name": "miniplug",
-  "description": "Teeny-tiny plug.dj library/API",
-  "version": "1.13.4",
+  "description": "Small Promise-based plug.dj API client for Node.js.",
+  "version": "1.14.0",
   "author": "Renée Kooi <renee@kooi.me>",
   "bugs": "https://github.com/goto-bus-stop/miniplug/issues",
+  "contributors": [
+    "Burkes (https://github.com/burkes)",
+    "Cosmetify (https://github.com/cosmetify)"
+  ],
   "dependencies": {
     "bluebird": "^3.5.1",
     "create-error-class": "^3.0.2",
