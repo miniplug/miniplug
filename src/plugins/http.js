@@ -1,8 +1,9 @@
 import fetch from 'node-fetch'
 import createDebug from 'debug'
-import { Agent } from 'https'
+import https from 'https'
 import { wrapResponseError } from '../errors'
 
+const { Agent } = https
 const debug = createDebug('miniplug:http')
 
 export default function httpPlugin (httpOpts) {

@@ -9,8 +9,8 @@ const pkg = require('./package.json')
 export default {
   input: 'src/index.js',
   output: [
-    { format: 'cjs', file: 'index.js', sourcemap: true, exports: 'default' },
-    { format: 'es', file: 'index.es.js', sourcemap: true }
+    { format: 'cjs', file: pkg.main, sourcemap: true, exports: 'default' },
+    { format: 'es', file: pkg.module, sourcemap: true }
   ],
   external: builtins.concat(Object.keys(pkg.dependencies)),
   plugins: [

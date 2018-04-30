@@ -43,8 +43,8 @@
   "files": [
     "index.js",
     "index.js.map",
-    "index.es.js",
-    "index.es.js.map",
+    "index.mjs",
+    "index.mjs.map",
     "docs",
     "src"
   ],
@@ -54,7 +54,6 @@
     ]
   },
   "homepage": "https://github.com/goto-bus-stop/miniplug",
-  "jsnext:main": "index.es.js",
   "keywords": [
     "plug",
     "plug.dj"
@@ -67,7 +66,7 @@
     ]
   },
   "main": "index.js",
-  "module": "index.es.js",
+  "module": "index.mjs",
   "pre-commit": {
     "run": [
       "rebuild",

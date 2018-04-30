@@ -1,5 +1,5 @@
-import { EventEmitter } from 'events'
-import { Agent } from 'https'
+import EventEmitter from 'events'
+import https from 'https'
 import createDebug from 'debug'
 import createBackoff from 'linear-promise-backoff-queue'
 import { partial } from './util'
@@ -52,6 +52,7 @@ export default miniplug
 
 // Implementation
 
+const { Agent } = https
 const debug = createDebug('miniplug:miniplug')
 const defaultOptions = {
   host: 'https://plug.dj',
