@@ -40,6 +40,8 @@ mp.on('chat', (message) => {
 })
 ```
 
+## API
+
 Full API documentation is available in [docs/API.md][].
 
 ## Contributing
