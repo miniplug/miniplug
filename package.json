@@ -16,7 +16,7 @@
     "linear-promise-backoff-queue": "^1.0.0",
     "plug-login": "^1.2.0",
     "plug-message-split": "^1.0.0",
-    "plug-socket": "^0.6.0"
+    "plug-socket": "^1.0.0"
   },
   "devDependencies": {
     "async-to-gen": "^1.3.3",
