@@ -211,9 +211,11 @@
 
 The miniplug API is heavily Promise-based. Most methods return Promises.
 
-miniplug uses the [Bluebird][] library. That means that Promises returned by
-miniplug have all the useful methods from Bluebird, too. See its
-[API reference][Bluebird API] for a list.
+miniplug uses the [Bluebirdish][] library. Bluebirdish implements methods from
+the Bluebird library on top of native PRomises. That means that Promises
+returned by miniplug have many of the useful methods from Bluebird, too. See its
+[API reference][Bluebird API] for documentation, and the [Bluebirdish Readme][]
+for a list of available methods.
 
 Promises work really well with JavaScript [async functions][]. Async functions
 are available in Node.js in versions 8 and up. If you are using an older
@@ -229,7 +231,8 @@ immediately. By convention, miniplug method names that are nouns (such as
 `getRooms()`, or `getUser()`) return Promises, and usually fetch new data from
 the plug.dj API.
 
-[Bluebird]: http://bluebirdjs.com
+[Bluebirdish]: https://github.com/goto-bus-stop/bluebirdish
+[Bluebirdish Readme]: https://github.com/goto-bus-stop/bluebirdish#readme
 [Bluebird API]: http://bluebirdjs.com/docs/api-reference.html
 [async functions]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
 [Babel]: https://babeljs.io

@@ -9,7 +9,7 @@
     "Cosmetify (https://github.com/cosmetify)"
   ],
   "dependencies": {
-    "bluebird": "^3.5.1",
+    "bluebirdish": "^1.0.0",
     "create-error-class": "^3.0.2",
     "debug": "^3.0.0",
     "linear-promise-backoff-queue": "^1.0.0",

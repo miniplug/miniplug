@@ -21,7 +21,7 @@ export default {
       }
     }),
     inject({
-      Promise: 'bluebird'
+      Promise: 'bluebirdish'
     }),
     resolve({
       module: true,
