@@ -20,9 +20,6 @@ export default {
         node: 4
       }
     }),
-    inject({
-      Promise: 'bluebirdish'
-    }),
     resolve({
       module: true,
       jsnext: true,
@@ -30,6 +27,10 @@ export default {
       browser: false,
       preferBuiltins: true
     }),
-    commonjs()
+    commonjs(),
+    inject({
+      include: 'src/**',
+      Promise: 'bluebirdish'
+    })
   ]
 }
