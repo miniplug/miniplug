@@ -1,10 +1,13 @@
 const Test = require('tape/lib/test')
+const isAsyncSupported = require('is-async-supported')
 
 /**
  * Set up ES-future compilation.
  */
 
-require('async-to-gen/register')
+if (!isAsyncSupported()) {
+  require('async-to-gen/register')
+}
 
 /**
  * Monkeypatch support for returning Promises from Tape tests. Mostly just
