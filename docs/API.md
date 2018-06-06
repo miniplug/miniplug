@@ -2162,7 +2162,7 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
 
 ## mp.ws: WebSocket
 
-The [plug-socket](https://github.com/goto-bus-stop/plug-socket) WebSocket
+The [plug-socket](https://github.com/miniplug/plug-socket) WebSocket
 instance. This is also an instance of the [ws](https://github.com/websockets/ws)
 module.
 

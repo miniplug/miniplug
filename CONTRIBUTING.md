@@ -70,8 +70,8 @@ $ git commit -m 'v1.13.0 changelog'
 $ np minor
 ```
 
-Then open up the [Github releases page](https://github.com/goto-bus-stop/miniplug/releases)
+Then open up the [Github releases page](https://github.com/miniplug/miniplug/releases)
 and copy-paste the most recent CHANGELOG.md entry into it. An easy way to do
-that is by copying from the [raw CHANGELOG.md](https://raw.githubusercontent.com/goto-bus-stop/miniplug/master/CHANGELOG.md).
+that is by copying from the [raw CHANGELOG.md](https://raw.githubusercontent.com/miniplug/miniplug/master/CHANGELOG.md).
 
-[api]: https://github.com/goto-bus-stop/miniplug/tree/master/docs/API.md
+[api]: https://github.com/miniplug/miniplug/tree/master/docs/API.md

@@ -3,7 +3,7 @@
   "description": "Small Promise-based plug.dj API client for Node.js.",
   "version": "1.14.0",
   "author": "Renée Kooi <renee@kooi.me>",
-  "bugs": "https://github.com/goto-bus-stop/miniplug/issues",
+  "bugs": "https://github.com/miniplug/miniplug/issues",
   "contributors": [
     "Burkes (https://github.com/burkes)",
     "Cosmetify (https://github.com/cosmetify)"
@@ -53,7 +53,7 @@
       "lint-staged"
     ]
   },
-  "homepage": "https://github.com/goto-bus-stop/miniplug",
+  "homepage": "https://github.com/miniplug/miniplug",
   "keywords": [
     "plug",
     "plug.dj"
@@ -74,7 +74,7 @@
       "lint-staged"
     ]
   },
-  "repository": "goto-bus-stop/miniplug",
+  "repository": "miniplug/miniplug",
   "scripts": {
     "build": "rollup -c",
     "lint": "standard rollup.config.js src/**/*.js test/**/*.js",
