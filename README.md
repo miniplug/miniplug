@@ -8,7 +8,7 @@ Small but complete Promise-based [plug.dj][] API client for Node.js.
 [Contributing](#contributing) -
 [License: MIT](#license)
 
-## Installation
+## Installation [![(install size)](https://packagephobia.now.sh/badge?p=miniplug)](https://packagephobia.now.sh/result?p=miniplug)
 
 > Note: Node v6 or higher is required.
 > Run `node -v` in your console to check that your Node.js version is up-to-date.
@@ -43,6 +43,10 @@ mp.on('chat', (message) => {
 ## API
 
 Full API documentation is available in [docs/API.md][].
+
+For questions, visit the #coding channel in the plug.dj discord!
+
+[![join the plug.dj discord](https://img.shields.io/badge/plug.dj-%23coding-7289DA.svg)](https://discord.gg/plugdj)
 
 ## Contributing
 
