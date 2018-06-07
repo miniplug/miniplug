@@ -46,8 +46,7 @@
     "index.js.map",
     "index.mjs",
     "index.mjs.map",
-    "docs",
-    "src"
+    "docs"
   ],
   "greenkeeper": {
     "ignore": [
