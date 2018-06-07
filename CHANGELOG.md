@@ -1,40 +1,46 @@
-# 1.14.0 / 26 Apr 2018
+# miniplug change log
+
+All notable changes to this project will be documented in this file.
+
+This project adheres to [Semantic Versioning](http://semver.org/).
+
+## 1.14.0 / 26 Apr 2018
 
 Features:
  * Add `getChatHistory()`. (#113)
  * Add `isLocked()` and `isCycling()` functions. (#114)
 
-# 1.13.4 / 17 Apr 2018
+## 1.13.4 / 17 Apr 2018
 
 Bugfixes:
  * Remove unnecessary dependencies (async-to-gen, proxyquire). (ffb9d3f)
 
-# 1.13.3 / 26 Feb 2018
+## 1.13.3 / 26 Feb 2018
 
 Bugfixes:
 
  * roomState event would throw an error when trying to mp.wrapUser with an "undefined" user param.
 
-# 1.13.2 / 22 Feb 2018
+## 1.13.2 / 22 Feb 2018
 
 Bugfixes:
 
  * Some historyEntries would not have the #skip() method (#96)
 
-# 1.13.0 / 04 Nov 2017
+## 1.13.0 / 04 Nov 2017
 
 Features:
 
  * Add `HistoryEntry#skip`. (#83)
  * Add `disconnected` event. This can be used to implement auto-reconnect. (#77)
 
-# 1.12.0 / 29 Sep 2017
+## 1.12.0 / 29 Sep 2017
 
 Features:
 
  * Add constants for the new global user roles. (#82)
 
-# 1.11.0 / 19 Sep 2017
+## 1.11.0 / 19 Sep 2017
 
 This update addresses plug.dj's role ID change, please upgrade ASAP!
 
@@ -50,7 +56,7 @@ Bugfixes:
  * Remove `cycle` property from `modAddDj` event. (#74 by @Burkes)
  * Handle ghost users everywhere. (#74 by @Burkes)
 
-# 1.10.0 / 14 Jul 2017
+## 1.10.0 / 14 Jul 2017
 
 Features:
 
@@ -68,7 +74,7 @@ Internal:
 
  * ci: Add Node 8. (533893eb990a03b6636daa75a88a375b0471083c)
 
-# 1.9.0 / 22 Jun 2017
+## 1.9.0 / 22 Jun 2017
 
 This release adds a few new features, increasing plug.dj API coverage.
 
@@ -80,13 +86,13 @@ Features:
  * Add `userByName`. (#50)
  * Use an http agent with the `keepAlive` option to speed up REST requests. (#57, #58)
 
-# 1.8.1 / 18 May 2017
+## 1.8.1 / 18 May 2017
 
 Bugfixes:
 
  * Port booth `user` property fix from v1.7.1 (ae75b4d3b8821922b158bc7e1c56cc416421d867)
 
-# 1.8.0 / 18 May 2017
+## 1.8.0 / 18 May 2017
 
 Thanks to @Cosmetify, who has been implementing a bunch of the websocket events for this release :pray:
 
@@ -102,13 +108,13 @@ Features:
  * Throw custom error classes for some types of plug.dj HTTP API responses. (#39) 
  * Rename the `HistoryEntry.time` property to `timestamp` -- `time` will still be available as an alias until v2.x. (579098fe4beb94f1a1a7c6d4f617151149ba7ebe)
 
-# 1.7.1 / 14 May 2017
+## 1.7.1 / 14 May 2017
 
 Bugfixes:
 
  * Fix `user` property on booth entries. (439fbb98b9f716aa16890a5629d7318bbff0b906)
 
-# 1.7.0 / 22 Apr 2017
+## 1.7.0 / 22 Apr 2017
 
 Features:
 
@@ -119,7 +125,7 @@ Features:
  * Emit `userUpdate` events for `role` updates. (55e8f57f12229561da4243225e574ebb7b4d1add)
  * Include sourcemaps in published build. (fc310fe60c35d88258febd58846c184a804f6eca)
 
-# 1.6.2 / 13 Apr 2017
+## 1.6.2 / 13 Apr 2017
 
 Features:
 
@@ -134,14 +140,14 @@ Bugfixes:
 
 Special thanks to @Burkes for the PR and to @maxqui26 for several bug reports regarding empty DJ booths!
 
-# 1.6.1 / 30 Mar 2017
+## 1.6.1 / 30 Mar 2017
 
 Bugfixes:
 
  * Emit a `waitlistUpdate` event when advancing. (fe39328bd143a87c460cf0d18e6764850fe626dc)
  * Increase default maxEventListeners for miniplug event emitters. (834a88cdcdc17cec7d6880eba27070b9055e3b9a, 04f97ca000954bcb8ef42d15d7ccbd1b18b96c38)
 
-# 1.6.0 / 20 Mar 2017
+## 1.6.0 / 20 Mar 2017
 
 Features:
 
@@ -164,13 +170,13 @@ Also:
  * There's now a basic test setup using Tape and Nock, so future versions of miniplug may actually be tested!
  * Thanks to @cosmetify for spotting and fixing a mistake in the connection example in the readme!
 
-# 1.5.1 / 09 Mar 2017
+## 1.5.1 / 09 Mar 2017
 
 Bugfixes:
 
  * Fix subsequent HTTP/chat requests after one fails (195583af5a2520c8ed5dc784d3e329183501b0a7)
 
-# 1.5.0 / 04 Mar 2017
+## 1.5.0 / 04 Mar 2017
 
 Features:
 
@@ -186,31 +192,31 @@ Internal:
 
  * Replace lodash with smaller specialised modules. (259ae143c60bd549cfb3980c3066fbfa7f31ad26)
 
-# 1.4.0 / 12 Feb 2017
+## 1.4.0 / 12 Feb 2017
 
 Features:
 
  * Add `mp.getRoomHistory`, `mp.getUserHistory`, and `user.getHistory` methods.
 
-# 1.3.3 / 24 Jan 2017
+## 1.3.3 / 24 Jan 2017
 
 Bugfixes:
 
  * Return User objects for ghost users in `waitlist()`. (#24 by @Burkes)
 
-# 1.3.2 / 23 Jan 2017
+## 1.3.2 / 23 Jan 2017
 
 Bugfixes:
 
  * Fix Media prop in history entries. (d9549a5a002c25e054e1b4bd1a377ff444fcb403)
 
-# 1.3.1 / 21 Jan 2017
+## 1.3.1 / 21 Jan 2017
 
 Bugfixes:
 
  * Fix error in initialising vote plugin. (cbef52612e7d802dfa48d701c501e2c1511ec37e)
 
-# 1.3.0 / 21 Jan 2017
+## 1.3.0 / 21 Jan 2017
 
 Features:
 
@@ -227,32 +233,32 @@ Bugfixes:
  * Prevent room `favorite` method being overridden by boolean property from plug.dj. (15f10ce1b4573001efccfc5ec71af8099999d5df)
  * Don't decrement guest count below zero. (b4670c434a23a6ab86cf391aed8ae49650cd4203)
 
-# 1.2.0 / 01 Jan 2017
+## 1.2.0 / 01 Jan 2017
 
 Features:
 
  * Added `validateRoomName` and `validateUsername` methods.
  * Add `.mention()` method to User objects, returning a string that can be used to mention the user in chat.
 
-# 1.1.0 / 03 Dec 2016
+## 1.1.0 / 03 Dec 2016
 
 Features:
 
  * Added Store and Inventory routes. (9827e47d2932250666d78491ae4ca697677fa671)
  * Methods on miniplug objects (users, rooms, etc) are no longer own properties but now exist on the prototype. (ab69ef962c2bd89e9a04c9cdeca4735adb571386)
 
-# 1.0.2 / 02 Dec 2016
+## 1.0.2 / 02 Dec 2016
 
 Internal:
 
  * Upgrade [plug-socket](https://github.com/goto-bus-stop/plug-socket) dependency.
 
-# 1.0.1 / 01 Dec 2016
+## 1.0.1 / 01 Dec 2016
 
 Bugfixes:
 
  * Fix error when dealing with guest users. (c62242d5e9a8c3216d106d6a68af5f96e2909c06)
 
-# 1.0.0 / 01 Dec 2016
+## 1.0.0 / 01 Dec 2016
 
 Initial release.
