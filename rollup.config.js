@@ -27,9 +27,10 @@ export default {
       browser: false,
       preferBuiltins: true
     }),
-    commonjs(),
+    commonjs({
+      include: 'node_modules/**'
+    }),
     inject({
-      include: 'src/**',
       Promise: 'bluebirdish'
     })
   ]
