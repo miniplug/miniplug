@@ -16,6 +16,7 @@ export default {
   plugins: [
     buble({
       include: 'src/**',
+      objectAssign: 'Object.assign',
       target: {
         node: 4
       }

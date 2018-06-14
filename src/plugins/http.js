@@ -7,10 +7,11 @@ const { Agent } = https
 const debug = createDebug('miniplug:http')
 
 export default function httpPlugin (httpOpts) {
-  httpOpts = Object.assign({
+  httpOpts = {
     backoff: (fn) => fn,
-    agent: httpOpts.agent || new Agent({ keepAlive: true })
-  }, httpOpts)
+    agent: httpOpts.agent || new Agent({ keepAlive: true }),
+    ...httpOpts
+  }
 
   return (mp) => {
     const request = httpOpts.backoff(
@@ -18,15 +19,15 @@ export default function httpPlugin (httpOpts) {
       (url, opts) => mp.connected
         .tap(() => debug(opts.method, url, opts.body || opts.query))
         .then((session) =>
-          fetch(`${httpOpts.host}/_/${url}`, Object.assign({
+          fetch(`${httpOpts.host}/_/${url}`, {
             agent: httpOpts.agent,
             headers: {
               cookie: session.cookie,
               'content-type': 'application/json'
-            }
-          }, opts, {
+            },
+            ...opts,
             body: opts.body ? JSON.stringify(opts.body) : undefined
-          }))
+          })
         )
         .then((response) => {
           return response.json().then((body) => {

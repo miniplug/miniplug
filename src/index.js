@@ -65,7 +65,10 @@ function miniplug (opts = {}) {
   emitter.setMaxListeners(100)
   const mp = Object.create(emitter)
 
-  opts = Object.assign({}, defaultOptions, opts)
+  opts = {
+    ...defaultOptions,
+    ...opts
+  }
 
   if (typeof opts.agent === 'undefined') {
     opts.agent = new Agent({ keepAlive: true })
