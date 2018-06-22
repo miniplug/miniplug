@@ -14,9 +14,13 @@ export default function httpPlugin (httpOpts) {
   }
 
   return (mp) => {
-    const request = httpOpts.backoff(
+    const request = httpOpts.backoff((url, opts) => {
+      if (!mp.connected) {
+        return Promise.reject(new Error('No connection available. Use mp.connect() before calling other functions.'))
+      }
+
       // wait until connections are complete before sending off requests
-      (url, opts) => mp.connected
+      return mp.connected
         .tap(() => debug(opts.method, url, opts.body || opts.query))
         .then((session) =>
           fetch(`${httpOpts.host}/_/${url}`, {
@@ -47,7 +51,7 @@ export default function httpPlugin (httpOpts) {
           }
           throw err
         })
-    )
+    })
 
     const post = (url, data) => request(url, { method: 'post', body: data })
     const get = (url, data) => request(url, { method: 'get', query: data })
