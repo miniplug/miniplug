@@ -4,6 +4,59 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0-beta.0 / 22 Jun 2018
+
+Breaking changes:
+ * Don't connect on initialisation by default. (#116)
+ * Switch from `bluebird` to `bluebirdish`. (#115)
+ * Switch from `got` to `node-fetch`. (#115)
+ * Remove Node 4 from CI tests. (#115)
+
+See below for upgrade instructions.
+
+### Don't connect on initialisation
+
+> This change affects everyone.
+
+v1.x accepted `email` and `password` options in the `miniplug()` constructor, and immediately connected to the plug.dj API and socket. This was handy but there was no clear way to handle login or connection failures. Now, this functionality has been split up, and the `.connect()` method must be used. `.connect()` returns a Promise, which you can attach `.catch()` handlers to. See its [documentation][mp.connect] for more.
+
+```js
+const mp = miniplug()
+mp.connect({ email: 'test@miniplug.com', password: 'hunter2' }).catch((err) => {
+  console.error('connection failed:', err.message)
+  process.exit(1)
+})
+
+// Then just use it as normal.
+mp.join('radiant')
+```
+
+[mp.connect]: https://github.com/miniplug/miniplug/blob/51d349a75b203e4711ebf63149868d192bd18533/docs/API.md#mp-connect
+
+### Switch to `node-fetch`
+
+> This change only affects you if you use the `response` property on Errors thrown by miniplug.
+
+`node-fetch` is significantly smaller than `got`, and implements the web standard Fetch API.
+
+Previously, `error.response` would contain a Got response object, now it contains the [`Response`][Response] object from the Fetch API.
+
+[Response]: https://developer.mozilla.org/en-US/docs/Web/API/Response
+
+### Switch to `bluebirdish`
+
+> This change only affects you if you use Bluebird timeouts, cancellation, or disposers.
+
+`bluebirdish` provides a similar API to Bluebird, but is built on native Promises. It is compatible in all features it implements, but it doesn't support a few things. In most situations, you should not have to change any code. If you were using `.timeout()`, `.cancel()`, or resource management with `Promise.using()` and `.disposer()`, that will no longer work by default. You can use `Bluebird.resolve(p)` to convert a bluebirdish Promise `p` from the miniplug API to a Bluebird Promise.
+
+### Remove Node 4 from CI tests
+
+> This change only affects you if your bot runs on Node v4.
+
+Use `node -v` to check your current version.
+
+miniplug will most likely continue to work on Node 4, but it is not officially supported anymore and might break at some point. Node 4 is no longer supported by the Node.js project either and will not receive security patches, so it would be best to upgrade to at least Node 6 or 8.
+
 ## 1.14.0 / 26 Apr 2018
 
 Features:
