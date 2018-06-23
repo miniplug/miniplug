@@ -1,10 +1,8 @@
-const test = require('tape')
+const { test } = require('tape-modern')
 const miniplug = require('./mocks/mp')
 const nock = require('nock')('https://plug.dj')
 
 test('Getting rooms by the current user', async (t) => {
-  t.plan(2)
-
   nock.get('/_/rooms/me').reply(200, require('./mocks/rooms/me.json'))
 
   const mp = miniplug()
@@ -17,8 +15,6 @@ test('Getting rooms by the current user', async (t) => {
 })
 
 test('Sets the current room after joining', async (t) => {
-  t.plan(3)
-
   nock.post('/_/rooms/join').reply(200, require('./mocks/rooms/join.json'))
   nock.get('/_/rooms/state').reply(200, require('./mocks/rooms/state.json'))
 
@@ -34,8 +30,6 @@ test('Sets the current room after joining', async (t) => {
 })
 
 test('Emits `roomState` after receiving new room state', async (t) => {
-  t.plan(1)
-
   nock.get('/_/rooms/state').reply(200, require('./mocks/rooms/state.json'))
 
   const mp = miniplug()
@@ -48,7 +42,6 @@ test('Emits `roomState` after receiving new room state', async (t) => {
 })
 
 test('Updates `room()` properties when updates come in', async (t) => {
-  t.plan(9)
   nock.get('/_/rooms/state').reply(200, require('./mocks/rooms/state.json'))
 
   const mp = miniplug()
@@ -59,7 +52,7 @@ test('Updates `room()` properties when updates come in', async (t) => {
   mp.on('roomNameUpdate', t.pass)
   mp.on('roomMinChatLevelUpdate', t.pass)
 
-  t.true(/Welcome to the Tastycat room/.test(mp.room().description))
+  t.ok(/Welcome to the Tastycat room/.test(mp.room().description))
 
   mp.ws.onmessage({
     data: JSON.stringify([
@@ -71,7 +64,7 @@ test('Updates `room()` properties when updates come in', async (t) => {
         s: 'tastycat' }
     ])
   })
-  t.true(/New description/.test(mp.room().description))
+  t.ok(/New description/.test(mp.room().description))
 
   mp.ws.onmessage({
     data: JSON.stringify([

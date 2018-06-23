@@ -36,7 +36,7 @@
     "rollup-plugin-node-resolve": "^3.0.0",
     "standard": "^11.0.0",
     "tap-min": "^1.2.1",
-    "tape": "^4.6.3"
+    "tape-modern": "^1.1.1"
   },
   "engines": {
     "node": ">= 4"
@@ -79,7 +79,7 @@
     "lint-staged": "lint-staged",
     "prepare": "npm run build",
     "rebuild": "node has-changed || rollup -c",
-    "tap": "tape -r ./test/_init.js test/*.js",
+    "tap": "node test",
     "tap:min": "npm run tap | tap-min",
     "test": "npm-run-all lint rebuild tap:min",
     "test:ci": "npm-run-all lint rebuild tap"
