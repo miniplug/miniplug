@@ -1,6 +1,6 @@
 {
   "name": "miniplug",
-  "description": "Small Promise-based plug.dj API client for Node.js.",
+  "description": "Small plug.dj API client for bots and applications, built on Promises",
   "version": "2.0.0-beta.0",
   "author": "Renée Kooi <renee@kooi.me>",
   "bugs": "https://github.com/miniplug/miniplug/issues",
@@ -54,7 +54,12 @@
   "homepage": "https://github.com/miniplug/miniplug",
   "keywords": [
     "plug",
-    "plug.dj"
+    "plug.dj",
+    "plugdj",
+    "api",
+    "bot",
+    "client",
+    "promises"
   ],
   "license": "MIT",
   "lint-staged": {

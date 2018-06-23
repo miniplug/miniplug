@@ -1,6 +1,6 @@
 # miniplug
 
-Small but complete Promise-based [plug.dj][] API client for Node.js.
+Small [plug.dj][] client for building bots and applications in Node.js, with a Promise-based API.
 
 [Installation](#installation) -
 [Usage](#usage) -
