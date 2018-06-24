@@ -5,6 +5,7 @@ Small [plug.dj][] client for building bots and applications in Node.js, with a P
 [Installation](#installation) -
 [Usage](#usage) -
 [API][docs/API.md] -
+[Status](#status) -
 [Contributing](#contributing) -
 [License: MIT](#license)
 
@@ -48,6 +49,14 @@ For questions, visit the #coding channel in the plug.dj discord!
 
 [![join the plug.dj discord](https://img.shields.io/badge/plug.dj-%23coding-7289DA.svg)](https://discord.gg/plugdj)
 
+## Status
+
+<!-- npm search uses badge count as a search metric for some godforsaken reason -->
+[![Travis](https://img.shields.io/travis/miniplug/miniplug.svg)](https://travis-ci.org/miniplug/miniplug)
+[![npm version](https://img.shields.io/npm/v/miniplug/next.svg)](https://npmjs.com/package/miniplug)
+[![David](https://img.shields.io/david/miniplug/miniplug.svg)](https://david-dm.org/miniplug/miniplug)
+![npm downloads](https://img.shields.io/npm/dt/miniplug.svg)
+
 ## Contributing
 
 Issues/PRs are appreciated!
@@ -73,7 +82,7 @@ Changed files will also be tested and linted automatically when you `git commit`
 
 ## License
 
-[MIT](./LICENSE)
+[![MIT](https://img.shields.io/npm/l/miniplug.svg)](./LICENSE)
 
 [plug.dj]: https://plug.dj
 [docs/API.md]: ./docs/API.md
