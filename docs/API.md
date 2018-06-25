@@ -273,7 +273,7 @@ mp.use(lotteryPlugin())
 ```
 
 <a id="mp-join"></a>
-## mp.join(room): Promise&lt;[Room](#class-room)>
+## mp.join(room): Promise
 
 Join a room. The parameter is the room's slug. If your room URL is
 `https://plug.dj/loves-kpop`, the slug is `loves-kpop`.
@@ -375,11 +375,15 @@ mp.unfavoriteRoom(123456).then(() => {
 ```
 
 <a id="mp-getroomstate"></a>
-## mp.getRoomState(): Promise&lt;[Room](#class-room)>
+## mp.getRoomState(): Promise&lt;object>
 
-Get the current room object, but fresh from the plug.dj API and not cached. This
-is like an async version of [mp.room()](#mp-room). Using [mp.room()](#mp-room)
-should be preferred whenever possible.
+Get the current room object, but fresh from the plug.dj API and not cached. It
+returns the object from plug.dj's [`/_/rooms/state`][rooms/state] endpoint.
+
+Using other API methods like [mp.room()](#mp-room) should be preferred whenever
+possible.
+
+[rooms/state]: https://github.com/plugcommunity/documentation/blob/master/api/endpoints/rooms_state.md
 
 <hr>
 
