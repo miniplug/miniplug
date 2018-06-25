@@ -29,7 +29,8 @@ const mp = miniplug({
 })
 
 // Join a room
-mp.join('tastycat').then((room) => {
+mp.join('tastycat').then(() => {
+  const room = mp.room()
   mp.chat(`Hello ${room.name}! :wave:`)
 })
 
