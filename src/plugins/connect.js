@@ -15,7 +15,7 @@ export default function connectPlugin (options = {}) {
       authToken: true
     }
 
-    function connect (opts) {
+    function connect (opts = {}) {
       debug('connecting', opts.email)
 
       const loginPromise = Promise.resolve(
