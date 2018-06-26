@@ -15,6 +15,7 @@ export default function wrapHistoryEntry (mp, rawEntry) {
 
   return makeProto(rawEntry, {
     get time () { throw new Error('miniplug: \'HistoryEntry.time\' was renamed to \'HistoryEntry.timestamp\' in v2.0.0. Please update your code.') },
+    get dj () { throw new Error('miniplug: \'HistoryEntry.dj\' was renamed to \'HistoryEntry.user\' in v2.0.0. Please update your code.') },
     getUser: partial(mp.getUser, rawEntry.user.id),
     skip: partial(mp.skipDJ, rawEntry.user.id, rawEntry.id)
   })
