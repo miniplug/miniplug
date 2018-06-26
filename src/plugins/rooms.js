@@ -60,7 +60,9 @@ export default function roomsPlugin () {
     const unfavoriteRoom = (rid) =>
       mp.del(`rooms/favorites/${rid}`)
     const join = (slug) =>
-      mp.post('rooms/join', { slug: slug }).then(getRoomState)
+      mp.post('rooms/join', { slug: slug })
+        .then(getRoomState)
+        .then(room) // Return the current Room instance.
     const getRoomState = () =>
       mp.get('rooms/state').get(0)
         .tap(mp.emit.bind(mp, 'roomState'))

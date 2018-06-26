@@ -216,7 +216,7 @@ mp.use(lotteryPlugin())
 ```
 
 <a id="mp-join"></a>
-## mp.join(room): Promise
+## mp.join(room): Promise&lt;[Room](#class-room)>
 
 Join a room. The parameter is the room's slug. If your room URL is
 `https://plug.dj/loves-kpop`, the slug is `loves-kpop`.
@@ -225,6 +225,12 @@ Join a room. The parameter is the room's slug. If your room URL is
 mp.join('loves-kpop').then(() => {
   mp.chat('Hello!')
 })
+```
+
+It returns the Room object so you can do:
+
+```js
+const room = await mp.join('my-fav-room')
 ```
 
 <a id="mp-room"></a>
