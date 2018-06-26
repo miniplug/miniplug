@@ -126,5 +126,12 @@ function miniplug (opts = {}) {
     getNews: partial(mp.get, 'news')
   })
 
+  // Deprecations
+  mp.on('newListener', (name) => {
+    if (name === 'waitlistBan') {
+      throw new Error('miniplug: the \'waitlistBan\' event was renamed to \'modWaitlistBan\' in 2.0.0. Please update your code.')
+    }
+  })
+
   return mp
 }

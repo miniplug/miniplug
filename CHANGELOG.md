@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+
+Breaking changes:
+ * Remove `'waitlistBan'` event, use `'modWaitlistBan'` instead.
+
 ## 2.0.0-beta.0 / 22 Jun 2018
 
 Breaking changes:
