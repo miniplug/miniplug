@@ -11,7 +11,7 @@ Small [plug.dj][] client for building bots and applications in Node.js, with a P
 
 ## Installation [![(install size)](https://packagephobia.now.sh/badge?p=miniplug)](https://packagephobia.now.sh/result?p=miniplug)
 
-> Note: Node v6 or higher is required.
+> Note: Node v4 or higher is required.
 > Run `node -v` in your console to check that your Node.js version is up-to-date.
 
 ```sh
