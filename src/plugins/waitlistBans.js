@@ -28,6 +28,13 @@ export default function waitlistBansPlugin () {
       })
     })
 
+    // Deprecations
+    mp.on('newListener', (name) => {
+      if (name === 'waitlistBan') {
+        throw new Error('miniplug: the \'waitlistBan\' event was renamed to \'modWaitlistBan\' in 1.11.0. Please update your code.')
+      }
+    })
+
     Object.assign(mp, {
       getWaitlistBans,
       waitlistBan,
