@@ -1,4 +1,17 @@
 /**
+ * Copy property descriptors.
+ *
+ * @param {object} base
+ * @param {Array.<object>} others
+ */
+export function copyProperties (base, ...others) {
+  others.forEach((obj) => {
+    Object.defineProperties(base, Object.getOwnPropertyDescriptors(obj))
+  })
+  return base
+}
+
+/**
  * Flatten nested arrays.
  *
  *     flatten([ 4, 5, [ 8, 7 ] ])

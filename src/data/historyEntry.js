@@ -5,7 +5,6 @@ export default function wrapHistoryEntry (mp, rawEntry) {
   const timestamp = parseDate(rawEntry.timestamp)
 
   rawEntry.timestamp = timestamp
-  rawEntry.time = timestamp // TODO(v2.x) remove this alias
   // wrapMedia expects a playlist ID, but we don't know it--pass null instead.
   rawEntry.media = mp.wrapMedia(null, rawEntry.media)
   rawEntry.user = mp.wrapUser(rawEntry.user)
@@ -15,6 +14,7 @@ export default function wrapHistoryEntry (mp, rawEntry) {
   }
 
   return makeProto(rawEntry, {
+    get time () { throw new Error('miniplug: \'HistoryEntry.time\' was renamed to \'HistoryEntry.timestamp\' in v2.0.0. Please update your code.') },
     getUser: partial(mp.getUser, rawEntry.user.id),
     skip: partial(mp.skipDJ, rawEntry.user.id, rawEntry.id)
   })

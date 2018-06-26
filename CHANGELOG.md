@@ -7,7 +7,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
 Breaking changes:
- * Remove `'waitlistBan'` event, use `'modWaitlistBan'` instead.
+ * Remove `'waitlistBan'` event alias, use `'modWaitlistBan'` instead.
+ * Remove `HistoryEntry#time` property alias, use `HistoryEntry#timestamp` instead.
 
 ## 2.0.0-beta.0 / 22 Jun 2018
 
