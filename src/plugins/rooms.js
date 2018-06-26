@@ -71,8 +71,6 @@ export default function roomsPlugin () {
       if (!room()) {
         return Promise.reject(new Error('You are not currently in a room.'))
       }
-      // TODO check keys used in `patch`? Only 'name', 'description', 'welcome'
-      // and 'minChatLevel' can be updated.
       return mp.post('rooms/update', patch)
     }
 
