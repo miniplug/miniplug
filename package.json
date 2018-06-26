@@ -1,7 +1,7 @@
 {
   "name": "miniplug",
   "description": "Small plug.dj API client for bots and applications, built on Promises",
-  "version": "2.0.0-beta.0",
+  "version": "2.0.0-beta.1",
   "author": "Renée Kooi <renee@kooi.me>",
   "bugs": "https://github.com/miniplug/miniplug/issues",
   "contributors": [
