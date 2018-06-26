@@ -6,7 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 1.14.1 / 26 Jun 2018
 
-Bigfixes:
+Bugfixes:
  * Fix documentation of `join()` and `getRoomState()` methods. (45cd71d)
  * Add API header to readme so it is easier to spot. (20dfad6)
 
