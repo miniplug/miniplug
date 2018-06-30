@@ -54,7 +54,7 @@ For questions, visit the #coding channel in the plug.dj discord!
 
 <!-- npm search uses badge count as a search metric for some godforsaken reason -->
 [![Travis](https://img.shields.io/travis/miniplug/miniplug.svg)](https://travis-ci.org/miniplug/miniplug)
-[![npm version](https://img.shields.io/npm/v/miniplug/next.svg)](https://npmjs.com/package/miniplug)
+[![npm version](https://img.shields.io/npm/v/miniplug.svg)](https://npmjs.com/package/miniplug)
 [![David](https://img.shields.io/david/miniplug/miniplug.svg)](https://david-dm.org/miniplug/miniplug)
 ![npm downloads](https://img.shields.io/npm/dt/miniplug.svg)
 
