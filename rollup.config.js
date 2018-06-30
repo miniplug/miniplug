@@ -7,21 +7,19 @@ import builtins from 'builtin-modules'
 const pkg = require('./package.json')
 
 export default {
-  input: 'src/index.js',
+  input: './src/index.js',
   output: [
-    { format: 'cjs', file: 'index.js', sourcemap: true, exports: 'default' },
-    { format: 'es', file: 'index.es.js', sourcemap: true }
+    { format: 'cjs', file: pkg.main, sourcemap: true, exports: 'default', interop: false },
+    { format: 'es', file: pkg.module, sourcemap: true }
   ],
   external: builtins.concat(Object.keys(pkg.dependencies)),
   plugins: [
     buble({
       include: 'src/**',
+      objectAssign: 'Object.assign',
       target: {
         node: 4
       }
-    }),
-    inject({
-      Promise: 'bluebird'
     }),
     resolve({
       module: true,
@@ -30,6 +28,11 @@ export default {
       browser: false,
       preferBuiltins: true
     }),
-    commonjs()
+    commonjs({
+      include: 'node_modules/**'
+    }),
+    inject({
+      Promise: 'bluebirdish'
+    })
   ]
 }

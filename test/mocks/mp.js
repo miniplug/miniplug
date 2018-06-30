@@ -1,5 +1,5 @@
-const EventEmitter = require('events').EventEmitter
-const Promise = require('bluebird')
+const EventEmitter = require('events')
+const Promise = require('bluebirdish')
 const miniplug = require('../../')
 const socket = require('proxyquire')('plug-socket', {
   // A not-WebSocket that is a good enough imitation for plug-socket
@@ -28,9 +28,7 @@ const socket = require('proxyquire')('plug-socket', {
 })
 
 module.exports = () => {
-  const mp = miniplug({
-    connect: false
-  })
+  const mp = miniplug()
 
   mp.ws = socket()
 

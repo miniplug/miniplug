@@ -25,10 +25,14 @@ export default function waitlistBansPlugin () {
           timestamp: new Date()
         })
         mp.emit('modWaitlistBan', wrappedBan)
-        // back compat with v1.10.0:
-        // (TODO remove in v2)
-        mp.emit('waitlistBan', wrappedBan)
       })
+    })
+
+    // Deprecations
+    mp.on('newListener', (name) => {
+      if (name === 'waitlistBan') {
+        throw new Error('miniplug: the \'waitlistBan\' event was renamed to \'modWaitlistBan\' in 1.11.0. Please update your code.')
+      }
     })
 
     Object.assign(mp, {

@@ -1,3 +1,25 @@
+function polyfillGetOwnPropertyDescriptors (obj) {
+  return [...Object.getOwnPropertyNames(obj), ...Object.getOwnPropertySymbols(obj)].reduce((acc, name) => {
+    acc[name] = Object.getOwnPropertyDescriptor(obj, name)
+    return acc
+  }, {})
+}
+
+const getOwnPropertyDescriptors = Object.getOwnPropertyDescriptors || polyfillGetOwnPropertyDescriptors
+
+/**
+ * Copy property descriptors.
+ *
+ * @param {object} base
+ * @param {Array.<object>} others
+ */
+export function copyProperties (base, ...others) {
+  others.forEach((obj) => {
+    Object.defineProperties(base, getOwnPropertyDescriptors(obj))
+  })
+  return base
+}
+
 /**
  * Flatten nested arrays.
  *

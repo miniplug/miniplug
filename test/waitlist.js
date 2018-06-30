@@ -1,10 +1,8 @@
-const test = require('tape')
+const { test } = require('@goto-bus-stop/tape-modern')
 const miniplug = require('./mocks/mp')
 const nock = require('nock')('https://plug.dj')
 
 test('check waitlist lock/cycle state', async (t) => {
-  t.plan(4)
-
   nock.get('/_/rooms/state').reply(200, require('./mocks/rooms/state.json'))
 
   const mp = miniplug()

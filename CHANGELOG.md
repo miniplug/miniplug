@@ -4,6 +4,88 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.0 / 30 Jun 2018
+
+Breaking changes:
+ * Don't connect on initialisation by default. (#116)
+ * Switch from `bluebird` to `bluebirdish`. (#115)
+ * Switch from `got` to `node-fetch`. (#115)
+
+See below for upgrade instructions.
+
+Features:
+ * Return Room instance from `.join()`. (#115)
+
+Removed:
+ * Remove `'waitlistBan'` event alias, use `'modWaitlistBan'` instead. (#115)
+ * Remove `HistoryEntry#time` property alias, use `HistoryEntry#timestamp` instead. (#115)
+ * Remove `HistoryEntry#dj`, use `HistoryEntry#user` instead. (#115)
+
+### Don't connect on initialisation
+
+> This change affects everyone.
+
+v1.x accepted `email` and `password` options in the `miniplug()` constructor, and immediately connected to the plug.dj API and socket. This was handy but there was no clear way to handle login or connection failures. Now, this functionality has been split up, and the `.connect()` method must be used. `.connect()` returns a Promise, which you can attach `.catch()` handlers to. See its [documentation][mp.connect] for more.
+
+```js
+const mp = miniplug()
+mp.connect({ email: 'test@miniplug.com', password: 'hunter2' }).catch((err) => {
+  console.error('connection failed:', err.message)
+  process.exit(1)
+})
+
+// Then just use it as normal.
+mp.join('radiant')
+```
+
+[mp.connect]: https://github.com/miniplug/miniplug/blob/51d349a75b203e4711ebf63149868d192bd18533/docs/API.md#mp-connect
+
+### Removed deprecated names
+
+These properties and events were removed and will now throw an error:
+
+ * `HistoryEntry#dj` - this was never supposed to exist, and did not exist consistently. Use `HistoryEntry#user` instead.
+ * `HistoryEntry#time` - this was renamed to `HistoryEntry#timestamp` for consistency with other classes.
+ * `mp.on('waitlistBan')` - the 'waitlistBan' event was renamed to 'modWaitlistBan'.
+
+### Switch to `node-fetch`
+
+> This change only affects you if you use the `response` property on Errors thrown by miniplug.
+
+`node-fetch` is significantly smaller than `got`, and implements the web standard Fetch API.
+
+Previously, `error.response` would contain a Got response object, now it contains the [`Response`][Response] object from the Fetch API.
+
+[Response]: https://developer.mozilla.org/en-US/docs/Web/API/Response
+
+### Switch to `bluebirdish`
+
+> This change only affects you if you use Bluebird timeouts, cancellation, or disposers.
+
+`bluebirdish` provides a similar API to Bluebird, but is built on native Promises. It is compatible in all features it implements, but it doesn't support a few things. In most situations, you should not have to change any code. If you were using `.timeout()`, `.cancel()`, or resource management with `Promise.using()` and `.disposer()`, that will no longer work by default. You can use `Bluebird.resolve(p)` to convert a bluebirdish Promise `p` from the miniplug API to a Bluebird Promise.
+
+## 2.0.0-beta.1 / 26 Jun 2018
+
+Breaking changes:
+ * Remove `'waitlistBan'` event alias, use `'modWaitlistBan'` instead. (#115)
+ * Remove `HistoryEntry#time` property alias, use `HistoryEntry#timestamp` instead. (#115)
+ * Remove `HistoryEntry#dj`, use `HistoryEntry#user` instead. (#115)
+ * Return Room instance from `.join()`. (#115)
+
+Features:
+ * Restore Node 4 support. (#115)
+
+Bugfixes:
+ * Connect as guest when `connect()` is called without argument. (#115)
+
+## 2.0.0-beta.0 / 22 Jun 2018
+
+Breaking changes:
+ * Don't connect on initialisation by default. (#116)
+ * Switch from `bluebird` to `bluebirdish`. (#115)
+ * Switch from `got` to `node-fetch`. (#115)
+ * Remove Node 4 from CI tests. (#115)
+
 ## 1.14.1 / 26 Jun 2018
 
 Bugfixes:

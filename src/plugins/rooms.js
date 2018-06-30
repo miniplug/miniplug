@@ -60,7 +60,9 @@ export default function roomsPlugin () {
     const unfavoriteRoom = (rid) =>
       mp.del(`rooms/favorites/${rid}`)
     const join = (slug) =>
-      mp.post('rooms/join', { slug: slug }).then(getRoomState)
+      mp.post('rooms/join', { slug: slug })
+        .then(getRoomState)
+        .then(room) // Return the current Room instance.
     const getRoomState = () =>
       mp.get('rooms/state').get(0)
         .tap(mp.emit.bind(mp, 'roomState'))
@@ -69,8 +71,6 @@ export default function roomsPlugin () {
       if (!room()) {
         return Promise.reject(new Error('You are not currently in a room.'))
       }
-      // TODO check keys used in `patch`? Only 'name', 'description', 'welcome'
-      // and 'minChatLevel' can be updated.
       return mp.post('rooms/update', patch)
     }
 

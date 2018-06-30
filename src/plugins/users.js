@@ -96,7 +96,7 @@ export default function usersPlugin () {
     }
     const user = userByProp('id')
     const userByName = userByProp('username')
-    // TODO May want to include `me()` in the `users()` list in v2.0.0. I'm not
+    // Maybe include `me()` in the `users()` list in v3.0.0? I'm not
     // sure which is more expected.
     const users = () => mp[kUsers]
     const guests = () => mp[kGuestsCount]

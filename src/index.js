@@ -1,5 +1,5 @@
-import { EventEmitter } from 'events'
-import { Agent } from 'https'
+import EventEmitter from 'events'
+import https from 'https'
 import createDebug from 'debug'
 import createBackoff from 'linear-promise-backoff-queue'
 import { partial } from './util'
@@ -52,10 +52,10 @@ export default miniplug
 
 // Implementation
 
+const { Agent } = https
 const debug = createDebug('miniplug:miniplug')
 const defaultOptions = {
-  host: 'https://plug.dj',
-  connect: true
+  host: 'https://plug.dj'
 }
 
 function miniplug (opts = {}) {
@@ -64,7 +64,10 @@ function miniplug (opts = {}) {
   emitter.setMaxListeners(100)
   const mp = Object.create(emitter)
 
-  opts = Object.assign({}, defaultOptions, opts)
+  opts = {
+    ...defaultOptions,
+    ...opts
+  }
 
   if (typeof opts.agent === 'undefined') {
     opts.agent = new Agent({ keepAlive: true })
@@ -122,8 +125,6 @@ function miniplug (opts = {}) {
     // REST: News APIs
     getNews: partial(mp.get, 'news')
   })
-
-  if (opts.connect) mp.connect(opts)
 
   return mp
 }

@@ -5,196 +5,107 @@
 ---
 
  - [miniplug(opts)](#mp-constructor)
+ - [mp.connect({ email, password })](#mp-connect)
  - [mp.use(plugin)](#mp-use)
- - [mp.join(room)](#mp-join)
- - [mp.room()](#mp-room)
- - [mp.getRooms(query, page, limit)](#mp-getrooms)
- - [mp.getFavorites(query, page, limit)](#mp-getfavorites)
- - [mp.getMyRooms()](#mp-getmyrooms)
- - [mp.validateRoomName(name)](#mp-validateroomname)
- - [mp.createRoom(name, isPrivate)](#mp-createroom)
- - [mp.favoriteRoom(id)](#mp-favoriteroom)
- - [mp.unfavoriteRoom(id)](#mp-unfavoriteroom)
- - [mp.getRoomState()](#mp-getroomstate)
- - [mp.me()](#mp-me)
- - [mp.user(id)](#mp-user)
- - [mp.userByName(name)](#mp-userbyname)
- - [mp.users()](#mp-users)
- - [mp.guests()](#mp-guests)
- - [mp.getMe()](#mp-getme)
- - [mp.getUser(id)](#mp-getuser)
- - [mp.getUsers(...ids)](#mp-getusers)
- - [mp.saveSettings(settings)](#mp-savesettings)
- - [mp.setAvatar(avatar)](#mp-setavatar)
- - [mp.setBadge(badge)](#mp-setbadge)
- - [mp.setBlurb(blurb)](#mp-setblurb)
- - [mp.setLanguage(lang)](#mp-setlanguage)
- - [mp.getTransactions()](#mp-gettransactions)
- - [mp.score()](#mp-score)
- - [mp.vote(direction)](#mp-vote)
- - [mp.woot()](#mp-woot)
- - [mp.meh()](#mp-meh)
- - [mp.dj()](#mp-dj)
- - [mp.waitlist()](#mp-waitlist)
- - [mp.joinWaitlist()](#mp-joinwaitlist)
- - [mp.leaveWaitlist()](#mp-leavewaitlist)
- - [mp.isCycling()](#mp-iscycling)
- - [mp.setCycle(cycle)](#mp-setcycle)
- - [mp.enableCycle()](#mp-enablecycle)
- - [mp.disableCycle()](#mp-disablecycle)
- - [mp.isLocked()](#mp-islocked)
- - [mp.setLock(lock)](#mp-setlock)
- - [mp.lockWaitlist()](#mp-lockwaitlist)
- - [mp.unlockWaitlist()](#mp-unlockwaitlist)
- - [mp.addDJ(uid)](#mp-adddj)
- - [mp.moveDJ(uid, position)](#mp-movedj)
- - [mp.removeDJ(uid)](#mp-removedj)
- - [mp.getWaitlistBans()](#mp-getwaitlistbans)
- - [mp.waitlistBan(uid, duration, reason)](#mp-waitlistban)
- - [mp.waitlistUnban(uid)](#mp-waitlistunban)
- - [mp.historyEntry()](#mp-historyentry)
- - [mp.getRoomHistory()](#mp-getroomhistory)
- - [mp.getUserHistory(uid)](#mp-getuserhistory)
- - [mp.chat(message)](#mp-chat)
- - [mp.emote(message)](#mp-emote)
- - [mp.getChatHistory()](#mp-getchathistory)
- - [mp.deleteChat(id)](#mp-deletechat)
- - [mp.getPlaylists()](#mp-getplaylists)
- - [mp.getActivePlaylist()](#mp-getactiveplaylist)
- - [mp.createPlaylist(name)](#mp-createplaylist)
- - [mp.deletePlaylist(id)](#mp-deleteplaylist)
- - [mp.activatePlaylist(id)](#mp-activateplaylist)
- - [mp.renamePlaylist(id, name)](#mp-renameplaylist)
- - [mp.shufflePlaylist(id)](#mp-shuffleplaylist)
- - [mp.getMedia(id)](#mp-getmedia)
- - [mp.updateMedia(pid, mid, author, title)](#mp-updatemedia)
- - [mp.moveMedia(pid, mids, before)](#mp-movemedia)
- - [mp.insertMedia(id, media, append)](#mp-insertmedia)
- - [mp.deleteMedia(pid, mids)](#mp-deletemedia)
- - [mp.getProducts(type, category)](#mp-getproducts)
- - [mp.getStoreAvatars(category)](#mp-getstoreavatars)
- - [mp.getStoreBadges(category)](#mp-getstorebadges)
- - [mp.getStoreMisc(category)](#mp-getstoremisc)
- - [mp.getInventory(type)](#mp-getinventory)
- - [mp.getOwnedAvatars()](#mp-getownedavatars)
- - [mp.getOwnedBadges()](#mp-getownedbadges)
- - [mp.purchase(product)](#mp-purchase)
- - [mp.validateUsername(name)](#mp-validateusername)
- - [mp.purchaseNameChange(username)](#mp-purchasenamechange)
- - [mp.notifications()](#mp-notifications)
- - [mp.getNotifications()](#mp-notifications)
- - [mp.acknowledgeNotification(id)](#mp-notifications)
- - [Room](#class-room)
-   - [room.id](#room-id)
-   - [room.name](#room-name)
-   - [room.slug](#room-slug)
-   - [room.join()](#room-join)
-   - [room.getHost()](#room-gethost)
-   - [room.favorite()](#room-favorite)
-   - [room.unfavorite()](#room-unfavorite)
- - [User](#class-user)
-   - [user.id](#user-id)
-   - [user.username](#user-username)
-   - [user.role](#user-role)
-   - [user.gRole](#user-grole)
-   - [user.hasPermission(role)](#user-haspermission)
-   - [user.hasGlobalPermission(role)](#user-hasglobalpermission)
-   - [user.chat(text)](#user-chat)
-   - [user.emote(text)](#user-emote)
-   - [user.mention()](#user-mention)
-   - [user.add()](#user-add)
-   - [user.move(position)](#user-move)
-   - [user.remove()](#user-remove)
-   - [user.skip(historyId)](#user-skip)
-   - [user.befriend()](#user-befriend)
-   - [user.rejectRequest()](#user-rejectrequest)
-   - [user.ignore()](#user-ignore)
-   - [user.unignore()](#user-unignore)
-   - [user.mute(duration, reason)](#user-mute)
-   - [user.unmute()](#user-unmute)
-   - [user.ban(duration, reason)](#user-ban)
-   - [user.unban()](#user-unban)
-   - [user.waitlistBan(duration, reason)](#user-waitlistban)
-   - [user.waitlistUnban()](#user-waitlistunban)
-   - [user.getHistory()](#user-gethistory)
- - [Waitlist](#class-waitlist)
-   - [waitlist.contains(user)](#waitlist-contains)
-   - [waitlist.positionOf(user)](#waitlist-positionof)
- - [WaitlistBan](#class-waitlistban)
-   - [wlban.user](#waitlistban-user)
-   - [wlban.moderator](#waitlistban-moderator)
-   - [wlban.moderatorName](#waitlistban-moderatorname)
-   - [wlban.duration](#waitlistban-duration)
-   - [wlban.reason](#waitlistban-reason)
-   - [wlban.timestamp](#waitlistban-timestamp)
-   - [wlban.getUser()](#waitlistban-getuser)
-   - [wlban.remove()](#waitlistban-remove)
- - [ChatMessage](#class-chatmessage)
-   - [message.id](#chatmessage-id)
-   - [message.message](#chatmessage-message)
-   - [message.uid](#chatmessage-uid)
-   - [message.un](#chatmessage-un)
-   - [message.user](#chatmessage-user)
-   - [message.getUser()](#chatmessage-getuser)
-   - [message.own()](#chatmessage-own)
-   - [message.reply(text)](#chatmessage-reply)
-   - [message.emote(text)](#chatmessage-emote)
-   - [message.delete()](#chatmessage-delete)
- - [Playlist](#class-playlist)
-   - [playlist.id](#playlist-id)
-   - [playlist.name](#playlist-name)
-   - [playlist.count](#playlist-count)
-   - [playlist.active](#playlist-active)
-   - [playlist.delete()](#playlist-delete)
-   - [playlist.activate()](#playlist-activate)
-   - [playlist.rename(name)](#playlist-rename)
-   - [playlist.shuffle()](#playlist-shuffle)
-   - [playlist.getMedia()](#playlist-getmedia)
-   - [playlist.insert(media, append)](#playlist-insert)
-   - [playlist.move(media, before)](#playlist-move)
- - [Media](#class-media)
-   - [media.id](#media-id)
-   - [media.format](#media-format)
-   - [media.cid](#media-cid)
-   - [media.author](#media-author)
-   - [media.title](#media-title)
-   - [media.duration](#media-duration)
-   - [media.image](#media-image)
-   - [media.update(author, title)](#media-update)
-   - [media.delete()](#media-delete)
- - [HistoryEntry](#class-historyentry)
-   - [entry.id](#historyentry-id)
-   - [entry.media](#historyentry-media)
-   - [entry.room](#historyentry-room)
-   - [entry.user](#historyentry-user)
-   - [entry.timestamp](#historyentry-timestamp)
-   - [entry.score](#historyentry-score)
-   - [entry.getUser()](#historyentry-getuser)
-   - [entry.skip()](#historyentry-skip)
- - [StoreProduct](#class-storeproduct)
-   - [product.type](#storeproduct-type)
-   - [product.category](#storeproduct-category)
-   - [product.id](#storeproduct-id)
-   - [product.name](#storeproduct-name)
-   - [product.level](#storeproduct-level)
-   - [product.pp](#storeproduct-pp)
-   - [product.sub](#storeproduct-sub)
-   - [product.cash](#storeproduct-cash)
-   - [product.purchase()](#storeproduct-purchase)
- - [InventoryProduct](#class-inventoryproduct)
-   - [product.type](#inventoryproduct-type)
-   - [product.category](#inventoryproduct-category)
-   - [product.id](#inventoryproduct-id)
- - [Notification](#class-notification)
-   - [notification.id](#notification-id)
-   - [notification.action](#notification-action)
-   - [notification.timestamp](#notification-timestamp)
-   - [notification.value](#notification-value)
-   - [notification.level](#notification-level)
-   - [notification.message](#notification-message)
-   - [notification.from](#notification-from)
-   - [notification.amount](#notification-amount)
-   - [notification.acknowledge()](#notification-acknowledge)
+
+ - Room methods
+   - [mp.join(room)](#mp-join)
+   - [mp.room()](#mp-room)
+   - [mp.getRooms(query, page, limit)](#mp-getrooms)
+   - [mp.getFavorites(query, page, limit)](#mp-getfavorites)
+   - [mp.getMyRooms()](#mp-getmyrooms)
+   - [mp.validateRoomName(name)](#mp-validateroomname)
+   - [mp.createRoom(name, isPrivate)](#mp-createroom)
+   - [mp.favoriteRoom(id)](#mp-favoriteroom)
+   - [mp.unfavoriteRoom(id)](#mp-unfavoriteroom)
+   - [mp.getRoomState()](#mp-getroomstate)
+ - User methods
+   - [mp.me()](#mp-me)
+   - [mp.user(id)](#mp-user)
+   - [mp.userByName(name)](#mp-userbyname)
+   - [mp.users()](#mp-users)
+   - [mp.guests()](#mp-guests)
+   - [mp.getMe()](#mp-getme)
+   - [mp.getUser(id)](#mp-getuser)
+   - [mp.getUsers(...ids)](#mp-getusers)
+   - [mp.saveSettings(settings)](#mp-savesettings)
+   - [mp.setAvatar(avatar)](#mp-setavatar)
+   - [mp.setBadge(badge)](#mp-setbadge)
+   - [mp.setBlurb(blurb)](#mp-setblurb)
+   - [mp.setLanguage(lang)](#mp-setlanguage)
+   - [mp.getTransactions()](#mp-gettransactions)
+ - Booth and waitlist methods
+   - [mp.score()](#mp-score)
+   - [mp.vote(direction)](#mp-vote)
+   - [mp.woot()](#mp-woot)
+   - [mp.meh()](#mp-meh)
+   - [mp.dj()](#mp-dj)
+   - [mp.waitlist()](#mp-waitlist)
+   - [mp.joinWaitlist()](#mp-joinwaitlist)
+   - [mp.leaveWaitlist()](#mp-leavewaitlist)
+   - [mp.isCycling()](#mp-iscycling)
+   - [mp.setCycle(cycle)](#mp-setcycle)
+   - [mp.enableCycle()](#mp-enablecycle)
+   - [mp.disableCycle()](#mp-disablecycle)
+   - [mp.isLocked()](#mp-islocked)
+   - [mp.setLock(lock)](#mp-setlock)
+   - [mp.lockWaitlist()](#mp-lockwaitlist)
+   - [mp.unlockWaitlist()](#mp-unlockwaitlist)
+   - [mp.addDJ(uid)](#mp-adddj)
+   - [mp.moveDJ(uid, position)](#mp-movedj)
+   - [mp.removeDJ(uid)](#mp-removedj)
+   - [mp.getWaitlistBans()](#mp-getwaitlistbans)
+   - [mp.waitlistBan(uid, duration, reason)](#mp-waitlistban)
+   - [mp.waitlistUnban(uid)](#mp-waitlistunban)
+ - History methods
+   - [mp.historyEntry()](#mp-historyentry)
+   - [mp.getRoomHistory()](#mp-getroomhistory)
+   - [mp.getUserHistory(uid)](#mp-getuserhistory)
+ - Chat methods
+   - [mp.chat(message)](#mp-chat)
+   - [mp.emote(message)](#mp-emote)
+   - [mp.getChatHistory()](#mp-getchathistory)
+   - [mp.deleteChat(id)](#mp-deletechat)
+ - Playlist methods
+   - [mp.getPlaylists()](#mp-getplaylists)
+   - [mp.getActivePlaylist()](#mp-getactiveplaylist)
+   - [mp.createPlaylist(name)](#mp-createplaylist)
+   - [mp.deletePlaylist(id)](#mp-deleteplaylist)
+   - [mp.activatePlaylist(id)](#mp-activateplaylist)
+   - [mp.renamePlaylist(id, name)](#mp-renameplaylist)
+   - [mp.shufflePlaylist(id)](#mp-shuffleplaylist)
+   - [mp.getMedia(id)](#mp-getmedia)
+   - [mp.updateMedia(pid, mid, author, title)](#mp-updatemedia)
+   - [mp.moveMedia(pid, mids, before)](#mp-movemedia)
+   - [mp.insertMedia(id, media, append)](#mp-insertmedia)
+   - [mp.deleteMedia(pid, mids)](#mp-deletemedia)
+ - Store methods
+   - [mp.getProducts(type, category)](#mp-getproducts)
+   - [mp.getStoreAvatars(category)](#mp-getstoreavatars)
+   - [mp.getStoreBadges(category)](#mp-getstorebadges)
+   - [mp.getStoreMisc(category)](#mp-getstoremisc)
+   - [mp.getInventory(type)](#mp-getinventory)
+   - [mp.getOwnedAvatars()](#mp-getownedavatars)
+   - [mp.getOwnedBadges()](#mp-getownedbadges)
+   - [mp.purchase(product)](#mp-purchase)
+   - [mp.validateUsername(name)](#mp-validateusername)
+   - [mp.purchaseNameChange(username)](#mp-purchasenamechange)
+ - Notification methods
+   - [mp.notifications()](#mp-notifications)
+   - [mp.getNotifications()](#mp-notifications)
+   - [mp.acknowledgeNotification(id)](#mp-notifications)
+ - Classes
+   - [Room](#class-room)
+   - [User](#class-user)
+   - [Waitlist](#class-waitlist)
+   - [WaitlistBan](#class-waitlistban)
+   - [ChatMessage](#class-chatmessage)
+   - [Playlist](#class-playlist)
+   - [Media](#class-media)
+   - [HistoryEntry](#class-historyentry)
+   - [StoreProduct](#class-storeproduct)
+   - [InventoryProduct](#class-inventoryproduct)
+   - [Notification](#class-notification)
  - [User Roles](#role)
  - [Mute Durations](#muteduration)
  - [Mute Reasons](#mutereason)
@@ -211,9 +122,11 @@
 
 The miniplug API is heavily Promise-based. Most methods return Promises.
 
-miniplug uses the [Bluebird][] library. That means that Promises returned by
-miniplug have all the useful methods from Bluebird, too. See its
-[API reference][Bluebird API] for a list.
+miniplug uses the [Bluebirdish][] library. Bluebirdish implements methods from
+the Bluebird library on top of native PRomises. That means that Promises
+returned by miniplug have many of the useful methods from Bluebird, too. See its
+[API reference][Bluebird API] for documentation, and the [Bluebirdish Readme][]
+for a list of available methods.
 
 Promises work really well with JavaScript [async functions][]. Async functions
 are available in Node.js in versions 8 and up. If you are using an older
@@ -229,7 +142,8 @@ immediately. By convention, miniplug method names that are nouns (such as
 `getRooms()`, or `getUser()`) return Promises, and usually fetch new data from
 the plug.dj API.
 
-[Bluebird]: http://bluebirdjs.com
+[Bluebirdish]: https://github.com/goto-bus-stop/bluebirdish
+[Bluebirdish Readme]: https://github.com/goto-bus-stop/bluebirdish#readme
 [Bluebird API]: http://bluebirdjs.com/docs/api-reference.html
 [async functions]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function
 [Babel]: https://babeljs.io
@@ -240,23 +154,52 @@ the plug.dj API.
 <a id="mp-constructor"></a>
 ## mp = miniplug(opts={})
 
-Create a miniplug instance. Available options:
+Create a miniplug instance.
 
- - `opts.guest` - If true, will log in as a guest user. Defaults to false.
- - `opts.email` and `opts.password` - Login credentials. Only email/password
-   login is supported at the moment.
+ - `opts.host` - The plug.dj host to use, defaults to `https://plug.dj/`.
+   This can be changed for mocking or to run on a plug.dj subdomain like `stg.`.
+
+Note that a miniplug instance is not very useful until you open a
+[connection](#mp-connect) to plug.dj.
 
 ```js
 const miniplug = require('miniplug')
 
-const mp = miniplug({ guest: true })
+const mp = miniplug()
+```
+
+<a id="mp-connect"></a>
+## mp.connect(opts): Promise&lt;this>
+
+Connect to plug.dj. Available options:
+
+ - `opts.guest` - If true, will log in as a guest user. Defaults to false.
+ - `opts.email` and `opts.password` - Login credentials. Only email/password
+   login is supported and support for Facebook login is not currently planned.
+
+```js
+const mp = miniplug()
+mp.connect({ guest: true }).then(() => {
+  // ready
+})
 ```
 
 ```js
-const mp = miniplug({
+const mp = miniplug()
+mp.connect({
   email: 'example@test.com',
   password: 'hunter2'
+}).then(() => {
+  // ready
 })
+```
+
+This method returns `this` so you can use async/await syntax to do:
+
+```js
+async function main () {
+  const mp = await miniplug().connect({ /* ... */ })
+}
 ```
 
 <a id="mp-use"></a>
@@ -282,6 +225,12 @@ Join a room. The parameter is the room's slug. If your room URL is
 mp.join('loves-kpop').then(() => {
   mp.chat('Hello!')
 })
+```
+
+It returns the Room object so you can do:
+
+```js
+const room = await mp.join('my-fav-room')
 ```
 
 <a id="mp-room"></a>
@@ -1063,6 +1012,16 @@ notification.
 <a id="class-room"></a>
 ## Room
 
+### Properties
+
+ - [room.id](#room-id)
+ - [room.name](#room-name)
+ - [room.slug](#room-slug)
+ - [room.join()](#room-join)
+ - [room.getHost()](#room-gethost)
+ - [room.favorite()](#room-favorite)
+ - [room.unfavorite()](#room-unfavorite)
+
 <a id="room-id"></a>
 ### room.id: number
 
@@ -1142,6 +1101,33 @@ mp.room().unfavorite().then(() => {
 
 <a id="class-user"></a>
 ## User
+
+### Properties
+
+ - [user.id](#user-id)
+ - [user.username](#user-username)
+ - [user.role](#user-role)
+ - [user.gRole](#user-grole)
+ - [user.hasPermission(role)](#user-haspermission)
+ - [user.hasGlobalPermission(role)](#user-hasglobalpermission)
+ - [user.chat(text)](#user-chat)
+ - [user.emote(text)](#user-emote)
+ - [user.mention()](#user-mention)
+ - [user.add()](#user-add)
+ - [user.move(position)](#user-move)
+ - [user.remove()](#user-remove)
+ - [user.skip(historyId)](#user-skip)
+ - [user.befriend()](#user-befriend)
+ - [user.rejectRequest()](#user-rejectrequest)
+ - [user.ignore()](#user-ignore)
+ - [user.unignore()](#user-unignore)
+ - [user.mute(duration, reason)](#user-mute)
+ - [user.unmute()](#user-unmute)
+ - [user.ban(duration, reason)](#user-ban)
+ - [user.unban()](#user-unban)
+ - [user.waitlistBan(duration, reason)](#user-waitlistban)
+ - [user.waitlistUnban()](#user-waitlistunban)
+ - [user.getHistory()](#user-gethistory)
 
 <a id="user-id"></a>
 ### user.id: number
@@ -1358,6 +1344,11 @@ const firstTen = mp.waitlist().slice(0, 10)
 // firstTen is NOT a Waitlist object--just an array of the first ten users.
 ```
 
+### Properties
+
+ - [waitlist.contains(user)](#waitlist-contains)
+ - [waitlist.positionOf(user)](#waitlist-positionof)
+
 <a id="waitlist-contains"></a>
 ### waitlist.contains(user): bool
 
@@ -1386,6 +1377,17 @@ differences apply as with <code>[waitlist.contains](#waitlist-contains)</code>.
 
 <a id="class-waitlistban"></a>
 ## WaitlistBan
+
+### Properties
+
+ - [wlban.user](#waitlistban-user)
+ - [wlban.moderator](#waitlistban-moderator)
+ - [wlban.moderatorName](#waitlistban-moderatorname)
+ - [wlban.duration](#waitlistban-duration)
+ - [wlban.reason](#waitlistban-reason)
+ - [wlban.timestamp](#waitlistban-timestamp)
+ - [wlban.getUser()](#waitlistban-getuser)
+ - [wlban.remove()](#waitlistban-remove)
 
 <a id="waitlistban-user"></a>
 ### wlban.user: [User](#class-user)
@@ -1433,6 +1435,19 @@ Remove the waitlist ban.
 
 <a id="class-chatmessage"></a>
 ## ChatMessage
+
+### Properties
+
+ - [message.id](#chatmessage-id)
+ - [message.message](#chatmessage-message)
+ - [message.uid](#chatmessage-uid)
+ - [message.un](#chatmessage-un)
+ - [message.user](#chatmessage-user)
+ - [message.getUser()](#chatmessage-getuser)
+ - [message.own()](#chatmessage-own)
+ - [message.reply(text)](#chatmessage-reply)
+ - [message.emote(text)](#chatmessage-emote)
+ - [message.delete()](#chatmessage-delete)
 
 <a id="chatmessage-id"></a>
 ### message.id: string
@@ -1524,6 +1539,20 @@ mp.on('chat', (message) => {
 <a id="class-playlist"></a>
 ## Playlist
 
+### Properties
+
+ - [playlist.id](#playlist-id)
+ - [playlist.name](#playlist-name)
+ - [playlist.count](#playlist-count)
+ - [playlist.active](#playlist-active)
+ - [playlist.delete()](#playlist-delete)
+ - [playlist.activate()](#playlist-activate)
+ - [playlist.rename(name)](#playlist-rename)
+ - [playlist.shuffle()](#playlist-shuffle)
+ - [playlist.getMedia()](#playlist-getmedia)
+ - [playlist.insert(media, append)](#playlist-insert)
+ - [playlist.move(media, before)](#playlist-move)
+
 <a id="playlist-id"></a>
 ### playlist.id: number
 
@@ -1595,6 +1624,18 @@ move was finished.
 <a id="class-media"></a>
 ## Media
 
+### Properties
+
+ - [media.id](#media-id)
+ - [media.format](#media-format)
+ - [media.cid](#media-cid)
+ - [media.author](#media-author)
+ - [media.title](#media-title)
+ - [media.duration](#media-duration)
+ - [media.image](#media-image)
+ - [media.update(author, title)](#media-update)
+ - [media.delete()](#media-delete)
+
 <a id="media-id"></a>
 ### media.id: number
 
@@ -1644,6 +1685,17 @@ Delete the media from the playlist it belongs to.
 
 <a id="class-historyentry"></a>
 ## HistoryEntry
+
+### Properties
+
+ - [entry.id](#historyentry-id)
+ - [entry.media](#historyentry-media)
+ - [entry.room](#historyentry-room)
+ - [entry.user](#historyentry-user)
+ - [entry.timestamp](#historyentry-timestamp)
+ - [entry.score](#historyentry-score)
+ - [entry.getUser()](#historyentry-getuser)
+ - [entry.skip()](#historyentry-skip)
 
 <a id="historyentry-id"></a>
 ### entry.id: string
@@ -1715,6 +1767,18 @@ mp.historyEntry().skip()
 
 <a id="class-storeproduct"></a>
 ## StoreProduct
+
+### Properties
+
+ - [product.type](#storeproduct-type)
+ - [product.category](#storeproduct-category)
+ - [product.id](#storeproduct-id)
+ - [product.name](#storeproduct-name)
+ - [product.level](#storeproduct-level)
+ - [product.pp](#storeproduct-pp)
+ - [product.sub](#storeproduct-sub)
+ - [product.cash](#storeproduct-cash)
+ - [product.purchase()](#storeproduct-purchase)
 
 <a id="storeproduct-type"></a>
 ### product.type: string
@@ -1790,6 +1854,12 @@ Purchase the product. Only works for products that can be purchased with points.
 <a id="class-inventoryproduct"></a>
 ## InventoryProduct
 
+### Properties
+
+ - [product.type](#inventoryproduct-type)
+ - [product.category](#inventoryproduct-category)
+ - [product.id](#inventoryproduct-id)
+
 <a id="inventoryproduct-type"></a>
 ### product.type: string
 
@@ -1814,13 +1884,25 @@ The internal product name.
 A plug.dj service notification. These are the notifications listed on your user
 profile under My Profile » Notifications.
 
+### Properties
+
+ - [notification.id](#notification-id)
+ - [notification.action](#notification-action)
+ - [notification.timestamp](#notification-timestamp)
+ - [notification.value](#notification-value)
+ - [notification.level](#notification-level)
+ - [notification.message](#notification-message)
+ - [notification.from](#notification-from)
+ - [notification.amount](#notification-amount)
+ - [notification.acknowledge()](#notification-acknowledge)
+
 <a id="notification-id"></a>
-## notification.id: number
+### notification.id: number
 
 Unique ID of the notification.
 
 <a id="notification-action"></a>
-## notification.action: string
+### notification.action: string
 
 Type of notification.
 This determines what the [Notification](#class-notification)'s
@@ -1836,12 +1918,12 @@ notification types.
    since plug.dj doesn't sell XP boosts anymore.
 
 <a id="notification-timestamp"></a>
-## notification.timestamp: Date
+### notification.timestamp: Date
 
 Date and time when the notification came in.
 
 <a id="notification-value"></a>
-## notification.value: string
+### notification.value: string
 
 Raw value of the notification. This can mean different things for different
 actions. It's best to use one of the other properties documented below if you
@@ -1850,30 +1932,30 @@ can.
 See [`notification.action`](#notification-action).
 
 <a id="notification-level"></a>
-## notification.level: number
+### notification.level: number
 
 The user's new level after leveling up. Only present when the notification
 `action` is `levelUp`.
 
 <a id="notification-message"></a>
-## notification.message: string
+### notification.message: string
 
 HTML message contents of a plug.dj announcement notification. Only present when
 the notification `action` is `custom`.
 
 <a id="notification-from"></a>
-## notification.from: string
+### notification.from: string
 
 Nickname of the sender of a gift. Only present when the notification `action` is
 `gift`.
 
 <a id="notification-amount"></a>
-## notification.amount: number
+### notification.amount: number
 
 Amount of PP in a gift. Only present when the notification `action` is `gift`.
 
 <a id="notification-acknowledge"></a>
-## notification.acknowledge(): Promise
+### notification.acknowledge(): Promise
 
 Acknowledge and remove the notification.
 
@@ -2163,7 +2245,7 @@ mp.post('booth/skip', { userID: 123456, historyID: mp.historyEntry().id })
 
 ## mp.ws: WebSocket
 
-The [plug-socket](https://github.com/goto-bus-stop/plug-socket) WebSocket
+The [plug-socket](https://github.com/miniplug/plug-socket) WebSocket
 instance. This is also an instance of the [ws](https://github.com/websockets/ws)
 module.
 
@@ -2193,6 +2275,7 @@ events (eg. `'close'`), but otherwise there are better options.
  - [modRemoveDj](#event-modremovedj)
  - [modSkip](#event-modskip)
  - [modStaff](#event-modstaff)
+ - [modWaitlistBan](#event-modwaitlistban)
  - [roomUpdate](#event-roomupdate)
  - [roomNameUpdate](#event-roomnameupdate)
  - [roomDescriptionUpdate](#event-roomdescriptionupdate)
@@ -2204,7 +2287,6 @@ events (eg. `'close'`), but otherwise there are better options.
  - [userLeave](#event-userleave)
  - [userUpdate](#event-userupdate)
  - [vote](#event-vote)
- - [waitlistBan](#event-modwaitlistban)
  - [waitlistClear](#event-waitlistclear)
  - [waitlistCycle](#event-waitlistcycle)
  - [waitlistLock](#event-waitlistlock)

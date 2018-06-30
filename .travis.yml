@@ -1,8 +1,12 @@
 language: node_js
 sudo: false
 script: npm run test:ci
-before_script:
+before_install:
+  # The build needs Node 6
+  - 'if [ $TRAVIS_NODE_VERSION == "4" ]; then nvm install 6; fi'
   - nvm install-latest-npm
+after_install:
+  - 'if [ $TRAVIS_NODE_VERSION == "4" ]; then nvm use 4; fi'
 node_js:
   - "stable"
   - "8"

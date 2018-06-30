@@ -6,7 +6,7 @@ export default function boothPlugin (opts = {}) {
   return (mp) => {
     // Local state API
     const historyEntry = () => mp[kCurrentHistoryEntry]
-    const dj = () => mp[kCurrentHistoryEntry] ? mp[kCurrentHistoryEntry].dj : null
+    const dj = () => mp[kCurrentHistoryEntry] ? mp[kCurrentHistoryEntry].user : null
     const media = () => mp[kCurrentHistoryEntry] ? mp[kCurrentHistoryEntry].media : null
 
     mp.on('roomState', (state) => {
@@ -26,10 +26,6 @@ export default function boothPlugin (opts = {}) {
 
       // only for the current historyEntry
       mp[kCurrentHistoryEntry].playlistId = state.playback.playlistID
-
-      // Compat with v1.7.0 and below.
-      // TODO remove in 2.x
-      mp[kCurrentHistoryEntry].dj = mp[kCurrentHistoryEntry].user
     })
 
     // Socket API
@@ -58,10 +54,6 @@ export default function boothPlugin (opts = {}) {
 
       // only for the current historyEntry
       mp[kCurrentHistoryEntry].playlistId = playlistId
-
-      // Compat with v1.7.0 and below.
-      // TODO remove in 2.x
-      mp[kCurrentHistoryEntry].dj = mp[kCurrentHistoryEntry].user
 
       mp.emit('advance', historyEntry(), previous)
     }
