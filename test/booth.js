@@ -1,9 +1,7 @@
-const test = require('tape')
+const { test } = require('@goto-bus-stop/tape-modern')
 const miniplug = require('./mocks/mp')
 
 test('Sets booth and waitlist information on `advance`', (t) => {
-  t.plan(10)
-
   const mp = miniplug()
 
   mp.ws.emit('userJoin', { id: 4393540 })
