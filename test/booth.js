@@ -1,4 +1,4 @@
-const { test } = require('tape-modern')
+const { test } = require('@goto-bus-stop/tape-modern')
 const miniplug = require('./mocks/mp')
 
 test('Sets booth and waitlist information on `advance`', (t) => {
