@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.1 / 31 Jun 2018
+
+Internal:
+ * Update dependencies to avoid vulnerability warnings.
+
 ## 2.0.0 / 30 Jun 2018
 
 Breaking changes:
