@@ -8,7 +8,7 @@ const stat = require('fs').statSync
 const glob = require('glob').sync
 
 const files = glob('src/**/*.js')
-const pkg = require('./package.json')
+const pkg = require('../package.json')
 
 try {
   const sourceTime = Math.max.apply(Math, files.map(stat).map(s => s.atime))
