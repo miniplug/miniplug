@@ -179,8 +179,8 @@ Connect to plug.dj. Available options:
 
 ```js
 const mp = miniplug()
-mp.connect({ guest: true }).then(() => {
-  // ready
+mp.connect({ guest: true }).catch(() => {
+  // failed
 })
 ```
 
@@ -189,8 +189,8 @@ const mp = miniplug()
 mp.connect({
   email: 'example@test.com',
   password: 'hunter2'
-}).then(() => {
-  // ready
+}).catch(() => {
+  // failed
 })
 ```
 

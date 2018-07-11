@@ -23,22 +23,29 @@ npm install --save miniplug
 ```js
 const miniplug = require('miniplug')
 
-const mp = miniplug({
-  email: 'admin@plug.dj',
-  password: 'hunter2'
-})
-
-// Join a room
-mp.join('tastycat').then(() => {
-  const room = mp.room()
-  mp.chat(`Hello ${room.name}! :wave:`)
-})
+const mp = miniplug()
 
 // Add an example chat command "!id"
 mp.on('chat', (message) => {
   if (/^!id/.test(message.message)) {
     message.reply(`Your user ID is ${message.uid}.`)
   }
+})
+
+// Connect to plug.dj
+mp.connect({
+  email: 'admin@plug.dj',
+  password: 'hunter2'
+}).catch((err) => {
+  console.error('Could not connect to plug.dj:')
+  console.error(err)
+  process.exit(1)
+})
+
+// Join a room
+mp.join('tastycat').then(() => {
+  const room = mp.room()
+  mp.chat(`Hello ${room.name}! :wave:`)
 })
 ```
 
