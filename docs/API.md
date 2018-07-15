@@ -1750,6 +1750,9 @@ all numbers:
  - `entry.score.grabs` - The amount of grabs.
  - `entry.score.listeners` - The amount of people in the room at the time the
    song was played.
+ - `entry.score.skipped` - Contains the number 0 if this song was played through
+   to the end, and nonzero if it was skipped.
+   (Not available on the current Booth entry.)
 
 <a id="historyentry-getuser"></a>
 ### entry.getUser(): Promise&lt;[User](#class-user)>
