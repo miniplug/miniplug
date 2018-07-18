@@ -36,7 +36,8 @@
     "rollup-plugin-inject": "^2.0.0",
     "rollup-plugin-node-resolve": "^3.0.0",
     "standard": "^11.0.0",
-    "tap-min": "^1.2.1"
+    "tap-min": "^1.2.1",
+    "with-staged": "^1.0.1"
   },
   "engines": {
     "node": ">= 4"
@@ -69,7 +70,7 @@
   "repository": "miniplug/miniplug",
   "scripts": {
     "build": "rollup -c",
-    "lint-staged": "node scripts/lint-staged",
+    "lint-staged": "with-staged '**/*.js' -- standard",
     "lint": "standard rollup.config.js scripts/**/*.js src/**/*.js test/**/*.js",
     "prepare": "npm run build",
     "rebuild": "node scripts/has-changed || rollup -c",
