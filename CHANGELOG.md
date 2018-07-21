@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.2 / 21 Jul 2018
+
+Docs:
+ * Document `HistoryEntry#score.skipped`.
+ * Update readme example.
+
 ## 2.0.1 / 31 Jun 2018
 
 Internal:
