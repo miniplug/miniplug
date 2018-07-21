@@ -29,7 +29,7 @@
     "plug-message-split": "^1.1.1",
     "pre-commit": "^1.2.2",
     "proxyquire": "^2.0.1",
-    "rollup": "^0.61.2",
+    "rollup": "^0.63.4",
     "rollup-plugin-buble": "^0.19.0",
     "rollup-plugin-commonjs": "^9.0.0",
     "rollup-plugin-inject": "^2.0.0",
