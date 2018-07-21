@@ -123,7 +123,7 @@
 The miniplug API is heavily Promise-based. Most methods return Promises.
 
 miniplug uses the [Bluebirdish][] library. Bluebirdish implements methods from
-the Bluebird library on top of native PRomises. That means that Promises
+the Bluebird library on top of native Promises. That means that Promises
 returned by miniplug have many of the useful methods from Bluebird, too. See its
 [API reference][Bluebird API] for documentation, and the [Bluebirdish Readme][]
 for a list of available methods.
