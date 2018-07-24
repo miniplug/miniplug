@@ -1,3 +1,4 @@
+import Promise from 'bluebirdish'
 import login from 'plug-login'
 import socket from 'plug-socket'
 import createDebug from 'debug'

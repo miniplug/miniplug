@@ -1,3 +1,4 @@
+import Promise from 'bluebirdish'
 import createDebug from 'debug'
 import { flatten, partial } from '../util'
 

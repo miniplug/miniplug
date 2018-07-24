@@ -1,5 +1,4 @@
 import buble from 'rollup-plugin-buble'
-import inject from 'rollup-plugin-inject'
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import builtins from 'builtin-modules'
@@ -30,9 +29,6 @@ export default {
     }),
     commonjs({
       include: 'node_modules/**'
-    }),
-    inject({
-      Promise: 'bluebirdish'
     })
   ]
 }

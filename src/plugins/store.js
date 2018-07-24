@@ -1,3 +1,4 @@
+import Promise from 'bluebirdish'
 import { getId, partial } from '../util'
 
 export default function storePlugin () {

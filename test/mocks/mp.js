@@ -1,6 +1,6 @@
 const EventEmitter = require('events')
 const Promise = require('bluebirdish')
-const miniplug = require('../../')
+const miniplug = require('esm')(module)('../../src').default
 const socket = require('proxyquire')('plug-socket', {
   // A not-WebSocket that is a good enough imitation for plug-socket
   ws: function WebSocket () {

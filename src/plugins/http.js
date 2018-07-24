@@ -1,3 +1,4 @@
+import Promise from 'bluebirdish'
 import fetch from 'node-fetch'
 import createDebug from 'debug'
 import https from 'https'

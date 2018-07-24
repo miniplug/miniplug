@@ -1,5 +1,6 @@
-import { partial } from '../util'
+import Promise from 'bluebirdish'
 import createDebug from 'debug'
+import { partial } from '../util'
 
 const debug = createDebug('miniplug:chat')
 

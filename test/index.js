@@ -8,6 +8,8 @@ if (!isAsyncSupported()) {
   require('async-to-gen/register')
 }
 
+require('buble/register')
+
 require('./booth')
 require('./rooms')
 require('./users')

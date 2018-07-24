@@ -1,5 +1,6 @@
-import { partial } from '../util'
+import Promise from 'bluebirdish'
 import { unescape } from 'plug-message-split'
+import { partial } from '../util'
 import makeProto from '../wrap'
 
 export default function wrapMessage (mp, message) {

@@ -1,3 +1,4 @@
+import Promise from 'bluebirdish'
 import EventEmitter from 'events'
 import https from 'https'
 import createDebug from 'debug'
