@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.3 / 30 Sep 2018
+
+Internal:
+ * Update `debug` to v4.0.0.
+
 ## 2.0.2 / 21 Jul 2018
 
 Docs:
