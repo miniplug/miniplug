@@ -22,9 +22,6 @@ export default {
       }
     }),
     resolve({
-      module: true,
-      jsnext: true,
-      main: true,
       browser: false,
       preferBuiltins: true
     }),
