@@ -3,7 +3,7 @@ dist: bionic
 script: npm run test:ci
 before_install:
   # The build needs Node 8
-  - 'if [ $TRAVIS_NODE_VERSION == "4" || $TRAVIS_NODE_VERSION == "6" ]; then nvm install 8; fi'
+  - 'if [ $TRAVIS_NODE_VERSION == "4" ] || [ $TRAVIS_NODE_VERSION == "6" ]; then nvm install 8; fi'
   - 'nvm install-latest-npm'
 before_script:
   - 'npm run build'
