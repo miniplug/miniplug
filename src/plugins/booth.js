@@ -37,7 +37,7 @@ export default function boothPlugin (opts = {}) {
         return
       }
 
-      let {
+      const {
         h: historyId,
         m: media,
         c: djId,

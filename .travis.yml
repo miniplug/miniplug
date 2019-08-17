@@ -1,11 +1,11 @@
 language: node_js
-sudo: false
+dist: bionic
 script: npm run test:ci
 before_install:
   # The build needs Node 6
   - 'if [ $TRAVIS_NODE_VERSION == "4" ]; then nvm install 6; fi'
   - nvm install-latest-npm
-after_install:
+before_script:
   - 'if [ $TRAVIS_NODE_VERSION == "4" ]; then nvm use 4; fi'
 node_js:
   - "stable"
