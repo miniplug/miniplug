@@ -48,7 +48,7 @@ export function getId (item, idProp = 'id') {
  * @param {Array.<object>} items
  */
 export function getIds (items, idProp = 'id') {
-  const arr = Array.isArray(items) ? items : [ items ]
+  const arr = Array.isArray(items) ? items : [items]
   return arr.map((item) => getId(item, idProp))
 }
 
