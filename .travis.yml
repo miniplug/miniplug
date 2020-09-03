@@ -1,14 +1,8 @@
 language: node_js
 dist: bionic
 script: npm run test:ci
-before_install:
-  # The build needs Node 8
-  - 'if [ $TRAVIS_NODE_VERSION == "4" ] || [ $TRAVIS_NODE_VERSION == "6" ]; then nvm install 8; fi'
-  - 'nvm install-latest-npm'
-before_script:
-  - 'npm run build'
-  - 'nvm use $TRAVIS_NODE_VERSION'
+before_script: npm run build
 node_js:
   - "stable"
-  - "8"
-  - "6"
+  - "12"
+  - "10"
