@@ -56,12 +56,14 @@ test('Updates `room()` properties when updates come in', async (t) => {
 
   mp.ws.onmessage({
     data: JSON.stringify([
-      { a: 'roomDescriptionUpdate',
+      {
+        a: 'roomDescriptionUpdate',
         p: {
           u: 4393540,
           d: 'New description'
         },
-        s: 'tastycat' }
+        s: 'tastycat'
+      }
     ])
   })
   t.ok(/New description/.test(mp.room().description))
