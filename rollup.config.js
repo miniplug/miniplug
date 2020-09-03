@@ -1,7 +1,7 @@
-import buble from 'rollup-plugin-buble'
-import inject from 'rollup-plugin-inject'
-import resolve from 'rollup-plugin-node-resolve'
-import commonjs from 'rollup-plugin-commonjs'
+import buble from '@rollup/plugin-buble'
+import inject from '@rollup/plugin-inject'
+import resolve from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
 import builtins from 'builtin-modules'
 
 const pkg = require('./package.json')
