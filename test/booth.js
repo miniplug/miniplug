@@ -1,5 +1,5 @@
-const { test } = require('@goto-bus-stop/tape-modern')
-const miniplug = require('./mocks/mp')
+import { test } from '@goto-bus-stop/tape-modern'
+import miniplug from './mocks/mp.js'
 
 test('Sets booth and waitlist information on `advance`', (t) => {
   const mp = miniplug()

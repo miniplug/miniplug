@@ -1,6 +1,6 @@
 import { unescape } from 'plug-message-split'
-import { partial, parseDate } from '../util'
-import makeProto from '../wrap'
+import { partial, parseDate } from '../util.js'
+import makeProto from '../wrap.js'
 
 export default function wrapWaitlistBan (mp, data) {
   data.username = unescape(data.username)

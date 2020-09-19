@@ -1,4 +1,4 @@
-import makeProto from '../wrap'
+import makeProto from '../wrap.js'
 
 export default function wrapInventoryProduct (mp, product) {
   // Rename the product.id property. The `id` property on inventory products

@@ -1,6 +1,6 @@
-import { partial } from '../util'
+import { partial } from '../util.js'
 import { unescape } from 'plug-message-split'
-import makeProto from '../wrap'
+import makeProto from '../wrap.js'
 
 export default function wrapRoom (mp, room) {
   if (room.welcome) {

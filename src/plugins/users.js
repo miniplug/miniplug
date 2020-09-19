@@ -1,5 +1,6 @@
+import Promise from 'bluebirdish'
 import createDebug from 'debug'
-import { flatten, partial } from '../util'
+import { flatten, partial } from '../util.js'
 
 const debug = createDebug('miniplug:users')
 

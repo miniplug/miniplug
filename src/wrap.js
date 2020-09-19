@@ -1,4 +1,4 @@
-import { copyProperties } from './util'
+import { copyProperties } from './util.js'
 
 /**
  * Add methods to an object's prototype.

@@ -1,14 +1,4 @@
-const isAsyncSupported = require('is-async-supported')
-
-/**
- * Set up ES-future compilation.
- */
-
-if (!isAsyncSupported()) {
-  require('async-to-gen/register')
-}
-
-require('./booth')
-require('./rooms')
-require('./users')
-require('./waitlist')
+import './booth.js'
+import './rooms.js'
+import './users.js'
+import './waitlist.js'

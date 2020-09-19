@@ -1,4 +1,4 @@
-import { partial } from '../util'
+import { partial } from '../util.js'
 
 const kVoteStats = Symbol('Votes')
 const kGrabs = Symbol('Grabs')

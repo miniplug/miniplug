@@ -1,5 +1,5 @@
-import { partial } from '../util'
-import makeProto from '../wrap'
+import { partial } from '../util.js'
+import makeProto from '../wrap.js'
 
 export default function wrapStoreProduct (mp, product) {
   return makeProto(product, {

@@ -5,4 +5,7 @@ before_script: npm run build
 node_js:
   - "stable"
   - "12"
-  - "10"
+jobs:
+  include:
+    - node_js: 10
+      script: npm run test:ci:cjs

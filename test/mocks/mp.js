@@ -1,33 +1,8 @@
-const EventEmitter = require('events')
-const Promise = require('bluebirdish')
-const miniplug = require('../../')
-const socket = require('proxyquire')('plug-socket', {
-  // A not-WebSocket that is a good enough imitation for plug-socket
-  ws: function WebSocket () {
-    const fakeSocket = new EventEmitter()
-    setImmediate(() => {
-      fakeSocket.onopen && fakeSocket.onopen()
-    })
+import Promise from 'bluebirdish'
+import miniplug from 'miniplug'
+import socket from './socket.cjs'
 
-    // Adding a thing so tests can mock socket events more easily
-    fakeSocket.receiveMessages = (messages) => {
-      fakeSocket.onmessage({
-        data: JSON.stringify(messages)
-      })
-    }
-
-    fakeSocket.close = () => {
-      setImmediate(() => {
-        fakeSocket.onclose && fakeSocket.onclose()
-        fakeSocket.emit('close')
-      })
-    }
-
-    return fakeSocket
-  }
-})
-
-module.exports = () => {
+export default function mockMiniplug () {
   const mp = miniplug()
 
   mp.ws = socket()

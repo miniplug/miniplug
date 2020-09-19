@@ -1,5 +1,5 @@
-import makeProto from '../wrap'
-import { partial, parseDate } from '../util'
+import makeProto from '../wrap.js'
+import { partial, parseDate } from '../util.js'
 
 export default function wrapHistoryEntry (mp, rawEntry) {
   const timestamp = parseDate(rawEntry.timestamp)

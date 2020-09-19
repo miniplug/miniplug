@@ -1,4 +1,4 @@
-import { partial } from '../util'
+import { partial } from '../util.js'
 import createDebug from 'debug'
 
 const debug = createDebug('miniplug:waitlist')

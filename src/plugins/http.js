@@ -1,7 +1,8 @@
+import Promise from 'bluebirdish'
 import fetch from 'node-fetch'
 import createDebug from 'debug'
 import https from 'https'
-import { wrapResponseError } from '../errors'
+import { wrapResponseError } from '../errors.js'
 
 const { Agent } = https
 const debug = createDebug('miniplug:http')

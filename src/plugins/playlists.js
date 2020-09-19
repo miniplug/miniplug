@@ -1,4 +1,4 @@
-import { getId, getIds, partial } from '../util'
+import { getId, getIds, partial } from '../util.js'
 
 export default function playlistsPlugin () {
   return (mp) => {

@@ -1,6 +1,5 @@
-/index.js
-/index.js.map
-/index.mjs
-/index.mjs.map
+/index.cjs
+/index.cjs.map
+/test/index.cjs
 /node_modules
 yarn.lock

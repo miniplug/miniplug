@@ -16,10 +16,9 @@
     "plug-socket": "^1.0.0"
   },
   "devDependencies": {
-    "@goto-bus-stop/tape-modern": "^2.0.0",
+    "@goto-bus-stop/tape-modern": "^3.0.0",
     "@rollup/plugin-buble": "^0.21.3",
     "@rollup/plugin-commonjs": "^15.0.0",
-    "@rollup/plugin-inject": "^4.0.2",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "async-to-gen": "^1.3.3",
     "builtin-modules": "^3.0.0",
@@ -41,8 +40,8 @@
     "node": ">= 4"
   },
   "files": [
-    "index.js",
-    "index.mjs",
+    "index.cjs",
+    "src",
     "docs"
   ],
   "homepage": "https://github.com/miniplug/miniplug",
@@ -56,8 +55,14 @@
     "promises"
   ],
   "license": "MIT",
-  "main": "index.js",
-  "module": "index.mjs",
+  "main": "./index.cjs",
+  "module": "./src/index.js",
+  "exports": {
+    ".": {
+      "import": "./src/index.js",
+      "require": "./index.cjs"
+    }
+  },
   "pre-commit": {
     "run": [
       "rebuild",
@@ -71,10 +76,13 @@
     "lint-staged": "with-staged '**/*.js' -- standard",
     "lint": "standard rollup.config.js scripts/**/*.js src/**/*.js test/**/*.js",
     "prepare": "npm run build",
-    "rebuild": "node scripts/has-changed || rollup -c",
-    "tap": "node test",
+    "rebuild": "node scripts/has-changed.cjs || rollup -c",
+    "tap": "node test/index.js",
+    "tap:cjs": "node test/index.cjs",
     "tap:min": "npm run tap | tap-min",
     "test": "npm-run-all lint rebuild tap:min",
+    "test:build:cjs": "cd test && rollup -c",
+    "test:ci:cjs": "npm-run-all lint rebuild test:build:cjs tap:cjs",
     "test:ci": "npm-run-all lint rebuild tap"
   },
   "standard": {
@@ -84,5 +92,6 @@
     "ignore": [
       "tap-min"
     ]
-  }
+  },
+  "type": "module"
 }

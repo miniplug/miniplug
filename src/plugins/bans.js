@@ -1,5 +1,5 @@
-import { partial } from '../util'
-import { BAN_DURATION, BAN_REASON } from '../constants'
+import { partial } from '../util.js'
+import { BAN_DURATION, BAN_REASON } from '../constants.js'
 
 export default function bansPlugin () {
   return (mp) => {

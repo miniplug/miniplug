@@ -1,7 +1,8 @@
+import Promise from 'bluebirdish'
 import login from 'plug-login'
 import socket from 'plug-socket'
 import createDebug from 'debug'
-import { errorClasses } from '../errors'
+import { errorClasses } from '../errors.js'
 
 const debug = createDebug('miniplug:connect')
 const debugWs = createDebug('miniplug:ws')

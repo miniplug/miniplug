@@ -1,9 +1,11 @@
-const { test } = require('@goto-bus-stop/tape-modern')
-const miniplug = require('./mocks/mp')
-const nock = require('nock')('https://plug.dj')
+import { test } from '@goto-bus-stop/tape-modern'
+import createNock from 'nock'
+import miniplug from './mocks/mp.js'
+
+const nock = createNock('https://plug.dj')
 
 test('Getting rooms by the current user', async (t) => {
-  nock.get('/_/rooms/me').reply(200, require('./mocks/rooms/me.json'))
+  nock.get('/_/rooms/me').replyWithFile(200, new URL('./mocks/rooms/me.json', import.meta.url))
 
   const mp = miniplug()
 
@@ -15,8 +17,8 @@ test('Getting rooms by the current user', async (t) => {
 })
 
 test('Sets the current room after joining', async (t) => {
-  nock.post('/_/rooms/join').reply(200, require('./mocks/rooms/join.json'))
-  nock.get('/_/rooms/state').reply(200, require('./mocks/rooms/state.json'))
+  nock.post('/_/rooms/join').replyWithFile(200, new URL('./mocks/rooms/join.json', import.meta.url))
+  nock.get('/_/rooms/state').replyWithFile(200, new URL('./mocks/rooms/state.json', import.meta.url))
 
   const mp = miniplug()
 
@@ -30,7 +32,7 @@ test('Sets the current room after joining', async (t) => {
 })
 
 test('Emits `roomState` after receiving new room state', async (t) => {
-  nock.get('/_/rooms/state').reply(200, require('./mocks/rooms/state.json'))
+  nock.get('/_/rooms/state').replyWithFile(200, new URL('./mocks/rooms/state.json', import.meta.url))
 
   const mp = miniplug()
   mp.on('roomState', () => {
@@ -42,7 +44,7 @@ test('Emits `roomState` after receiving new room state', async (t) => {
 })
 
 test('Updates `room()` properties when updates come in', async (t) => {
-  nock.get('/_/rooms/state').reply(200, require('./mocks/rooms/state.json'))
+  nock.get('/_/rooms/state').replyWithFile(200, new URL('./mocks/rooms/state.json', import.meta.url))
 
   const mp = miniplug()
   await mp.getRoomState()

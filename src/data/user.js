@@ -1,6 +1,6 @@
-import { partial } from '../util'
+import { partial } from '../util.js'
 import { unescape } from 'plug-message-split'
-import makeProto from '../wrap'
+import makeProto from '../wrap.js'
 
 export default function wrapUser (mp, user) {
   user.username = user.guest ? null : unescape(user.username || '')

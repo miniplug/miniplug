@@ -1,5 +1,5 @@
-import makeProto from '../wrap'
-import { partial, parseDate } from '../util'
+import makeProto from '../wrap.js'
+import { partial, parseDate } from '../util.js'
 
 export default function wrapNotification (mp, notif) {
   notif.id = Number(notif.id)

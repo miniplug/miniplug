@@ -1,4 +1,4 @@
-import { getId } from '../util'
+import { getId } from '../util.js'
 
 // Have to use a real class to get working inheritance from Array. Methods are
 // still added inside wrapWaitlist, as usual.

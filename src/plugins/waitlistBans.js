@@ -1,4 +1,4 @@
-import { WAITLIST_BAN_DURATION, WAITLIST_BAN_REASON } from '../constants'
+import { WAITLIST_BAN_DURATION, WAITLIST_BAN_REASON } from '../constants.js'
 
 export default function waitlistBansPlugin () {
   return (mp) => {

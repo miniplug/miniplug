@@ -1,4 +1,4 @@
-import { partial, parseDate } from '../util'
+import { partial, parseDate } from '../util.js'
 
 const kCurrentHistoryEntry = Symbol('History entry')
 

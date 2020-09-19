@@ -1,9 +1,11 @@
-const { test } = require('@goto-bus-stop/tape-modern')
-const miniplug = require('./mocks/mp')
-const nock = require('nock')('https://plug.dj')
+import { test } from '@goto-bus-stop/tape-modern'
+import createNock from 'nock'
+import miniplug from './mocks/mp.js'
+
+const nock = createNock('https://plug.dj')
 
 test('Retrieving a user', async (t) => {
-  nock.get('/_/users/123456').reply(200, require('./mocks/users/123456.json'))
+  nock.get('/_/users/123456').replyWithFile(200, new URL('./mocks/users/123456.json', import.meta.url))
 
   const mp = miniplug()
 
@@ -14,7 +16,7 @@ test('Retrieving a user', async (t) => {
 })
 
 test('Get the current user', async (t) => {
-  nock.get('/_/users/me').reply(200, require('./mocks/users/me.json'))
+  nock.get('/_/users/me').replyWithFile(200, new URL('./mocks/users/me.json', import.meta.url))
 
   const mp = miniplug()
 
@@ -25,8 +27,8 @@ test('Get the current user', async (t) => {
 })
 
 test('Get a user who is currently in the room', async (t) => {
-  nock.post('/_/rooms/join').reply(200, require('./mocks/rooms/join.json'))
-  nock.get('/_/rooms/state').reply(200, require('./mocks/rooms/state.json'))
+  nock.post('/_/rooms/join').replyWithFile(200, new URL('./mocks/rooms/join.json', import.meta.url))
+  nock.get('/_/rooms/state').replyWithFile(200, new URL('./mocks/rooms/state.json', import.meta.url))
 
   const mp = miniplug()
   await mp.join('tastycat')

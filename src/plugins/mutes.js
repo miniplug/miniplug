@@ -1,5 +1,5 @@
-import { partial } from '../util'
-import { MUTE_DURATION, MUTE_REASON } from '../constants'
+import { partial } from '../util.js'
+import { MUTE_DURATION, MUTE_REASON } from '../constants.js'
 
 export default function mutesPlugin () {
   return (mp) => {

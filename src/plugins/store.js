@@ -1,4 +1,5 @@
-import { getId, partial } from '../util'
+import Promise from 'bluebirdish'
+import { getId, partial } from '../util.js'
 
 export default function storePlugin () {
   return (mp) => {

@@ -1,6 +1,7 @@
-import { partial } from '../util'
+import { partial } from '../util.js'
 import { unescape } from 'plug-message-split'
-import makeProto from '../wrap'
+import Promise from 'bluebirdish'
+import makeProto from '../wrap.js'
 
 export default function wrapMessage (mp, message) {
   if (message.un) {
