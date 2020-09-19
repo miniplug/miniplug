@@ -9,9 +9,11 @@ export default {
   output: {
     format: 'cjs',
     file: './index.cjs',
-    interop: false
+    interop: false,
+    paths: { miniplug: '../' }
   },
   external: [
+    'miniplug',
     ...builtins,
     ...Object.keys(pkg.dependencies),
     ...Object.keys(pkg.devDependencies)
